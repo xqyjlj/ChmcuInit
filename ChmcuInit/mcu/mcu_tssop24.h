@@ -9,6 +9,7 @@
 #include "mcu_xml.h"
 #include "mcu_pin.h"
 #include <QList>
+#include "mcu_chip.h"
 class mcu_tssop24: public QGroupBox
 {
 public:
@@ -22,7 +23,7 @@ private:
     void set_pin_menu(mcu_pin* pin, QStringList list);
 private:
     QGridLayout* gridLayout = new QGridLayout(this);
-    QLabel* chip = new QLabel();
+    mcu_chip* chip = new mcu_chip();
 
     mcu_pin* pin1 = new mcu_pin(this);
     mcu_pin* pin2 = new mcu_pin(this);
