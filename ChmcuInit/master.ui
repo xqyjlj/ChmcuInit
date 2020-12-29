@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>960</width>
-    <height>647</height>
+    <width>973</width>
+    <height>712</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -162,76 +162,149 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_2">
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="1">
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0" rowspan="2">
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="tab_3">
+           <attribute name="title">
+            <string>引脚</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+             <widget class="QTreeWidget" name="treeWidget">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string notr="true">1</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_4">
+           <attribute name="title">
+            <string>外设</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="0" column="0">
+             <widget class="QTreeWidget" name="treeWidget_4">
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string notr="true">1</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item row="0" column="1" rowspan="2">
+         <widget class="Line" name="line_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
          <widget class="QGraphicsView" name="mcu_view"/>
         </item>
-        <item row="0" column="0">
-         <widget class="QGroupBox" name="groupBox">
-          <property name="title">
-           <string/>
+        <item row="0" column="3" rowspan="2">
+         <widget class="Line" name="line_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0" rowspan="3">
-            <widget class="QTreeWidget" name="treeWidget">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <column>
-              <property name="text">
-               <string notr="true">1</string>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QTableWidget" name="pin_table">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4" rowspan="2">
+         <widget class="QTabWidget" name="tabWidget_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_5">
+           <attribute name="title">
+            <string>寄存器</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="QTreeWidget" name="treeWidget_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-             </column>
-            </widget>
-           </item>
-           <item row="0" column="1" rowspan="3">
-            <widget class="Line" name="line_3">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QTreeWidget" name="treeWidget_2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <column>
-              <property name="text">
-               <string notr="true">1</string>
-              </property>
-             </column>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="Line" name="line_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QTreeWidget" name="treeWidget_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <column>
-              <property name="text">
-               <string notr="true">1</string>
-              </property>
-             </column>
-            </widget>
-           </item>
-          </layout>
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string notr="true">1</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_6">
+           <attribute name="title">
+            <string>源代码</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="0">
+             <widget class="QTextBrowser" name="textBrowser"/>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -246,7 +319,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>960</width>
+     <width>973</width>
      <height>23</height>
     </rect>
    </property>

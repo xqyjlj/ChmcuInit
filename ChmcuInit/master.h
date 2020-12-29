@@ -20,7 +20,7 @@ public:
 
 private:
     Ui::master* ui;
-    mcu* fun_mcu = new mcu(this);
+    mcu* fun_mcu;
 };
 
 #endif // MASTER_H

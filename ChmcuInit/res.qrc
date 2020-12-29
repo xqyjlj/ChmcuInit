@@ -8,4 +8,8 @@
     <qresource prefix="/mcu/hc32">
         <file>res/db/mcu/HDSC/HC32/HC32F002/HC32F002D4P8.xml</file>
     </qresource>
+    <qresource prefix="/qss">
+        <file>res/qss/mcu_pin_high.qss</file>
+        <file>res/qss/mcu_pin_low.qss</file>
+    </qresource>
 </RCC>
