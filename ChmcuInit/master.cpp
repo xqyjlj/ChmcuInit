@@ -16,10 +16,7 @@ master::master(QWidget* parent) :
     ui->mcu_view->setScene(fun_mcu_scene);
     mcu_tssop24* fun_mcu_tssop24 = new mcu_tssop24();
     fun_mcu_tssop24->resize(400, 400);
-    QGraphicsProxyWidget* pWidget = fun_mcu_scene->addWidget(fun_mcu_tssop24);
-
-    pWidget->setPos((ui->mcu_view->width() - fun_mcu_tssop24->width()) / 2, (ui->mcu_view->height() - fun_mcu_tssop24->height()) / 2);
-    pWidget->setFlags(QGraphicsItem::ItemIsFocusable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+    fun_mcu_scene->addWidget(fun_mcu_tssop24);
 
     QSplitter* splitter1 = new QSplitter(Qt::Vertical);
     splitter1->setStretchFactor(0, 2);
