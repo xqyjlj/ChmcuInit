@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2020-2020,  by xqyjlj
+ *
+ * SPDX-License-Identifier: LGPL
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2021-01-15     xqyjlj       the first version
+ */
 #include "mcu_chip.h"
 
 mcu_chip::mcu_chip(QWidget* parent): QLabel(parent)

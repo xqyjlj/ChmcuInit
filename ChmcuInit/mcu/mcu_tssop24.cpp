@@ -90,7 +90,7 @@ void mcu_tssop24::set_pin()
         set_pin_menu(pin_list.at(i - 1), list);
         pin_list.at(i - 1)->setCurrentIndex(0);
         pin_list.at(i - 1)->setconnect();
-        connect(pin_list.at(i - 1), SIGNAL(index_changed(QString, int, bool)), this, SLOT(send_index_changed_signals(QString, int, bool)));
+        connect(pin_list.at(i - 1), SIGNAL(index_changed(QString, int)), this, SLOT(send_index_changed_signals(QString, int)));
     }
 }
 void mcu_tssop24::set_pin_menu(mcu_pin* pin, QStringList list)
@@ -100,13 +100,13 @@ void mcu_tssop24::set_pin_menu(mcu_pin* pin, QStringList list)
         pin->addItem(list.at(0) + QString(":") + list.at(i));
     }
 }
-void mcu_tssop24::send_index_changed_signals(QString pin, int index, bool ischange)
+void mcu_tssop24::send_index_changed_signals(QString pin, int index)
 {
     for (int i = 1; i <= 24; i++)
     {
         if(pin_list.at(i - 1)->itemText(0) == pin)
         {
-            emit item_click(i, index, ischange);
+            emit item_click(i, index);
             break;
         }
     }

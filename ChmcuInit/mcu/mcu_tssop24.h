@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2020-2020,  by xqyjlj
+ *
+ * SPDX-License-Identifier: LGPL
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2021-01-15     xqyjlj       the first version
+ */
 #ifndef MCU_TSSOP24_H
 #define MCU_TSSOP24_H
 
@@ -19,10 +28,10 @@ public:
 private:
     void set_pin_menu(mcu_pin* pin, QStringList list);
 signals:
-    void item_click(int _pin, int index, bool ischange);
+    void item_click(int _pin, int index);
 public slots:
 //    void change_pin_color(int pin, int index, bool ischange);
-    void send_index_changed_signals(QString pin, int index, bool ischange);
+    void send_index_changed_signals(QString pin, int index);
 private:
     QGridLayout* gridLayout;
     mcu_chip* chip;

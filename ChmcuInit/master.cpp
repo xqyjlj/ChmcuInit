@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2020-2020,  by xqyjlj
+ *
+ * SPDX-License-Identifier: LGPL
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2021-01-15     xqyjlj       the first version
+ */
 #include "master.h"
 #include "ui_master.h"
 #include "QGraphicsProxyWidget"
@@ -57,7 +66,7 @@ void master::init_mcu(void)
 
 void master::init_connect(void)
 {
-    connect(fun_mcu_tssop24, SIGNAL(item_click(int, int, bool )), ui->pin_tree, SLOT(change_item_color(int, int, bool )));
+    connect(fun_mcu_tssop24, SIGNAL(item_click(int, int)), ui->pin_tree, SLOT(change_item_color(int, int)));
 }
 
 void master::on_start_project_pressed()

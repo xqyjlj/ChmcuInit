@@ -34,13 +34,12 @@ void mcu_pin::textchanged(int index)
                             "background-color: rgb(0, 255, 0);"
                             "border: 0px solid gray;"
                             "}");
-        emit index_changed(this->itemText(0), index, true);
     }
     else
     {
         this->setStyleSheet("");
-        emit index_changed(this->itemText(0), index, false);
     }
+    emit index_changed(this->itemText(0), index);
 }
 
 void mcu_pin::setconnect()

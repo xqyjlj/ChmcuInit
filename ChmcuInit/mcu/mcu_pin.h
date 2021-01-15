@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2020-2020,  by xqyjlj
+ *
+ * SPDX-License-Identifier: LGPL
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2021-01-15     xqyjlj       the first version
+ */
 #ifndef MCU_PIN_H
 #define MCU_PIN_H
 
@@ -18,7 +27,7 @@ private slots:
 private:
 
 signals:
-    void index_changed(QString pin, int fun, bool ischange);
+    void index_changed(QString pin, int fun);
 };
 
 #endif // MCU_PIN_H

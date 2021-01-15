@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2020-2020,  by xqyjlj
+ *
+ * SPDX-License-Identifier: LGPL
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2021-01-15     xqyjlj       the first version
+ */
 #include "window_pin.h"
 #include "QDebug"
 #include <QTreeWidgetItem>
@@ -33,26 +42,23 @@ void window_pin::item_double_clicked(QTreeWidgetItem* item, int column)
     }
 }
 
-void window_pin::change_item_color(int pin, int function, bool ischange)
+void window_pin::change_item_color(int pin, int index)
 {
-    qDebug() << pin << function << ischange;
     QTreeWidgetItem* item = this->topLevelItem(pin - 1);
     if(item)
     {
-        qDebug() << item->whatsThis(0);
-        QTreeWidgetItem* it_item = item->child(function - 1);
+        item->setExpanded(true);
+        for (int i = 0; i < item->childCount() ; i++ )
+        {
+            item->child(i)->setBackgroundColor(0, Qt::white);
+        }
+        QTreeWidgetItem* it_item = item->child(index - 1);
         if(it_item)
         {
-            qDebug() << it_item->whatsThis(0);
-            if(ischange)
-            {
-                it_item->setBackgroundColor(0, Qt::green);
-            }
-            else
-            {
-                it_item->setBackgroundColor(0, QColor(Qt::white));
-            }
+            it_item->setBackgroundColor(0, Qt::green);
+            return;
         }
+        item->setExpanded(false);
     }
 }
 

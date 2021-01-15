@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2020-2020,  by xqyjlj
+ *
+ * SPDX-License-Identifier: LGPL
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2021-01-15     xqyjlj       the first version
+ */
 #ifndef WINDOW_PIN_H
 #define WINDOW_PIN_H
 
@@ -17,7 +26,7 @@ private:
 signals:
     void item_doubled_clicked_info(int pin, int fun, bool ischange);
 public slots:
-    void change_item_color(int pin, int function, bool ischange);
+    void change_item_color(int pin, int index);
 private slots:
     void item_double_clicked(QTreeWidgetItem* item, int column);
 };

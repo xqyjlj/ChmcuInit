@@ -1,7 +1,11 @@
 #-------------------------------------------------
+# Copyright (c) 2020-2020,  by xqyjlj
 #
-# Project created by QtCreator 2020-12-24T13:31:48
+#  SPDX-License-Identifier: LGPL
 #
+#  Change Logs:
+#  Date           Author       Notes
+#  2021-01-15     xqyjlj       the first version
 #-------------------------------------------------
 
 QT      += core gui
