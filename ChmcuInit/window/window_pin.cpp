@@ -17,20 +17,42 @@ window_pin::window_pin(QWidget* parent, QString path) : QTreeWidget(parent)
             QTreeWidgetItem* it_item = new QTreeWidgetItem(QStringList() << list.at(i + 1));
             it_item->setWhatsThis(0, QString::number(i + 1));
             item->addChild(it_item);
-
         }
         this->addTopLevelItem(item);
-
     }
     connect(this, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(item_double_clicked(QTreeWidgetItem*, int)), Qt::UniqueConnection);
-
 }
 
 void window_pin::item_double_clicked(QTreeWidgetItem* item, int column)
 {
     if(item->parent())
     {
-        qDebug() << item->parent()->whatsThis(column) << item->whatsThis(column);
+        bool isischange = (item->backgroundColor(0) == Qt::green);
+        emit item_doubled_clicked_info(item->parent()->whatsThis(column).toInt(), item->whatsThis(column).toInt(), isischange);
+        qDebug() << item->parent()->whatsThis(column).toInt() << item->whatsThis(column).toInt();
+    }
+}
+
+void window_pin::change_item_color(int pin, int function, bool ischange)
+{
+    qDebug() << pin << function << ischange;
+    QTreeWidgetItem* item = this->topLevelItem(pin - 1);
+    if(item)
+    {
+        qDebug() << item->whatsThis(0);
+        QTreeWidgetItem* it_item = item->child(function - 1);
+        if(it_item)
+        {
+            qDebug() << it_item->whatsThis(0);
+            if(ischange)
+            {
+                it_item->setBackgroundColor(0, Qt::green);
+            }
+            else
+            {
+                it_item->setBackgroundColor(0, QColor(Qt::white));
+            }
+        }
     }
 }
 

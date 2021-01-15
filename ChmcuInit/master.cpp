@@ -11,6 +11,7 @@ master::master(QWidget* parent) :
     ui->setupUi(this);
     init_mcu();
     ui->pin_tree->set_xml_file_path(":/mcu/hc32/res/db/mcu/HDSC/HC32/HC32F002/HC32F002D4P8.xml");
+    init_connect();
 }
 
 master::~master()
@@ -26,9 +27,9 @@ void master::init_mcu(void)
     head = ui->mcu_choose->header();
     head->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    mcu_scene* fun_mcu_scene = new mcu_scene();
+    fun_mcu_scene = new mcu_scene();
     ui->mcu_view->setScene(fun_mcu_scene);
-    mcu_tssop24* fun_mcu_tssop24 = new mcu_tssop24();
+    fun_mcu_tssop24 = new mcu_tssop24();
     fun_mcu_tssop24->resize(400, 400);
     fun_mcu_scene->addWidget(fun_mcu_tssop24);
 
@@ -52,6 +53,11 @@ void master::init_mcu(void)
 
     ui->stackedWidget->layout()->replaceWidget(ui->stackedWidget->widget(1), splitter2);
     ui->stackedWidget->widget(1)->hide();
+}
+
+void master::init_connect(void)
+{
+    connect(fun_mcu_tssop24, SIGNAL(item_click(int, int, bool )), ui->pin_tree, SLOT(change_item_color(int, int, bool )));
 }
 
 void master::on_start_project_pressed()

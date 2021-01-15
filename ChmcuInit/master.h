@@ -22,8 +22,11 @@ private slots:
 
 private:
     Ui::master* ui;
+    mcu_scene* fun_mcu_scene;
+    mcu_tssop24* fun_mcu_tssop24;
 
     void init_mcu(void);
+    void init_connect(void);
 };
 
 #endif // MASTER_H

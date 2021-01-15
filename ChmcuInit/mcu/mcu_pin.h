@@ -17,6 +17,8 @@ private slots:
     void textchanged(int index);
 private:
 
+signals:
+    void index_changed(QString pin, int fun, bool ischange);
 };
 
 #endif // MCU_PIN_H

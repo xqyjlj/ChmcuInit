@@ -15,8 +15,10 @@ private:
     QString xml_file_path;
     mcu_xml* fun_mcu_xml;
 signals:
-
+    void item_doubled_clicked_info(int pin, int fun, bool ischange);
 public slots:
+    void change_item_color(int pin, int function, bool ischange);
+private slots:
     void item_double_clicked(QTreeWidgetItem* item, int column);
 };
 

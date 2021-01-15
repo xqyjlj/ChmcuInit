@@ -30,12 +30,16 @@ void mcu_pin::textchanged(int index)
 {
     if(this->itemText(index).contains(QString(":")))
     {
-        this->setStyleSheet("background-color: rgb(0, 255, 0);"
-                            "border: 0px solid gray;");
+        this->setStyleSheet("QComboBox { "
+                            "background-color: rgb(0, 255, 0);"
+                            "border: 0px solid gray;"
+                            "}");
+        emit index_changed(this->itemText(0), index, true);
     }
     else
     {
         this->setStyleSheet("");
+        emit index_changed(this->itemText(0), index, false);
     }
 }
 

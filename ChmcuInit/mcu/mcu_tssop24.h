@@ -1,7 +1,6 @@
 #ifndef MCU_TSSOP24_H
 #define MCU_TSSOP24_H
 
-#include <QObject>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
@@ -10,17 +9,20 @@
 #include "mcu_pin.h"
 #include <QList>
 #include "mcu_chip.h"
+
 class mcu_tssop24: public QGroupBox
 {
+    Q_OBJECT
 public:
     explicit mcu_tssop24(QWidget* parent = nullptr);
-
-public:
     void set_pin();
-protected:
-
 private:
     void set_pin_menu(mcu_pin* pin, QStringList list);
+signals:
+    void item_click(int _pin, int index, bool ischange);
+public slots:
+//    void change_pin_color(int pin, int index, bool ischange);
+    void send_index_changed_signals(QString pin, int index, bool ischange);
 private:
     QGridLayout* gridLayout;
     mcu_chip* chip;
