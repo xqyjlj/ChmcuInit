@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -30,7 +30,7 @@
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QCommandLinkButton" name="cLB_start_project">
+         <widget class="QCommandLinkButton" name="start_project">
           <property name="layoutDirection">
            <enum>Qt::RightToLeft</enum>
           </property>
@@ -172,7 +172,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_3">
            <attribute name="title">
@@ -180,7 +180,7 @@
            </attribute>
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="0">
-             <widget class="QTreeWidget" name="treeWidget">
+             <widget class="window_pin" name="pin_tree">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -381,6 +381,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>window_pin</class>
+   <extends>QTreeWidget</extends>
+   <header>window_pin.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="res.qrc"/>
  </resources>

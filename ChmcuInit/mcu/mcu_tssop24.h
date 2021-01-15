@@ -5,8 +5,8 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
-
 #include "mcu_xml.h"
+
 #include "mcu_pin.h"
 #include <QList>
 #include "mcu_chip.h"

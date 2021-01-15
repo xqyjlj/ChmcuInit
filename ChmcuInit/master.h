@@ -2,7 +2,6 @@
 #define MASTER_H
 
 #include <QMainWindow>
-#include "mcu.h"
 #include "mcu_tssop24.h"
 #include "mcu_scene.h"
 namespace Ui
@@ -18,9 +17,13 @@ public:
     explicit master(QWidget* parent = nullptr);
     ~master();
 
+private slots:
+    void on_start_project_pressed();
+
 private:
     Ui::master* ui;
-    mcu* fun_mcu;
+
+    void init_mcu(void);
 };
 
 #endif // MASTER_H

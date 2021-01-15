@@ -2,15 +2,29 @@
 #include "ui_master.h"
 #include "QGraphicsProxyWidget"
 #include <QSplitter>
+#include <QDebug>
+#include <QMessageBox>
 master::master(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::master)
 {
     ui->setupUi(this);
-    fun_mcu = new mcu(this);
+    init_mcu();
+    ui->pin_tree->set_xml_file_path(":/mcu/hc32/res/db/mcu/HDSC/HC32/HC32F002/HC32F002D4P8.xml");
+}
 
-    fun_mcu->set_mcu_treeWidget_Resize(ui->mcu_info);
-    fun_mcu->set_mcu_treeWidget_Resize(ui->mcu_choose);
+master::~master()
+{
+    delete ui;
+}
+
+void master::init_mcu(void)
+{
+    QHeaderView* head = ui->mcu_info->header();
+    head->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    head = ui->mcu_choose->header();
+    head->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     mcu_scene* fun_mcu_scene = new mcu_scene();
     ui->mcu_view->setScene(fun_mcu_scene);
@@ -36,11 +50,18 @@ master::master(QWidget* parent) :
     splitter2->addWidget(splitter1);
     splitter2->addWidget(ui->tabWidget_2);
 
-    ui->stackedWidget->layout()->replaceWidget(ui->page_2, splitter2);
-    ui->page_2->hide();
+    ui->stackedWidget->layout()->replaceWidget(ui->stackedWidget->widget(1), splitter2);
+    ui->stackedWidget->widget(1)->hide();
 }
 
-master::~master()
+void master::on_start_project_pressed()
 {
-    delete ui;
+    if(ui->mcu_info->currentItem())
+    {
+        ui->stackedWidget->setCurrentIndex(1);
+    }
+    else
+    {
+        QMessageBox::critical(this, "错误", "请选择正确的芯片型号", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    }
 }

@@ -13,21 +13,29 @@
         <Signal Name="SPI_SCK"/>
         <Signal Name="ADC_AIN4"/>
         <Signal Name="LVD_IN2"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PD05" Position="2">
         <Signal Name="LPUART1_TXD"/>
         <Signal Name="ATIM3_CH0A"/>
         <Signal Name="SPI_MISO"/>
         <Signal Name="ADC_AIN5"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PD06" Position="3">
         <Signal Name="LPUART1_RXD"/>
         <Signal Name="GTIM_ETR"/>
         <Signal Name="SPI_MOSI"/>
         <Signal Name="ADC_AIN6"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PA00" Position="4">
         <Signal Name="RESETB"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PA01" Position="5">
         <Signal Name="LPUART0_RXD"/>
@@ -35,19 +43,25 @@
         <Signal Name="GTIM_TOGP"/>
         <Signal Name="HCLK_OUT"/>
         <Signal Name="ADC_AIN7"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PA02" Position="6">
         <Signal Name="LPUART0_TXD"/>
         <Signal Name="I2C_SCL"/>
         <Signal Name="GTIM_TOGN"/>
         <Signal Name="LVD_OUT"/>
-        <Signal Name="ADC_AIN8"/>  
+        <Signal Name="ADC_AIN8"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>  
     </Pin>
     <Pin Type="Power" Name="AVSS/DVSS" Position="7"/>
     <Pin Type="I/O" Name="PA04" Position="8">
         <Signal Name="GTIM_GOGP"/>
         <Signal Name="LVD_OUT"/>
-        <Signal Name="SPI_NSS"/> 
+        <Signal Name="SPI_NSS"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/> 
     </Pin>
     <Pin Type="Power" Name="AVCC/DVCC" Position="9"/>
     <Pin Type="I/O" Name="PA03" Position="10">
@@ -56,6 +70,8 @@
         <Signal Name="CTRIM_ETR"/>
         <Signal Name="CTIRM_TOG"/>
         <Signal Name="LVD_IN0"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PB05" Position="11">
         <Signal Name="I2C_SDA"/>
@@ -63,29 +79,39 @@
         <Signal Name="CTRIM_ETR"/>
         <Signal Name="CTIRM_TOG"/>
         <Signal Name="ADC_AIN9"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PB03" Position="12">
         <Signal Name="ATIM3_ETR"/>
         <Signal Name="GTIM_CH0"/>
         <Signal Name="LPUART1_CTS"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PB04" Position="13">
         <Signal Name="I2C_SCL"/>
         <Signal Name="ATIM3_CH2B"/>
         <Signal Name="LPUART0_CTS"/>
         <Signal Name="ADC_AIN10"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PB02" Position="14">
         <Signal Name="ATIM3_CH2B"/>
         <Signal Name="GTIM_CH1"/>
         <Signal Name="LPUART1_RTS"/>
         <Signal Name="ADC_AIN11"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PB01" Position="15">
         <Signal Name="ATIM3_CH1B"/>
         <Signal Name="GTIM_CH2"/>
         <Signal Name="LPUART0_CTS"/>
         <Signal Name="ADC_AIN12"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PC03" Position="16">
         <Signal Name="ATIM3_CH2A"/>
@@ -93,52 +119,70 @@
         <Signal Name="LPUART0_RTS"/>
         <Signal Name="LVD_IN1"/>
         <Signal Name="ADC_ExRef"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PB00" Position="17">
         <Signal Name="ATIM3_CH0B"/>
         <Signal Name="GTIM_CH3"/>
         <Signal Name="LPUART0_RTS"/>
         <Signal Name="ADC_AIN13"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PC04" Position="18">
         <Signal Name="ATIM3_CH0B"/>
         <Signal Name="ATIM3_CH1B"/>
         <Signal Name="TCLK_OUT"/>
         <Signal Name="ADC_AIN0"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PC05" Position="19">
         <Signal Name="SPI_SCK"/>
         <Signal Name="GTIM_CH3"/>
         <Signal Name="ATIM3_ETR"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PC06" Position="20">
         <Signal Name="SPI_MOSI"/>
         <Signal Name="ATIM3_CH0A"/>
         <Signal Name="LPUART1_RTS"/>
         <Signal Name="ADC_AIN1"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PC07" Position="21">
         <Signal Name="SWDIO"/>
         <Signal Name="SPI_MISO"/>
         <Signal Name="ATIM3_CH1A"/>
         <Signal Name="LPUART0_RXD"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PD01" Position="22">
         <Signal Name="SWCLK"/>
         <Signal Name="GTIM_ETR"/>
         <Signal Name="ATIM3_BK"/>
         <Signal Name="LPUART0_TXD"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PD02" Position="23">
         <Signal Name="GTIM_CH2"/>
         <Signal Name="ATIM3_CH2A"/>
         <Signal Name="LPUART1_CTS"/>
         <Signal Name="ADC_AIN2"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
     <Pin Type="I/O" Name="PD03" Position="24">
         <Signal Name="GTIM_CH1"/>
         <Signal Name="ATIM3_CH1A"/>
         <Signal Name="LPUART1_RXD"/>
         <Signal Name="ADC_AIN3"/>
+        <Signal Name="GPIO_OUT"/>
+        <Signal Name="GPIO_IN"/>
     </Pin>
 </Mcu>

@@ -28,29 +28,30 @@ SOURCES += \
         keil/keil_xml.cpp \
         main.cpp \
         master.cpp \
-        mcu/mcu.cpp \
         mcu/mcu_chip.cpp \
         mcu/mcu_pin.cpp \
         mcu/mcu_scene.cpp \
         mcu/mcu_tssop24.cpp \
-        mcu/mcu_xml.cpp
+        mcu/mcu_xml.cpp \
+        window/window_pin.cpp
 
 HEADERS += \
         keil/keil_xml.h \
         master.h \
-        mcu/mcu.h \
         mcu/mcu_chip.h \
         mcu/mcu_pin.h \
         mcu/mcu_scene.h \
         mcu/mcu_tssop24.h \
-        mcu/mcu_xml.h
+        mcu/mcu_xml.h \
+        window/window_pin.h
 
 FORMS += \
         master.ui
 
 INCLUDEPATH += \
         keil\
-        mcu
+        mcu\
+        window
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

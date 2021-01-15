@@ -1,0 +1,23 @@
+#ifndef WINDOW_PIN_H
+#define WINDOW_PIN_H
+
+#include <QTreeWidget>
+#include <QString>
+#include "mcu_xml.h"
+class window_pin : public QTreeWidget
+{
+    Q_OBJECT
+public:
+    explicit window_pin(QWidget* parent = nullptr, QString path = QString(""));
+
+    void set_xml_file_path(QString path);
+private:
+    QString xml_file_path;
+    mcu_xml* fun_mcu_xml;
+signals:
+
+public slots:
+    void item_double_clicked(QTreeWidgetItem* item, int column);
+};
+
+#endif // WINDOW_PIN_H
