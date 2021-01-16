@@ -13,7 +13,7 @@
 #include <QSplitter>
 #include <QDebug>
 #include <QMessageBox>
-master::master(QWidget* parent) :
+master::master(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::master)
 {
@@ -30,7 +30,7 @@ master::~master()
 
 void master::init_mcu(void)
 {
-    QHeaderView* head = ui->mcu_info->header();
+    QHeaderView *head = ui->mcu_info->header();
     head->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     head = ui->mcu_choose->header();
@@ -42,7 +42,7 @@ void master::init_mcu(void)
     fun_mcu_tssop24->resize(400, 400);
     fun_mcu_scene->addWidget(fun_mcu_tssop24);
 
-    QSplitter* splitter1 = new QSplitter(Qt::Vertical);
+    QSplitter *splitter1 = new QSplitter(Qt::Vertical);
     splitter1->setStretchFactor(0, 2);
     splitter1->setStretchFactor(1, 1);
     splitter1->setChildrenCollapsible(false);
@@ -50,7 +50,7 @@ void master::init_mcu(void)
     splitter1->addWidget(ui->mcu_view);
     splitter1->addWidget(ui->pin_table);
 
-    QSplitter* splitter2 = new QSplitter(Qt::Horizontal);
+    QSplitter *splitter2 = new QSplitter(Qt::Horizontal);
     splitter2->setStretchFactor(0, 1);
     splitter2->setStretchFactor(1, 3);
     splitter2->setStretchFactor(2, 1);
@@ -67,6 +67,7 @@ void master::init_mcu(void)
 void master::init_connect(void)
 {
     connect(fun_mcu_tssop24, SIGNAL(item_click(int, int)), ui->pin_tree, SLOT(change_item_color(int, int)));
+    connect(ui->pin_tree, SIGNAL(item_doubled_clicked_info(int, int, bool)), fun_mcu_tssop24, SLOT(change_pin_color(int, int, bool)));
 }
 
 void master::on_start_project_pressed()

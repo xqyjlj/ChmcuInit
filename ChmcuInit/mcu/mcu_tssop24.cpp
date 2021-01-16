@@ -15,7 +15,7 @@
 #include <QAction>
 
 
-mcu_tssop24::mcu_tssop24(QWidget* parent): QGroupBox(parent)
+mcu_tssop24::mcu_tssop24(QWidget *parent): QGroupBox(parent)
 {
     gridLayout = new QGridLayout(this);
     chip = new mcu_chip();
@@ -93,7 +93,7 @@ void mcu_tssop24::set_pin()
         connect(pin_list.at(i - 1), SIGNAL(index_changed(QString, int)), this, SLOT(send_index_changed_signals(QString, int)));
     }
 }
-void mcu_tssop24::set_pin_menu(mcu_pin* pin, QStringList list)
+void mcu_tssop24::set_pin_menu(mcu_pin *pin, QStringList list)
 {
     for (int i = 1; i < list.length(); i++)
     {
@@ -110,4 +110,16 @@ void mcu_tssop24::send_index_changed_signals(QString pin, int index)
             break;
         }
     }
+}
+void mcu_tssop24::change_pin_color(int pin, int index, bool ischange)
+{
+    if(ischange)
+    {
+        pin_list.at(pin - 1)->setCurrentIndex(0);
+    }
+    else
+    {
+        pin_list.at(pin - 1)->setCurrentIndex(index);
+    }
+    qDebug() << pin << index << ischange;
 }

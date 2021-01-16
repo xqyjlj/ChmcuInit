@@ -17,18 +17,18 @@ class window_pin : public QTreeWidget
 {
     Q_OBJECT
 public:
-    explicit window_pin(QWidget* parent = nullptr, QString path = QString(""));
+    explicit window_pin(QWidget *parent = nullptr, QString path = QString(""));
 
     void set_xml_file_path(QString path);
 private:
     QString xml_file_path;
-    mcu_xml* fun_mcu_xml;
+    mcu_xml *fun_mcu_xml;
 signals:
-    void item_doubled_clicked_info(int pin, int fun, bool ischange);
+    void item_doubled_clicked_info(int pin, int index, bool ischange);
 public slots:
     void change_item_color(int pin, int index);
 private slots:
-    void item_double_clicked(QTreeWidgetItem* item, int column);
+    void item_double_clicked(QTreeWidgetItem *item, int column);
 };
 
 #endif // WINDOW_PIN_H
