@@ -12,4 +12,7 @@
         <file>res/qss/mcu_pin_high.qss</file>
         <file>res/qss/mcu_pin_low.qss</file>
     </qresource>
+    <qresource prefix="/code">
+        <file>res/db/sys/code.xml</file>
+    </qresource>
 </RCC>

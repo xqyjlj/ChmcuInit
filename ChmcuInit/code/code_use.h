@@ -16,13 +16,13 @@ class code_use : public QObject
 {
     Q_OBJECT
 public:
-    explicit code_use(QObject* parent = nullptr);
-
+    explicit code_use(QObject *parent = nullptr);
+    QString get_label_data(QString label);
 signals:
 
 
 private:
-
+    QString FileHeader;
 };
 
 #endif // CODE_USE_H

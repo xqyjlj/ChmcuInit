@@ -121,5 +121,4 @@ void mcu_tssop24::change_pin_color(int pin, int index, bool ischange)
     {
         pin_list.at(pin - 1)->setCurrentIndex(index);
     }
-    qDebug() << pin << index << ischange;
 }
