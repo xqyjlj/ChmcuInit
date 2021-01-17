@@ -13,7 +13,7 @@
 #include <QSplitter>
 #include <QDebug>
 #include <QMessageBox>
-master::master(QWidget *parent) :
+master::master(QWidget* parent) :
     QMainWindow(parent),
     ui(new Ui::master)
 {
@@ -30,7 +30,7 @@ master::~master()
 
 void master::init_mcu(void)
 {
-    QHeaderView *head = ui->mcu_info->header();
+    QHeaderView* head = ui->mcu_info->header();
     head->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     head = ui->mcu_choose->header();
@@ -42,7 +42,7 @@ void master::init_mcu(void)
     fun_mcu_tssop24->resize(400, 400);
     fun_mcu_scene->addWidget(fun_mcu_tssop24);
 
-    QSplitter *splitter1 = new QSplitter(Qt::Vertical);
+    QSplitter* splitter1 = new QSplitter(Qt::Vertical);
     splitter1->setStretchFactor(0, 2);
     splitter1->setStretchFactor(1, 1);
     splitter1->setChildrenCollapsible(false);
@@ -50,7 +50,7 @@ void master::init_mcu(void)
     splitter1->addWidget(ui->mcu_view);
     splitter1->addWidget(ui->pin_table);
 
-    QSplitter *splitter2 = new QSplitter(Qt::Horizontal);
+    QSplitter* splitter2 = new QSplitter(Qt::Horizontal);
     splitter2->setStretchFactor(0, 1);
     splitter2->setStretchFactor(1, 3);
     splitter2->setStretchFactor(2, 1);
@@ -80,4 +80,9 @@ void master::on_start_project_pressed()
     {
         QMessageBox::critical(this, "错误", "请选择正确的芯片型号", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     }
+}
+
+void master::on_action_generate_code_triggered()
+{
+
 }

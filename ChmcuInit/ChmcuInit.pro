@@ -29,6 +29,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        code/code_use.cpp \
         keil/keil_xml.cpp \
         main.cpp \
         master.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
         window/window_pin.cpp
 
 HEADERS += \
+        code/code_use.h \
         keil/keil_xml.h \
         master.h \
         mcu/mcu_chip.h \

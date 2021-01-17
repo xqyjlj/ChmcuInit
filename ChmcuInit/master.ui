@@ -337,7 +337,14 @@
     <addaction name="separator"/>
     <addaction name="actiond_4"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>工程</string>
+    </property>
+    <addaction name="action_generate_code"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <action name="actionddd">
    <property name="text">
@@ -377,6 +384,11 @@
   <action name="actiond_6">
    <property name="text">
     <string>d</string>
+   </property>
+  </action>
+  <action name="action_generate_code">
+   <property name="text">
+    <string>创建代码</string>
    </property>
   </action>
  </widget>

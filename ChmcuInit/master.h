@@ -29,6 +29,8 @@ public:
 private slots:
     void on_start_project_pressed();
 
+    void on_action_generate_code_triggered();
+
 private:
     Ui::master* ui;
     mcu_scene* fun_mcu_scene;
