@@ -180,7 +180,7 @@
            </attribute>
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="0">
-             <widget class="window_pin" name="pin_tree">
+             <widget class="WindowPin" name="pin_tree">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -395,9 +395,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>window_pin</class>
+   <class>WindowPin</class>
    <extends>QTreeWidget</extends>
-   <header>window_pin.h</header>
+   <header>WindowPin.h</header>
   </customwidget>
  </customwidgets>
  <resources>

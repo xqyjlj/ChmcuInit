@@ -29,36 +29,42 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        code/code_use.cpp \
-        keil/keil_xml.cpp \
+        Code/CodeAnnotationt.cpp \
+        Code/CodeCreateDriver.cpp \
+        Code/CodeDriver.cpp \
+        Code/CodeFunction.cpp \
+        Keil/KeilXml.cpp \
+        Mcu/McuChip.cpp \
+        Mcu/McuPin.cpp \
+        Mcu/McuScene.cpp \
+        Mcu/McuTssop24.cpp \
+        Mcu/McuXml.cpp \
+        Window/WindowPin.cpp \
         main.cpp \
-        master.cpp \
-        mcu/mcu_chip.cpp \
-        mcu/mcu_pin.cpp \
-        mcu/mcu_scene.cpp \
-        mcu/mcu_tssop24.cpp \
-        mcu/mcu_xml.cpp \
-        window/window_pin.cpp
+        master.cpp
 
 HEADERS += \
-        code/code_use.h \
-        keil/keil_xml.h \
-        master.h \
-        mcu/mcu_chip.h \
-        mcu/mcu_pin.h \
-        mcu/mcu_scene.h \
-        mcu/mcu_tssop24.h \
-        mcu/mcu_xml.h \
-        window/window_pin.h
+        Code/CodeAnnotationt.h \
+        Code/CodeCreateDriver.h \
+        Code/CodeDriver.h \
+        Code/CodeFunction.h \
+        Keil/KeilXml.h \
+        Mcu/McuChip.h \
+        Mcu/McuPin.h \
+        Mcu/McuScene.h \
+        Mcu/McuTssop24.h \
+        Mcu/McuXml.h \
+        Window/WindowPin.h \
+        master.h
 
 FORMS += \
         master.ui
 
 INCLUDEPATH += \
-        keil\
-        mcu\
-        window\
-        code
+        Keil\
+        Mcu\
+        Window\
+        Code
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -66,3 +72,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/quazip/lib/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/quazip/lib/ -lquazipd
+else:unix: LIBS += -L$$PWD/lib/quazip/lib/ -lquazip
+
+INCLUDEPATH += $$PWD/lib/quazip/include
+DEPENDPATH += $$PWD/lib/quazip/include

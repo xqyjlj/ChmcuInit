@@ -15,4 +15,7 @@
     <qresource prefix="/code">
         <file>res/db/sys/code.xml</file>
     </qresource>
+    <qresource prefix="/driver">
+        <file>res/driver/hc32/hc32f002_driver.zip</file>
+    </qresource>
 </RCC>

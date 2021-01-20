@@ -11,9 +11,9 @@
 #define MASTER_H
 
 #include <QMainWindow>
-#include "mcu_tssop24.h"
-#include "mcu_scene.h"
-#include "code_use.h"
+#include "McuTssop24.h"
+#include "McuScene.h"
+#include "CodeDriver.h"
 namespace Ui
 {
     class master;
@@ -24,7 +24,7 @@ class master : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit master(QWidget *parent = nullptr);
+    explicit master(QWidget* parent = nullptr);
     ~master();
 
 private slots:
@@ -33,10 +33,10 @@ private slots:
     void on_action_generate_code_triggered();
 
 private:
-    Ui::master *ui;
-    mcu_scene *fun_mcu_scene;
-    mcu_tssop24 *fun_mcu_tssop24;
-    code_use *fun_code_use = new code_use();
+    Ui::master* ui;
+    McuScene* fun_mcu_scene;
+    McuTssop24* fun_mcu_tssop24;
+    CodeDriver* fun_code_driver = new CodeDriver(this);
 
     void init_mcu(void);
     void init_connect(void);

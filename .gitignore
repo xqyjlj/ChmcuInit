@@ -1,5 +1,6 @@
 *.o
 
 build-ChmcuInit-Desktop_Qt_5_12_3_MinGW_64_bit-Debug/*
+build-ChmcuInit-Desktop_Qt_5_12_3_MinGW_64_bit-Release/*
 ChmcuInit/ChmcuInit.pro.user
 *.autosave

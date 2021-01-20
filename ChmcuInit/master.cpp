@@ -36,9 +36,9 @@ void master::init_mcu(void)
     head = ui->mcu_choose->header();
     head->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    fun_mcu_scene = new mcu_scene();
+    fun_mcu_scene = new McuScene();
     ui->mcu_view->setScene(fun_mcu_scene);
-    fun_mcu_tssop24 = new mcu_tssop24();
+    fun_mcu_tssop24 = new McuTssop24();
     fun_mcu_tssop24->resize(400, 400);
     fun_mcu_scene->addWidget(fun_mcu_tssop24);
 
