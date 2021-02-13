@@ -11,76 +11,78 @@
         TextElement.FontSize="18"
         FontFamily="{materialDesign:MaterialDesignFont}"
         Title="{Binding Title}" Height="450" Width="800">
-    <materialDesign:DrawerHost>
-        <materialDesign:DrawerHost.LeftDrawerContent>
-            <StackPanel Orientation="Vertical">
-                <StackPanel Margin="10" VerticalAlignment="Top" Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,10,0">菜单</TextBlock>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}"
-                            Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}">
-                        <materialDesign:PackIcon Kind="HamburgerMenuBack"></materialDesign:PackIcon>
-                    </Button>
-                </StackPanel>
+    <Grid>
+        <materialDesign:DrawerHost>
+            <materialDesign:DrawerHost.LeftDrawerContent>
                 <StackPanel Orientation="Vertical">
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" FontFamily="微软雅黑" Command="{Binding OpenStartViewCommand}">初始界面</Button>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" FontFamily="微软雅黑">芯片配置</Button>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" FontFamily="微软雅黑">工具</Button>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" FontFamily="微软雅黑">联系我们</Button>
+                    <StackPanel Margin="10" VerticalAlignment="Top" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,10,0">菜单</TextBlock>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}">
+                            <materialDesign:PackIcon Kind="HamburgerMenuBack"></materialDesign:PackIcon>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" FontFamily="微软雅黑" Command="{Binding OpenStartViewCommand}">初始界面</Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" FontFamily="微软雅黑" Command="{Binding OpenChipConfigViewCommand}">芯片配置</Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" FontFamily="微软雅黑">工具</Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" FontFamily="微软雅黑">联系我们</Button>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </materialDesign:DrawerHost.LeftDrawerContent>
-        <materialDesign:Card>
-            <Grid>
-                <StackPanel Margin="10" VerticalAlignment="Top" Orientation="Horizontal">
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" 
-                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top">
-                        <materialDesign:PackIcon Kind="HamburgerMenu"/>
-                    </Button>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"  FontFamily="JetBrains Mono">ChMcuInit</TextBlock>
-                    <materialDesign:PopupBox ToggleContent="文件" FontFamily="微软雅黑" Margin="15,0,0,0" ToolTip="文件">
-                        <StackPanel>
-                            <Button Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Width="200"
-                                    ToolTip="新建项目" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
-                                    新建项目
-                            </Button>
-                            <Button Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Width="200"
-                                    ToolTip="打开项目" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
-                                    打开项目
-                            </Button>
-                        </StackPanel>
-                    </materialDesign:PopupBox>
-                    <materialDesign:PopupBox ToggleContent="窗口" FontFamily="微软雅黑" Margin="15,0,0,0" ToolTip="文件" Foreground="{x:Null}">
-                        <StackPanel>
-                            <Button Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Width="200"
-                                    ToolTip="主题" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
-                                    主题
-                            </Button>
-                        </StackPanel>
-                    </materialDesign:PopupBox>
-                    <materialDesign:PopupBox ToggleContent="帮助" FontFamily="微软雅黑" Margin="15,0,0,0" ToolTip="文件">
-                        <StackPanel>
-                            <Button Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Width="200"
-                                    ToolTip="使用说明" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
-                                    使用说明
-                            </Button>
-                            <Button Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Width="200"
-                                    ToolTip="联系我们" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
-                                    联系我们
-                            </Button>
-                        </StackPanel>
-                    </materialDesign:PopupBox>
-                </StackPanel>
-                <Grid Margin="0,47,0,0">
-                    <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <materialDesign:Card>
+                <Grid>
+                    <StackPanel Margin="10" VerticalAlignment="Top" Orientation="Horizontal">
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                                Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                            <materialDesign:PackIcon Kind="HamburgerMenu"/>
+                        </Button>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"  FontFamily="JetBrains Mono">ChMcuInit</TextBlock>
+                        <materialDesign:PopupBox ToggleContent="文件" FontFamily="微软雅黑" Margin="15,0,0,0" ToolTip="文件">
+                            <StackPanel>
+                                <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Width="200"
+                                        ToolTip="新建项目" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                                        新建项目
+                                </Button>
+                                <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Width="200"
+                                        ToolTip="打开项目" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                                        打开项目
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <materialDesign:PopupBox ToggleContent="窗口" FontFamily="微软雅黑" Margin="15,0,0,0" ToolTip="文件" Foreground="{x:Null}">
+                            <StackPanel>
+                                <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Width="200"
+                                        ToolTip="主题" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                                        主题
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <materialDesign:PopupBox ToggleContent="帮助" FontFamily="微软雅黑" Margin="15,0,0,0" ToolTip="文件">
+                            <StackPanel>
+                                <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Width="200"
+                                        ToolTip="使用说明" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                                        使用说明
+                                </Button>
+                                <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                                        Width="200"
+                                        ToolTip="联系我们" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+                                        联系我们
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </StackPanel>
+                    <Grid Margin="0,47,0,0">
+                        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+                    </Grid>
                 </Grid>
-            </Grid>
-        </materialDesign:Card>
-    </materialDesign:DrawerHost>
+            </materialDesign:Card>
+        </materialDesign:DrawerHost>
+    </Grid>
 </Window>

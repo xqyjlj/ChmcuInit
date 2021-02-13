@@ -11,6 +11,7 @@ namespace ChmcuInit.ViewModels
         private string _title = "ChMcuInit";
 
         public DelegateCommand OpenStartViewCommand { get;private set; }
+        public DelegateCommand OpenChipConfigViewCommand { get;private set; }
 
         public string Title
         {
@@ -25,6 +26,7 @@ namespace ChmcuInit.ViewModels
             this.regionManger = regionManger;
 
             OpenStartViewCommand = new DelegateCommand(OpenStartView);
+            OpenChipConfigViewCommand =new DelegateCommand(OpenChipConfigView);
 
             regionManger.RegisterViewWithRegion("ContentRegion", typeof(StartView));
         }
@@ -34,5 +36,9 @@ namespace ChmcuInit.ViewModels
             regionManger.RequestNavigate("ContentRegion", "StartView");
         }
 
+        private void OpenChipConfigView()
+        { 
+            regionManger.RequestNavigate("ContentRegion", "ChipConfigView");
+        }
     }
 }
