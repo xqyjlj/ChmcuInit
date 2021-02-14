@@ -18,9 +18,9 @@ namespace ChmcuInit.Views
     /// <summary>
     /// StartView.xaml 的交互逻辑
     /// </summary>
-    public partial class StartView : UserControl
+    public partial class ViewStart : UserControl
     {
-        public StartView()
+        public ViewStart()
         {
             InitializeComponent();
         }

@@ -15,12 +15,9 @@ using System.Windows.Shapes;
 
 namespace ChmcuInit.Views
 {
-    /// <summary>
-    /// ChipConfig.xaml 的交互逻辑
-    /// </summary>
-    public partial class ChipConfigView : UserControl
+    public partial class ViewChipConfigChoose : UserControl
     {
-        public ChipConfigView()
+        public ViewChipConfigChoose()
         {
             InitializeComponent();
         }

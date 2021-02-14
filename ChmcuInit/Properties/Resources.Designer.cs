@@ -61,6 +61,26 @@ namespace ChmcuInit.Properties {
         }
         
         /// <summary>
+        ///   查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;!-- 
+        ///   Copyright 2021 xqyjlj
+        ///
+        ///   Licensed under Mozilla Public License 2.0, (the &quot;License&quot;);
+        ///   You may not use this file except in compliance with the License.
+        ///   You may obtain a copy of the License at
+        ///
+        ///       https://github.com/xqyjlj/ChmcuInit
+        ///
+        ///   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an &quot;AS IS&quot; BASIS, 
+        ///   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or impli [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string families {
+            get {
+                return ResourceManager.GetString("families", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Bitmap LogoMian {

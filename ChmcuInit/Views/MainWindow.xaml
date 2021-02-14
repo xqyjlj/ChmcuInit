@@ -79,7 +79,7 @@
                         </materialDesign:PopupBox>
                     </StackPanel>
                     <Grid Margin="0,47,0,0">
-                        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+                        <ContentControl prism:RegionManager.RegionName="MainWindowContentRegion" />
                     </Grid>
                 </Grid>
             </materialDesign:Card>

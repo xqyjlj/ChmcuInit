@@ -28,17 +28,17 @@ namespace ChmcuInit.ViewModels
             OpenStartViewCommand = new DelegateCommand(OpenStartView);
             OpenChipConfigViewCommand =new DelegateCommand(OpenChipConfigView);
 
-            regionManger.RegisterViewWithRegion("ContentRegion", typeof(StartView));
+            regionManger.RegisterViewWithRegion("MainWindowContentRegion", typeof(ViewStart));
         }
 
         private void OpenStartView()
         {
-            regionManger.RequestNavigate("ContentRegion", "StartView");
+            regionManger.RequestNavigate("MainWindowContentRegion", "ViewStart");
         }
 
         private void OpenChipConfigView()
         { 
-            regionManger.RequestNavigate("ContentRegion", "ChipConfigView");
+            regionManger.RequestNavigate("MainWindowContentRegion", "ViewChipConfig");
         }
     }
 }

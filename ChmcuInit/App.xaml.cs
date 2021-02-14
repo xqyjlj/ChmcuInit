@@ -16,8 +16,9 @@ namespace ChmcuInit
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<StartView>();
-            containerRegistry.RegisterForNavigation<ChipConfigView>();
+            containerRegistry.RegisterForNavigation<ViewStart>();
+            containerRegistry.RegisterForNavigation<ViewChipConfig>();
+            containerRegistry.RegisterForNavigation<ViewChipConfigChoose>();
         }
     }
 }
