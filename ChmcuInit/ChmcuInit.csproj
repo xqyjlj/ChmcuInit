@@ -58,11 +58,25 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\McuFeature.cs" />
+    <Compile Include="Models\ViewChipConfigChooseChipDataModel.cs" />
+    <Compile Include="Models\ViewChipConfigChooseChipSelectableModel.cs" />
     <Compile Include="Service\XMLFamilies.cs" />
     <Compile Include="Service\IXMLFamiliesData.cs" />
+    <Compile Include="Models\ChipItemsModel.cs" />
+    <Compile Include="ViewModels\ViewChipConfigChooseChipFeaturesViewModel.cs" />
+    <Compile Include="ViewModels\ViewChipConfigChooseChipViewModel.cs" />
     <Compile Include="ViewModels\ViewChipConfigChooseViewModel.cs" />
     <Compile Include="ViewModels\ViewChipConfigViewModel.cs" />
     <Compile Include="ViewModels\ViewStartViewModel.cs" />
+    <Compile Include="Views\ViewChipConfigChooseBoard.xaml.cs">
+      <DependentUpon>ViewChipConfigChooseBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewChipConfigChooseChip.xaml.cs">
+      <DependentUpon>ViewChipConfigChooseChip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewChipConfigChooseChipFeatures.xaml.cs">
+      <DependentUpon>ViewChipConfigChooseChipFeatures.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewChipConfigChoose.xaml.cs">
       <DependentUpon>ViewChipConfigChoose.xaml</DependentUpon>
     </Compile>
@@ -72,6 +86,18 @@
     <Compile Include="Views\ViewStart.xaml.cs">
       <DependentUpon>ViewStart.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\ViewChipConfigChooseBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewChipConfigChooseChip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewChipConfigChooseChipFeatures.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ViewChipConfigChoose.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -147,7 +173,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Data\families.xml" />
+    <Content Include="Data\families.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

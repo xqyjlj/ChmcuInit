@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using ChmcuInit.Service;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -29,6 +30,8 @@ namespace ChmcuInit.ViewModels
             NavigationParameters param = new NavigationParameters();
             param.Add("Type", "Chip");
             regionManger.RequestNavigate("MainWindowContentRegion", "ViewChipConfig", param);
+            XMLFamilies xMLFamilies = new XMLFamilies();
+            xMLFamilies.GetAllMcuFeatures(@"HDSC", @"HC32F0", @"HC32F002", @"HC32F002D4PB");
         }
         
         private void CreateProjectBoard()

@@ -19,6 +19,8 @@ namespace ChmcuInit
             containerRegistry.RegisterForNavigation<ViewStart>();
             containerRegistry.RegisterForNavigation<ViewChipConfig>();
             containerRegistry.RegisterForNavigation<ViewChipConfigChoose>();
+            containerRegistry.RegisterForNavigation<ViewChipConfigChooseChip>();
+            containerRegistry.RegisterForNavigation<ViewChipConfigChooseChipFeatures>();
         }
     }
 }

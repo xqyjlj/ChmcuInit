@@ -1,0 +1,137 @@
+﻿<UserControl x:Class="ChmcuInit.Views.ViewChipConfigChooseChip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ChmcuInit.Views"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             Background="{DynamicResource MaterialDesignPaper}"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontFamily="微软雅黑"
+             TextElement.FontWeight="Bold"
+             TextElement.FontSize="18"
+             FontFamily="{materialDesign:MaterialDesignFont}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="0,20,0,0">
+        <Grid HorizontalAlignment="Left">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                <TextBlock  Margin="20,0,0,0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center">搜索</TextBlock>
+                <ComboBox materialDesign:HintAssist.Hint="Search"
+                          materialDesign:HintAssist.HintOpacity=".26"
+                          IsEditable="True" 
+                          Margin="20,0,0,0"
+                          VerticalAlignment="Top"
+                          ItemsSource="{Binding ChipComboBoxItemsSource}"
+                          SelectedItem="{Binding ChipComboBoxSelectedItem}"
+                          DisplayMemberPath="mcuName">
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Margin="10,30,0,0" Orientation="Vertical">
+                <materialDesign:ColorZone Mode="PrimaryDark"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                          ClipToBounds="False"  
+                                          Margin="0,15,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" 
+                                      Command="{Binding 厂家Command}"/>
+                        <TextBlock VerticalAlignment="Center"
+                                   Margin="16 0 0 0">厂家</TextBlock>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+                <DataGrid ItemsSource="{Binding CompanyNameDataGridItemsSource}"
+                          Name="CompanyDataGrid"
+                          CanUserAddRows="False"
+                          Visibility="{Binding CompanyNameDataGridVisibility}"/>
+                <materialDesign:ColorZone Mode="PrimaryDark"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                          ClipToBounds="False"  
+                                          Margin="0,15,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" 
+                                      Command="{Binding 家族Command}"/>
+                        <TextBlock VerticalAlignment="Center"
+                                   Margin="16 0 0 0">家族</TextBlock>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+                <DataGrid ItemsSource="{Binding FamilyNameDataGridItemsSource}"
+                          CanUserAddRows="False"
+                          Visibility="{Binding FamilyNameDataGridVisibility}" />
+                <materialDesign:ColorZone Mode="PrimaryDark"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                          ClipToBounds="False"  
+                                          Margin="0,15,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" 
+                                      Command="{Binding 组Command}"/>
+                        <TextBlock VerticalAlignment="Center"
+                                   Margin="16 0 0 0">组</TextBlock>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+                <DataGrid ItemsSource="{Binding SubFamilyNameDataGridItemsSource}"
+                          CanUserAddRows="False"
+                          Visibility="{Binding SubFamilyNameDataGridVisibility}" />
+                <materialDesign:ColorZone Mode="PrimaryDark"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                          ClipToBounds="False" 
+                                          Margin="0,15,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" 
+                                      Command="{Binding 内核Command}"/>
+                        <TextBlock VerticalAlignment="Center"
+                                   Margin="16 0 0 0">内核</TextBlock>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+                <DataGrid ItemsSource="{Binding CoreNameDataGridItemsSource}"
+                          CanUserAddRows="False"
+                          Visibility="{Binding CoreNameDataGridVisibility}" />
+            </StackPanel>
+        </Grid>
+        <StackPanel Margin="379,0,0,0">
+            <TabControl Style="{StaticResource MaterialDesignNavigatilRailTabControl}"
+                        materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+                        MaxHeight="400">
+                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <TabItem.Header>
+                        <TextBlock Foreground="#DD000000" FontSize="20" FontWeight="Bold">特征</TextBlock>
+                    </TabItem.Header>
+                    <ScrollViewer>
+                        <ContentControl prism:RegionManager.RegionName="ViewChipConfigChooseChipFeatureContentRegion" />
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <TabItem.Header>
+                        <TextBlock Foreground="#DD000000" FontSize="20" FontWeight="Bold">框图</TextBlock>
+                    </TabItem.Header>
+                    <ScrollViewer>
+
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <TabItem.Header>
+                        <TextBlock Foreground="#DD000000" FontSize="20" FontWeight="Bold">文档</TextBlock>
+                    </TabItem.Header>
+                    <ScrollViewer>
+
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                    <TabItem.Header>
+                        <TextBlock Foreground="#DD000000" FontSize="20" FontWeight="Bold">购买</TextBlock>
+                    </TabItem.Header>
+                    <ScrollViewer>
+
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+            <DataGrid ItemsSource="{Binding McuDataGridItemsSource}"
+                      CanUserAddRows="False"
+                      SelectionUnit="Cell"
+                      SelectionMode="Extended"
+                      IsReadOnly="True"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

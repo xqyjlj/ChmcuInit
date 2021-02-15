@@ -13,8 +13,8 @@ namespace ChmcuInit.Models
     }
     public class McuFeatureCurrent
     {
-        public string                           Min                     { get; set; }
-        public string                           Max                     { get; set; }
+        public string                           Lowest                  { get; set; }
+        public string                           Run                     { get; set; }
     }
     public class McuFeatureTemperature
     {

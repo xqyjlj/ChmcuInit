@@ -13,6 +13,6 @@ namespace ChmcuInit.Service
         List<string>        GetAllFamilyName(string CompanyName);
         List<string>        GetAllSubFamilyName(string CompanyName, string FamilyName);
         List<string>        GetAllMcuName(string CompanyName, string FamilyName, string SubFamilyName);
-        List<McuFeature>    GetAllMcuFeatures(string CompanyName, string FamilyName, string SubFamilyName, string McuName);
+        McuFeature          GetAllMcuFeatures(string CompanyName, string FamilyName, string SubFamilyName, string McuName);
     }
 }
