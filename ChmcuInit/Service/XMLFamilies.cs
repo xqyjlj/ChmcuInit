@@ -100,6 +100,7 @@ namespace ChmcuInit.Service
                 McuName + @"']");
             foreach (XmlElement book in xmlDoc.SelectNodes(node))
             {
+                mcuFeature.McuPackageName = book.GetAttribute("PackageName");
                 for (int i = 0; i < book.ChildNodes.Count; i++)
                 {
                     XmlNode xmlNode = book.ChildNodes[i];

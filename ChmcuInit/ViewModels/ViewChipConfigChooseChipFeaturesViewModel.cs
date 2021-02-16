@@ -15,9 +15,7 @@ namespace ChmcuInit.ViewModels
 
         public ViewChipConfigChooseChipFeaturesViewModel(IRegionManager regionManger)
         {
-            this.regionManger = regionManger;
-
-            
+            this.regionManger = regionManger;        
         }
     }
 }

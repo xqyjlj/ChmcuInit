@@ -6,14 +6,17 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace ChmcuInit.ViewModels
 {
-    public class ViewChipConfigChooseChipViewModel : BindableBase
+    public class ViewChipConfigChooseChipViewModel : BindableBase, INotifyPropertyChanged
     {
         private readonly List<string> AllCompanyName = new List<string>();
         private readonly List<string> AllFamilyName = new List<string>();
@@ -307,9 +310,32 @@ namespace ChmcuInit.ViewModels
                 item.状态 = @"预售";
                 item.型号 = allMcuModel.mcuName;
                 item.封装 = allMcuModel.mcuFeature.McuPackageName;
+                item.Flash = allMcuModel.mcuFeature.Flash;
+                item.Ram = allMcuModel.mcuFeature.Ram;
+                item.IO = allMcuModel.mcuFeature.IO;
+                item.频率 = allMcuModel.mcuFeature.Frequency;
                 McuDataGridItemsSource.Add(item);
             }
         }
-        #endregion  
+        #endregion
+
+        public DelegateCommand<object> _myAgeCommand { get; private set; }
+        public DelegateCommand<object> MyAgeCommand
+        {
+            get
+            {
+                if (_myAgeCommand == null)
+                    _myAgeCommand = new DelegateCommand<object>(MySelectedCell);
+                return _myAgeCommand;
+            }
+        }
+
+
+
+        private void MySelectedCell(object obj)
+        {
+            Console.WriteLine("1111111");
+            // Rest of the code
+        }
     }
 }

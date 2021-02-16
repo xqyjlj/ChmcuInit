@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChmcuInit.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:models="clr-namespace:ChmcuInit.Models"
              xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
@@ -131,7 +133,116 @@
                       CanUserAddRows="False"
                       SelectionUnit="Cell"
                       SelectionMode="Extended"
-                      IsReadOnly="True"/>
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Resources>
+                    <models:BindingProxy x:Key="DataContextProxy"
+                                         Data="{Binding}" />
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <materialDesign:DataGridTextColumn
+                        Header="型号"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:DataGridTextColumn.Binding>
+                            <Binding Path="型号">
+                                <Binding.ValidationRules>
+                                    <models:NotEmptyValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:DataGridTextColumn.Binding>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn
+                        Header="状态"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:DataGridTextColumn.Binding>
+                            <Binding Path="状态">
+                                <Binding.ValidationRules>
+                                    <models:NotEmptyValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:DataGridTextColumn.Binding>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn
+                        Header="价格每千片"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:DataGridTextColumn.Binding>
+                            <Binding Path="价格每千片">
+                                <Binding.ValidationRules>
+                                    <models:NotEmptyValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:DataGridTextColumn.Binding>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn
+                        Header="封装"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:DataGridTextColumn.Binding>
+                            <Binding Path="封装">
+                                <Binding.ValidationRules>
+                                    <models:NotEmptyValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:DataGridTextColumn.Binding>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn
+                        Header="Flash"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:DataGridTextColumn.Binding>
+                            <Binding Path="Flash">
+                                <Binding.ValidationRules>
+                                    <models:NotEmptyValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:DataGridTextColumn.Binding>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn
+                        Header="Ram"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:DataGridTextColumn.Binding>
+                            <Binding Path="Ram">
+                                <Binding.ValidationRules>
+                                    <models:NotEmptyValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:DataGridTextColumn.Binding>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn
+                        Header="IO"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:DataGridTextColumn.Binding>
+                            <Binding Path="IO">
+                                <Binding.ValidationRules>
+                                    <models:NotEmptyValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:DataGridTextColumn.Binding>
+                    </materialDesign:DataGridTextColumn>
+                    <materialDesign:DataGridTextColumn
+                        Header="频率"
+                        ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <materialDesign:DataGridTextColumn.Binding>
+                            <Binding Path="频率">
+                                <Binding.ValidationRules>
+                                    <models:NotEmptyValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </materialDesign:DataGridTextColumn.Binding>
+                    </materialDesign:DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
     </Grid>
 </UserControl>
