@@ -1,4 +1,4 @@
 
-ChmcuInit/.vs/*
-ChmcuInit/bin/*
-ChmcuInit/obj/*
+.vs/*
+bin/*
+obj/*

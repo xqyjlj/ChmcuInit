@@ -1,5 +1,6 @@
 ﻿using ChmcuInit.Views;
 using Prism.Ioc;
+using Prism.Modularity;
 using System.Windows;
 
 namespace ChmcuInit
@@ -16,11 +17,7 @@ namespace ChmcuInit
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewStart>();
-            containerRegistry.RegisterForNavigation<ViewChipConfig>();
-            containerRegistry.RegisterForNavigation<ViewChipConfigChoose>();
-            containerRegistry.RegisterForNavigation<ViewChipConfigChooseChip>();
-            containerRegistry.RegisterForNavigation<ViewChipConfigChooseChipFeatures>();
+
         }
     }
 }
