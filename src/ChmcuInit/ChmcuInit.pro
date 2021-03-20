@@ -14,6 +14,7 @@ SOURCES += \
     debug.cpp \
     main.cpp \
     MainWindow.cpp \
+    treewiget_checkbox.cpp \
     xml_read.cpp \
     xml_write.cpp
 
@@ -21,6 +22,7 @@ HEADERS += \
     MainWindow.h \
     debug.h \
     mcu_model.h \
+    treewiget_checkbox.h \
     xml_read.h \
     xml_write.h
 

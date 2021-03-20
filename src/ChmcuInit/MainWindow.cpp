@@ -27,6 +27,7 @@
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     QStringList list = NXml::CXml_read().get_all_company_name();
     foreach (QString str, list)
     {
@@ -39,6 +40,14 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
             foreach (QString str, list)
             {
                 LOG_D << "      " + str;
+                QStringList list = NXml::CXml_read().get_all_mcu_name(str);
+                foreach (QString str, list)
+                {
+                    LOG_D << "          " + str;
+                    NModel::CMcu_model model = NXml::CXml_read().get_all_mcu_info(str);
+                    LOG_D << "              " + model.name << model.packagename
+                          << model.core << model.current.lowest;
+                }
             }
         }
     }

@@ -19,60 +19,24 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
+#ifndef CTREEWIGET_CHECKBOX_H
+#define CTREEWIGET_CHECKBOX_H
 
+#include <QObject>
+#include <QTreeWidget>
 
-#ifndef MCU_MODEL_H
-#define MCU_MODEL_H
+QT_BEGIN_NAMESPACE
 
-#include <QStringList>
-
-namespace NModel
+class CTreewiget_checkbox : public QTreeWidget
 {
-
-class CMcu_voltage_model
-{
+    Q_OBJECT
 public:
-    QString min;
-    QString max;
+    explicit CTreewiget_checkbox(QWidget *parent = nullptr);
+
+signals:
+
 };
 
-class CMcu_temperature_model
-{
-public:
-    QString min;
-    QString max;
-};
+QT_END_NAMESPACE
 
-class CMcu_current_model
-{
-public:
-    QString lowest;
-    QString run;
-};
-
-class CMcu_peripheral_model
-{
-public:
-    QString type;
-};
-
-class CMcu_model
-{
-public:
-    QString name;
-    QString packagename;
-    QString core;
-    QString frequency;
-    QString ram;
-    QString io;
-    QString flash;
-    CMcu_voltage_model voltage;
-    CMcu_temperature_model temperature;
-    CMcu_current_model current;
-    QList<CMcu_peripheral_model> peripheral;
-};
-
-}
-
-
-#endif // MCU_MODEL_H
+#endif // CTREEWIGET_CHECKBOX_H

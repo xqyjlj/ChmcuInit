@@ -19,60 +19,12 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
+#include "treewiget_checkbox.h"
+QT_BEGIN_NAMESPACE
 
-
-#ifndef MCU_MODEL_H
-#define MCU_MODEL_H
-
-#include <QStringList>
-
-namespace NModel
+CTreewiget_checkbox::CTreewiget_checkbox(QWidget *parent) : QTreeWidget(parent)
 {
-
-class CMcu_voltage_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_temperature_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_current_model
-{
-public:
-    QString lowest;
-    QString run;
-};
-
-class CMcu_peripheral_model
-{
-public:
-    QString type;
-};
-
-class CMcu_model
-{
-public:
-    QString name;
-    QString packagename;
-    QString core;
-    QString frequency;
-    QString ram;
-    QString io;
-    QString flash;
-    CMcu_voltage_model voltage;
-    CMcu_temperature_model temperature;
-    CMcu_current_model current;
-    QList<CMcu_peripheral_model> peripheral;
-};
 
 }
 
-
-#endif // MCU_MODEL_H
+QT_END_NAMESPACE

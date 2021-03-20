@@ -188,6 +188,165 @@ QStringList CXml_read::read_subfamily_name(QXmlStreamReader *reader)
     return list;
 }
 
+/**
+ * @brief   get all subfamily`s mcu name in the XML file
+ *
+ * @param   subfamily: the name of the subfamily we want to read
+ *
+ * @return  QStringList with mcu name
+*/
+QStringList CXml_read::get_all_mcu_name(QString subfamily)
+{
+    QStringList list;
+    QString str_families_xml = ":/families/db/families/families.xml";
+    QFile file(str_families_xml);
+    if (file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QXmlStreamReader reader;
+        reader.setDevice(&file);
+        while (!reader.atEnd())
+        {
+            if (reader.isStartElement() && reader.name() == QString("SubFamily") && reader.attributes().value("Name").toString() == subfamily)
+            {
+                list = read_mcu_name(&reader);
+                break;
+            }
+            reader.readNext();
+        }
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, tr("Error"), tr("Cannot read file %1").arg(str_families_xml));
+    }
+    file.close();
+    return list;
+}
 
+/**
+ * @brief   read mcu name in xml file
+ *
+ * @param   *reader: QXmlStreamReader handle
+ *
+ * @return  QStringList with mcu name
+*/
+QStringList CXml_read::read_mcu_name(QXmlStreamReader *reader)
+{
+    QStringList list;
+    while (!reader->atEnd())
+    {
+        reader->readNext();
+        if (reader->isStartElement() && reader->name() == QString("Mcu"))
+        {
+            list << reader->attributes().value("Name").toString();
+        }
+        else if (reader->isEndElement() && reader->name() == QString("SubFamily"))
+        {
+            break;
+        }
+    }
+    return list;
+}
+
+/**
+ * @brief   get all mcu`s info in the XML file
+ *
+ * @param   mcu: the name of the mcu we want to read
+ *
+ * @return  CMcu_model class with mcu info
+*/
+NModel::CMcu_model CXml_read::get_all_mcu_info(QString mcu)
+{
+    NModel::CMcu_model model;
+    QString str_families_xml = ":/families/db/families/families.xml";
+    QFile file(str_families_xml);
+    if (file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QXmlStreamReader reader;
+        reader.setDevice(&file);
+        while (!reader.atEnd())
+        {
+            if (reader.isStartElement() && reader.name() == QString("Mcu") && reader.attributes().value("Name").toString() == mcu)
+            {
+                model = read_mcu_info(&reader);
+                break;
+            }
+            reader.readNext();
+        }
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, tr("Error"), tr("Cannot read file %1").arg(str_families_xml));
+    }
+    file.close();
+    return model;
+}
+
+
+/**
+ * @brief   read mcu name in xml file
+ *
+ * @param   *reader: QXmlStreamReader handle
+ *
+ * @return  CMcu_model class with mcu info
+*/
+NModel::CMcu_model CXml_read::read_mcu_info(QXmlStreamReader *reader)
+{
+    NModel::CMcu_model model;
+    while (!reader->atEnd())
+    {
+        if (reader->isStartElement() && reader->name() == QString("Mcu"))
+        {
+            model.name = reader->attributes().value("Name").toString();
+            model.packagename = reader->attributes().value("PackageName").toString();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("Core"))
+        {
+            model.core = reader->readElementText();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("Frequency"))
+        {
+            model.frequency = reader->readElementText();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("Ram"))
+        {
+            model.ram = reader->readElementText();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("IO"))
+        {
+            model.io = reader->readElementText();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("Flash"))
+        {
+            model.flash = reader->readElementText();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("Voltage"))
+        {
+            model.voltage.min = reader->attributes().value("Min").toString();
+            model.voltage.max = reader->attributes().value("Max").toString();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("Current"))
+        {
+            model.current.lowest = reader->attributes().value("Lowest").toString();
+            model.current.run = reader->attributes().value("Run").toString();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("Temperature"))
+        {
+            model.temperature.min = reader->attributes().value("Min").toString();
+            model.temperature.max = reader->attributes().value("Max").toString();
+        }
+        else if (reader->isStartElement() && reader->name() == QString("Peripheral"))
+        {
+            NModel::CMcu_peripheral_model peripheral_model;
+            peripheral_model.type = reader->attributes().value("Type").toString();
+            model.peripheral << peripheral_model;
+        }
+        else if (reader->isEndElement() && reader->name() == QString("Mcu"))
+        {
+            break;
+        }
+        reader->readNext();
+    }
+    return model;
+}
 }
 

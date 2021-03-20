@@ -25,6 +25,8 @@
 #include <QObject>
 #include <QStringList>
 #include <QXmlStreamReader>
+#include "mcu_model.h"
+
 namespace NXml
 {
 class CXml_read : public QObject
@@ -59,6 +61,24 @@ public:
      * @return  QStringList with subfamily name
     */
     QStringList get_all_subfamily_name(QString family);
+
+    /**
+     * @brief   get all subfamily`s mcu name in the XML file
+     *
+     * @param   subfamily: the name of the subfamily we want to read
+     *
+     * @return  QStringList with mcu name
+    */
+    QStringList get_all_mcu_name(QString subfamily);
+
+    /**
+     * @brief   get all mcu`s info in the XML file
+     *
+     * @param   mcu: the name of the mcu we want to read
+     *
+     * @return  CMcu_model class with mcu info
+    */
+    NModel::CMcu_model get_all_mcu_info(QString mcu);
 signals:
 
 private:
@@ -80,6 +100,24 @@ private:
      * @return  QStringList with subfamily name
     */
     QStringList read_subfamily_name(QXmlStreamReader *reader);
+
+    /**
+     * @brief   read mcu name in xml file
+     *
+     * @param   *reader: QXmlStreamReader handle
+     *
+     * @return  QStringList with mcu name
+    */
+    QStringList read_mcu_name(QXmlStreamReader *reader);
+
+    /**
+     * @brief   read mcu name in xml file
+     *
+     * @param   *reader: QXmlStreamReader handle
+     *
+     * @return  CMcu_model class with mcu info
+    */
+    NModel::CMcu_model read_mcu_info(QXmlStreamReader *reader);
 };
 
 }
