@@ -1,26 +1,21 @@
-QT += quick
+# Check the Qt version. If QT_VERSION is not set, it is probably Qt 3.
+isEmpty(QT_VERSION) {
+    error("QT_VERSION not defined. Tiled does not work with Qt 3.")
+}
 
-CONFIG += c++11
+include(ChmcuInit.pri)
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+!minQtVersion(5, 6, 0) {
+    message("Cannot build Tiled with Qt version $${QT_VERSION}")
+    error("Use at least Qt 5.6.0.")
+}
 
-SOURCES += \
-        cpps/main.cpp
+#win* {
+#    message("Building Tiled for Windows using qmake is no longer supported")
+#    error("Use the tiled.qbs project file instead")
+#}
 
-RESOURCES += qml.qrc
+TEMPLATE  = subdirs
+CONFIG   += ordered
 
-TRANSLATIONS += \
-    ChmcuInit_zh_CN.ts
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
-
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-QML_DESIGNER_IMPORT_PATH =
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+SUBDIRS = src translations

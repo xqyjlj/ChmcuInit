@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/"/>
+    <qresource prefix="/families">
+        <file>db/families/families.xml</file>
+    </qresource>
+</RCC>
