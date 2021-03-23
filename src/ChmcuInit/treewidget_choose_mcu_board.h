@@ -17,64 +17,27 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-22     xqyjlj       the first version        xqyjlj@126.com
  **/
+#ifndef CTREEWIDGET_CHOOSE_MCU_H
+#define CTREEWIDGET_CHOOSE_MCU_H
 
-#ifndef MCU_MODEL_H
-#define MCU_MODEL_H
+#include <QObject>
+#include <QTreeWidget>
 
-#include <QStringList>
-
-namespace NModel
+namespace Ui
 {
-
-class CMcu_voltage_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_temperature_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_current_model
-{
-public:
-    QString lowest;
-    QString run;
-};
-
-class CMcu_peripheral_model
-{
-public:
-    QString type;
-};
-
-class CMcu_model
-{
-public:
-    QString company;
-    QString family;
-    QString subfamily;
-    QString name;
-    QString packagename;
-    QString core;
-    QString frequency;
-    QString ram;
-    QString io;
-    QString flash;
-    CMcu_voltage_model voltage;
-    CMcu_temperature_model temperature;
-    CMcu_current_model current;
-    QList<CMcu_peripheral_model> peripheral;
-};
-
+class CTreewidget_choose_mcu_board;
 }
 
+class CTreewidget_choose_mcu_board : public QTreeWidget
+{
+    Q_OBJECT
+public:
+    explicit CTreewidget_choose_mcu_board(QWidget *parent = nullptr);
 
-#endif // MCU_MODEL_H
+signals:
+
+};
+
+#endif // CTREEWIDGET_CHOOSE_MCU_H

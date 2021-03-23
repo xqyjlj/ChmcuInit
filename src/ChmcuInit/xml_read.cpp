@@ -25,6 +25,7 @@
 #include <QTranslator>
 #include <QXmlStreamReader>
 #include "debug.h"
+#include <QCoreApplication>
 namespace NXml
 {
 
@@ -43,7 +44,7 @@ CXml_read::CXml_read(QObject *parent) : QObject(parent)
 QStringList CXml_read::get_all_company_name()
 {
     QStringList list;
-    QString str_families_xml = ":/families/db/families/families.xml";
+    QString str_families_xml = QCoreApplication::applicationDirPath() + "/origin/families/chip/families.xml";
     QFile file(str_families_xml);
     if (file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -79,7 +80,7 @@ QStringList CXml_read::get_all_company_name()
 QStringList CXml_read::get_all_family_name(QString company)
 {
     QStringList list;
-    QString str_families_xml = ":/families/db/families/families.xml";
+    QString str_families_xml = QCoreApplication::applicationDirPath() + "/origin/families/chip/families.xml";
     QFile file(str_families_xml);
     if (file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -139,7 +140,7 @@ QStringList CXml_read::read_family_name(QXmlStreamReader *reader)
 QStringList CXml_read::get_all_subfamily_name(QString family)
 {
     QStringList list;
-    QString str_families_xml = ":/families/db/families/families.xml";
+    QString str_families_xml = QCoreApplication::applicationDirPath() + "/origin/families/chip/families.xml";
     QFile file(str_families_xml);
     if (file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -198,7 +199,7 @@ QStringList CXml_read::read_subfamily_name(QXmlStreamReader *reader)
 QStringList CXml_read::get_all_mcu_name(QString subfamily)
 {
     QStringList list;
-    QString str_families_xml = ":/families/db/families/families.xml";
+    QString str_families_xml = QCoreApplication::applicationDirPath() + "/origin/families/chip/families.xml";
     QFile file(str_families_xml);
     if (file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -256,8 +257,9 @@ QStringList CXml_read::read_mcu_name(QXmlStreamReader *reader)
 */
 NModel::CMcu_model CXml_read::get_all_mcu_info(QString mcu)
 {
+
     NModel::CMcu_model model;
-    QString str_families_xml = ":/families/db/families/families.xml";
+    QString str_families_xml = QCoreApplication::applicationDirPath() + "/origin/families/chip/families.xml";
     QFile file(str_families_xml);
     if (file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -298,6 +300,9 @@ NModel::CMcu_model CXml_read::read_mcu_info(QXmlStreamReader *reader)
         {
             model.name = reader->attributes().value("Name").toString();
             model.packagename = reader->attributes().value("PackageName").toString();
+            model.company = reader->attributes().value("CompanyName").toString();
+            model.family = reader->attributes().value("FamilyName").toString();
+            model.subfamily = reader->attributes().value("SubFamilyName").toString();
         }
         else if (reader->isStartElement() && reader->name() == QString("Core"))
         {

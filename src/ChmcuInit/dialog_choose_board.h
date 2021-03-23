@@ -17,26 +17,28 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-22     xqyjlj       the first version        xqyjlj@126.com
  **/
-#ifndef CTREEWIGET_CHECKBOX_H
-#define CTREEWIGET_CHECKBOX_H
+#ifndef DIALOG_CHOOSE_BOARD_H
+#define DIALOG_CHOOSE_BOARD_H
 
-#include <QObject>
-#include <QTreeWidget>
+#include <QDialog>
 
-QT_BEGIN_NAMESPACE
+namespace Ui
+{
+class CDialog_choose_board;
+}
 
-class CTreewiget_checkbox : public QTreeWidget
+class CDialog_choose_board : public QDialog
 {
     Q_OBJECT
+
 public:
-    explicit CTreewiget_checkbox(QWidget *parent = nullptr);
+    explicit CDialog_choose_board(QWidget *parent = nullptr);
+    ~CDialog_choose_board();
 
-signals:
-
+private:
+    Ui::CDialog_choose_board *ui;
 };
 
-QT_END_NAMESPACE
-
-#endif // CTREEWIGET_CHECKBOX_H
+#endif // DIALOG_CHOOSE_BOARD_H

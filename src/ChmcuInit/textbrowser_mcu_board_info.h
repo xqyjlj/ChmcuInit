@@ -17,64 +17,21 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-23     xqyjlj       the first version        xqyjlj@126.com
  **/
+#ifndef CTEXTBROWSER_MCU_BOARD_INFO_H
+#define CTEXTBROWSER_MCU_BOARD_INFO_H
 
-#ifndef MCU_MODEL_H
-#define MCU_MODEL_H
+#include <QObject>
 
-#include <QStringList>
-
-namespace NModel
+class CTextbrowser_mcu_board_info : public QObject
 {
-
-class CMcu_voltage_model
-{
+    Q_OBJECT
 public:
-    QString min;
-    QString max;
+    explicit CTextbrowser_mcu_board_info(QObject *parent = nullptr);
+
+signals:
+
 };
 
-class CMcu_temperature_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_current_model
-{
-public:
-    QString lowest;
-    QString run;
-};
-
-class CMcu_peripheral_model
-{
-public:
-    QString type;
-};
-
-class CMcu_model
-{
-public:
-    QString company;
-    QString family;
-    QString subfamily;
-    QString name;
-    QString packagename;
-    QString core;
-    QString frequency;
-    QString ram;
-    QString io;
-    QString flash;
-    CMcu_voltage_model voltage;
-    CMcu_temperature_model temperature;
-    CMcu_current_model current;
-    QList<CMcu_peripheral_model> peripheral;
-};
-
-}
-
-
-#endif // MCU_MODEL_H
+#endif // CTEXTBROWSER_MCU_BOARD_INFO_H

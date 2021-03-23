@@ -17,64 +17,22 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-22     xqyjlj       the first version        xqyjlj@126.com
  **/
+#include "dialog_choose_board.h"
+#include "ui_dialog_choose_board.h"
+#include <QPushButton>
 
-#ifndef MCU_MODEL_H
-#define MCU_MODEL_H
-
-#include <QStringList>
-
-namespace NModel
+CDialog_choose_board::CDialog_choose_board(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::CDialog_choose_board)
 {
-
-class CMcu_voltage_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_temperature_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_current_model
-{
-public:
-    QString lowest;
-    QString run;
-};
-
-class CMcu_peripheral_model
-{
-public:
-    QString type;
-};
-
-class CMcu_model
-{
-public:
-    QString company;
-    QString family;
-    QString subfamily;
-    QString name;
-    QString packagename;
-    QString core;
-    QString frequency;
-    QString ram;
-    QString io;
-    QString flash;
-    CMcu_voltage_model voltage;
-    CMcu_temperature_model temperature;
-    CMcu_current_model current;
-    QList<CMcu_peripheral_model> peripheral;
-};
-
+    ui->setupUi(this);
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("创建"));
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("取消"));
 }
 
-
-#endif // MCU_MODEL_H
+CDialog_choose_board::~CDialog_choose_board()
+{
+    delete ui;
+}

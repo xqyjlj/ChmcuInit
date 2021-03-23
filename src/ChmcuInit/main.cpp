@@ -20,13 +20,14 @@
  ** 2021-03-19     xqyjlj       the first version        xqyjlj@126.com
  **/
 #include "MainWindow.h"
-
 #include <QApplication>
+#include "debug.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QFont font("JetBrains Mono", 13);
+    QFont font;
+    font.setPointSize(13);
     a.setFont(font);
     MainWindow w;
     w.show();

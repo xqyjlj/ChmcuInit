@@ -17,64 +17,33 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-21     xqyjlj       the first version        xqyjlj@126.com
  **/
+#ifndef FORM_HOME_WIDGET_H
+#define FORM_HOME_WIDGET_H
 
-#ifndef MCU_MODEL_H
-#define MCU_MODEL_H
+#include <QWidget>
 
-#include <QStringList>
-
-namespace NModel
+namespace Ui
 {
-
-class CMcu_voltage_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_temperature_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_current_model
-{
-public:
-    QString lowest;
-    QString run;
-};
-
-class CMcu_peripheral_model
-{
-public:
-    QString type;
-};
-
-class CMcu_model
-{
-public:
-    QString company;
-    QString family;
-    QString subfamily;
-    QString name;
-    QString packagename;
-    QString core;
-    QString frequency;
-    QString ram;
-    QString io;
-    QString flash;
-    CMcu_voltage_model voltage;
-    CMcu_temperature_model temperature;
-    CMcu_current_model current;
-    QList<CMcu_peripheral_model> peripheral;
-};
-
+class CForm_home_widget;
 }
 
+class CForm_home_widget : public QWidget
+{
+    Q_OBJECT
 
-#endif // MCU_MODEL_H
+public:
+    explicit CForm_home_widget(QWidget *parent = nullptr);
+    ~CForm_home_widget();
+
+private slots:
+    void on_new_BoardButton_pressed();
+
+    void on_new_ChipButton_pressed();
+
+private:
+    Ui::CForm_home_widget *ui;
+};
+
+#endif // FORM_HOME_WIDGET_H

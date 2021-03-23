@@ -14,19 +14,14 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="CTreewiget_checkbox" name="treeWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>221</width>
-      <height>191</height>
-     </rect>
-    </property>
-    <attribute name="headerVisible">
-     <bool>false</bool>
-    </attribute>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QStackedWidget" name="MainWindowStackedWidget">
+      <widget class="CForm_home_widget" name="HomePage"/>
+      <widget class="QWidget" name="page_2"/>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
@@ -48,9 +43,10 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CTreewiget_checkbox</class>
-   <extends>QTreeWidget</extends>
-   <header>treewiget_checkbox.h</header>
+   <class>CForm_home_widget</class>
+   <extends>QWidget</extends>
+   <header>form_home_widget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

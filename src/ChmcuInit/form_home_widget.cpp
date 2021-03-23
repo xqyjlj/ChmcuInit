@@ -17,20 +17,38 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-19     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-21     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
+#include "form_home_widget.h"
+#include "ui_form_home_widget.h"
+#include "dialog_choose_mcu.h"
+#include "dialog_choose_board.h"
+#include <QStyle>
 
-
-
-MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
+CForm_home_widget::CForm_home_widget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::CForm_home_widget)
 {
     ui->setupUi(this);
+    ui->new_BoardButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon));
+    ui->new_ChipButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon));
 }
 
-MainWindow::~MainWindow()
+CForm_home_widget::~CForm_home_widget()
 {
     delete ui;
 }
 
+void CForm_home_widget::on_new_BoardButton_pressed()
+{
+    CDialog_choose_board dialog(this);
+    dialog.setWindowTitle(tr("新建开发板项目"));
+    dialog.exec();
+}
+
+void CForm_home_widget::on_new_ChipButton_pressed()
+{
+    CDialog_choose_mcu dialog(this);
+    dialog.setWindowTitle(tr("新建芯片项目"));
+    dialog.exec();
+}

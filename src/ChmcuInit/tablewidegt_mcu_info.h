@@ -17,64 +17,38 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-22     xqyjlj       the first version        xqyjlj@126.com
  **/
+#ifndef CTABLEWIDEGT_MCU_INFO_H
+#define CTABLEWIDEGT_MCU_INFO_H
 
-#ifndef MCU_MODEL_H
-#define MCU_MODEL_H
+#include <QObject>
+#include <QTableWidget>
+#include "mcu_model.h"
 
-#include <QStringList>
 
-namespace NModel
+namespace Ui
 {
-
-class CMcu_voltage_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_temperature_model
-{
-public:
-    QString min;
-    QString max;
-};
-
-class CMcu_current_model
-{
-public:
-    QString lowest;
-    QString run;
-};
-
-class CMcu_peripheral_model
-{
-public:
-    QString type;
-};
-
-class CMcu_model
-{
-public:
-    QString company;
-    QString family;
-    QString subfamily;
-    QString name;
-    QString packagename;
-    QString core;
-    QString frequency;
-    QString ram;
-    QString io;
-    QString flash;
-    CMcu_voltage_model voltage;
-    CMcu_temperature_model temperature;
-    CMcu_current_model current;
-    QList<CMcu_peripheral_model> peripheral;
-};
-
+class CTablewidegt_mcu_info;
 }
 
+class CTablewidegt_mcu_info : public QTableWidget
+{
+    Q_OBJECT
+public:
+    explicit CTablewidegt_mcu_info(QWidget *parent = nullptr);
 
-#endif // MCU_MODEL_H
+    /**
+     * @brief   add mcu model to QTableWidget
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void add_mcu_model(NModel::CMcu_model model);
+
+signals:
+
+};
+
+#endif // CTABLEWIDEGT_MCU_INFO_H

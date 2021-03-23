@@ -1,6 +1,6 @@
 include(../../ChmcuInit.pri)
 
-QT       += core gui xml widgets
+QT       += core gui xml widgets webenginewidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,22 +12,35 @@ CONFIG += c++11
 
 SOURCES += \
     debug.cpp \
+    dialog_choose_board.cpp \
+    dialog_choose_mcu.cpp \
+    form_home_widget.cpp \
     main.cpp \
     MainWindow.cpp \
-    treewiget_checkbox.cpp \
+    tablewidegt_mcu_info.cpp \
+    textbrowser_mcu_board_info.cpp \
+    treewidget_choose_mcu_board.cpp \
     xml_read.cpp \
     xml_write.cpp
 
 HEADERS += \
     MainWindow.h \
     debug.h \
+    dialog_choose_board.h \
+    dialog_choose_mcu.h \
+    form_home_widget.h \
     mcu_model.h \
-    treewiget_checkbox.h \
+    tablewidegt_mcu_info.h \
+    textbrowser_mcu_board_info.h \
+    treewidget_choose_mcu_board.h \
     xml_read.h \
     xml_write.h
 
 FORMS += \
-    MainWindow.ui
+    MainWindow.ui \
+    dialog_choose_board.ui \
+    dialog_choose_mcu.ui \
+    form_home_widget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

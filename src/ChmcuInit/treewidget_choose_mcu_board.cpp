@@ -17,14 +17,11 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-22     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "treewiget_checkbox.h"
-QT_BEGIN_NAMESPACE
+#include "treewidget_choose_mcu_board.h"
 
-CTreewiget_checkbox::CTreewiget_checkbox(QWidget *parent) : QTreeWidget(parent)
+CTreewidget_choose_mcu_board::CTreewidget_choose_mcu_board(QWidget *parent) : QTreeWidget(parent)
 {
 
 }
-
-QT_END_NAMESPACE
