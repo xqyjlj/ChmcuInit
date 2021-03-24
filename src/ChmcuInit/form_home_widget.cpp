@@ -25,9 +25,10 @@
 #include "dialog_choose_board.h"
 #include <QStyle>
 
-CForm_home_widget::CForm_home_widget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CForm_home_widget)
+#include "debug.h"
+#include "file_manage.h"
+#include <QMessageBox>
+CForm_home_widget::CForm_home_widget(QWidget *parent) : QWidget(parent), ui(new Ui::CForm_home_widget)
 {
     ui->setupUi(this);
     ui->new_BoardButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon));
@@ -44,11 +45,23 @@ void CForm_home_widget::on_new_BoardButton_pressed()
     CDialog_choose_board dialog(this);
     dialog.setWindowTitle(tr("新建开发板项目"));
     dialog.exec();
+
 }
 
 void CForm_home_widget::on_new_ChipButton_pressed()
 {
     CDialog_choose_mcu dialog(this);
     dialog.setWindowTitle(tr("新建芯片项目"));
+    connect(&dialog, &CDialog_choose_mcu::create_mcu_project, [ = ](QString name)
+    {
+        if (NFile::CFile_manage().get_mcu_pack_list().contains(name))
+        {
+
+        }
+        else
+        {
+            QMessageBox::critical(nullptr, tr("Error"), tr("目前还未准备这个包"));
+        }
+    });
     dialog.exec();
 }

@@ -14,6 +14,7 @@ SOURCES += \
     debug.cpp \
     dialog_choose_board.cpp \
     dialog_choose_mcu.cpp \
+    file_manage.cpp \
     form_home_widget.cpp \
     main.cpp \
     MainWindow.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     debug.h \
     dialog_choose_board.h \
     dialog_choose_mcu.h \
+    file_manage.h \
     form_home_widget.h \
     mcu_model.h \
     tablewidegt_mcu_info.h \

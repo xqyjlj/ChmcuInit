@@ -1,4 +1,9 @@
 <RCC>
-    <qresource prefix="/"/>
-    <qresource prefix="/families"/>
+    <qresource prefix="/image">
+        <file>assets/logo.png</file>
+    </qresource>
+    <qresource prefix="/markdown">
+        <file>assets/readme.md</file>
+        <file>assets/no_mcu_md.md</file>
+    </qresource>
 </RCC>

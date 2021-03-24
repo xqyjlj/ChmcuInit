@@ -17,20 +17,37 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-19     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-24     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include <QApplication>
+#include "file_manage.h"
+#include <QCoreApplication>
 #include "debug.h"
-
-int main(int argc, char *argv[])
+#include <QDir>
+namespace NFile
 {
-    QApplication a(argc, argv);
-    QFont font;
-    font.setFamily(QString("JetBrains Mono"));
-    font.setPointSize(13);
-    a.setFont(font);
-    MainWindow w;
-    w.show();
-    return a.exec();
+CFile_manage::CFile_manage(QObject *parent) : QObject(parent)
+{
+
+}
+
+/**
+ * @brief   get mcu pack list
+ *
+ * @param   null
+ *
+ * @return  QStringList of mcu pack
+*/
+QStringList CFile_manage::get_mcu_pack_list(void)
+{
+    QStringList list;
+    QDir dir(QCoreApplication::applicationDirPath() + "/origin/families/chip");
+    dir.setFilter(QDir::Dirs);
+    foreach (QFileInfo fullDir, dir.entryInfoList())
+    {
+        if (fullDir.fileName() == "." || fullDir.fileName() == "..")
+            continue;
+        list << fullDir.fileName();
+    }
+    return list;
+}
 }

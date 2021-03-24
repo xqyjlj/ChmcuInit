@@ -17,20 +17,36 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-19     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-24     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include <QApplication>
-#include "debug.h"
+#ifndef FILE_MANAGE_H
+#define FILE_MANAGE_H
 
-int main(int argc, char *argv[])
+#include <QObject>
+#include <QStringList>
+
+namespace NFile
 {
-    QApplication a(argc, argv);
-    QFont font;
-    font.setFamily(QString("JetBrains Mono"));
-    font.setPointSize(13);
-    a.setFont(font);
-    MainWindow w;
-    w.show();
-    return a.exec();
+
+
+
+class CFile_manage : public QObject
+{
+    Q_OBJECT
+public:
+    explicit CFile_manage(QObject *parent = nullptr);
+
+    /**
+     * @brief   get mcu pack list
+     *
+     * @param   null
+     *
+     * @return  QStringList of mcu pack
+    */
+    QStringList get_mcu_pack_list(void);
+signals:
+
+};
 }
+
+#endif // FILE_MANAGE_H

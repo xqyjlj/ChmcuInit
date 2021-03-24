@@ -23,12 +23,13 @@
 #include "ui_dialog_choose_mcu.h"
 #include <QPushButton>
 #include "debug.h"
-
 #include <QFile>
+
 #include <QCoreApplication>
 #include <QWebEngineView>
 #include <QTextStream>
 #include <QWebChannel>
+#include "file_manage.h"
 
 CDialog_choose_mcu::CDialog_choose_mcu(QWidget *parent): QDialog(parent), ui(new Ui::CDialog_choose_mcu)
 {
@@ -48,10 +49,12 @@ CDialog_choose_mcu::CDialog_choose_mcu(QWidget *parent): QDialog(parent), ui(new
 
     this->setWindowState(Qt::WindowMaximized);
 
-    QFile file(QCoreApplication::applicationDirPath() + "/origin/families/chip/stm32f103/readme.html");
+    QFile file(":/markdown/assets/readme.md");
     file.open(QFile::ReadOnly | QFile::Text);
-    ui->textBrowser->setHtml(file.readAll());
+    ui->textBrowser->setMarkdown(file.readAll());
     file.close();
+
+    connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonBox_click(QAbstractButton*)));
 }
 
 CDialog_choose_mcu::~CDialog_choose_mcu()
@@ -220,7 +223,7 @@ void CDialog_choose_mcu::find_package(void)
 {
     foreach (NModel::CMcu_model model, ql_mcu_g)
     {
-        if ((!model.packagename.isEmpty()) && (!qs_package_g.contains(model.core)))
+        if ((!model.packagename.isEmpty()) && (!qs_package_g.contains(model.packagename)))
         {
             qs_package_g << model.packagename;
         }
@@ -268,3 +271,47 @@ void CDialog_choose_mcu::add_tableWidget(void)
     }
 }
 
+/**
+ * @brief   SLOT of buttonBox click
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void CDialog_choose_mcu::buttonBox_click(QAbstractButton *button)
+{
+    if (button->text() == tr("创建"))
+    {
+        QList<QTableWidgetItem *> items =  ui->tableWidget->selectedItems();
+        if (!items.isEmpty())
+        {
+            emit create_mcu_project(items.at(0)->text());
+        }
+
+    }
+}
+
+void CDialog_choose_mcu::on_tableWidget_itemSelectionChanged()
+{
+    QList<QTableWidgetItem *> items =  ui->tableWidget->selectedItems();
+    if (!items.isEmpty())
+    {
+        QString path = QCoreApplication::applicationDirPath() + "/origin/families/chip/" + items.at(0)->text() + "/readme.md";
+        if (NFile::CFile_manage().get_mcu_pack_list().contains(items.at(0)->text()))
+        {
+            QFile file(path);
+            file.open(QFile::ReadOnly | QFile::Text);
+            ui->textBrowser->setMarkdown(file.readAll());
+            file.close();
+        }
+        else
+        {
+            QFile file(":/markdown/assets/no_mcu_md.md");
+            file.open(QFile::ReadOnly | QFile::Text);
+            QString md = file.readAll();
+            md = md.arg(path);
+            ui->textBrowser->setMarkdown(md);
+            file.close();
+        }
+    }
+}

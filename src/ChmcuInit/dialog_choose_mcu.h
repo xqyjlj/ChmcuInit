@@ -24,7 +24,7 @@
 
 #include <QDialog>
 #include "xml_read.h"
-
+#include <QAbstractButton>
 namespace Ui
 {
 class CDialog_choose_mcu;
@@ -129,6 +129,28 @@ private:
     QList<NModel::CMcu_model> ql_mcu_g;
     QStringList qs_core_g;
     QStringList qs_package_g;
+
+private slots:
+    /**
+     * @brief   SLOT of buttonBox click
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void buttonBox_click(QAbstractButton *button);
+
+    void on_tableWidget_itemSelectionChanged();
+
+signals:
+    /**
+     * @brief   SIGAL of Create mcu project
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void create_mcu_project(QString name);
 };
 
 #endif // DIALOG_CHOOSE_MCU_H
