@@ -28,30 +28,57 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-01     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
+#include "TreeWidgetChooseIp.h"
 #include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+TreeWidgetChooseIp::TreeWidgetChooseIp(QWidget* parent) : QTreeWidget(parent)
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
+    connect(this, &QTreeWidget::itemSelectionChanged, this, &TreeWidgetChooseIp::treeWidgetChooseIpItemSelectionChanged, Qt::UniqueConnection);
+}
+
+void TreeWidgetChooseIp::setIpModel(QList<Model::XmlIpModel> mode)
+{
+    ipModels = mode;
+    findIpName();
+    foreach (QString str, ipNames)
     {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+        QTreeWidgetItem* item = new QTreeWidgetItem(this);
+        item->setText(0, str);
+        foreach (Model::XmlIpModel model, ipModels)
+        {
+            if (model.name == str)
+            {
+                QTreeWidgetItem* _item = new QTreeWidgetItem(item);
+                _item->setText(0, model.instance_name);
+            }
+        }
+    }
 }
 
-
-MainWindow::~MainWindow()
+void TreeWidgetChooseIp::findIpName(void)
 {
-    delete ui;
+    foreach (Model::XmlIpModel model, ipModels)
+    {
+        if ((!model.name.isEmpty()) && (!ipNames.contains(model.name)))
+        {
+            ipNames << model.name;
+        }
+    }
 }
 
+void TreeWidgetChooseIp::treeWidgetChooseIpItemSelectionChanged()
+{
+    if (selectedItems().length() > 0)
+    {
+        QString str = selectedItems().at(0)->text(0);
+        foreach (Model::XmlIpModel model, ipModels)
+        {
+            if (model.instance_name == str)
+            {
+                emit ipChosen(model.instance_name, model.pack_locate + "/" + model.pack_name + "_" + model.version + ".xml");
+            }
+        }
+    }
+}

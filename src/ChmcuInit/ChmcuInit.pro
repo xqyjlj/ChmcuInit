@@ -11,38 +11,66 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    debug.cpp \
-    dialog_choose_board.cpp \
-    dialog_choose_mcu.cpp \
-    file_manage.cpp \
-    form_home_widget.cpp \
+    Debug.cpp \
+    DialogChooseBoard.cpp \
+    DialogChooseMcu.cpp \
+    FileManage.cpp \
+    FormChipConfig/FormChipConfig.cpp \
+    FormChipConfig/GraphicsViewMcu.cpp \
+    FormChipConfig/Parameter/STM32/FormPinAttribute.cpp \
+    FormChipConfig/Parameter/STM32/FormSTM32PeripheralsModeConfig.cpp \
+    FormChipConfig/Parameter/STM32/STM32XmlRead.cpp \
+    FormChipConfig/ChipView/LabelPin.cpp \
+    FormChipConfig/ChipView/WidgetLQFP48.cpp \
+    FormChipConfig/TreeWidgetChooseFunction.cpp \
+    FormHome.cpp \
+    TableWidegtMcuInfo.cpp \
+    FormChipConfig/TreeWidgetChooseIp.cpp \
+    TreeWidgetChooseMcuBoard.cpp \
+    XmlRead.cpp \
+    XmlWrite.cpp \
+    demo/demo_chip.cpp \
     main.cpp \
-    MainWindow.cpp \
-    tablewidegt_mcu_info.cpp \
-    textbrowser_mcu_board_info.cpp \
-    treewidget_choose_mcu_board.cpp \
-    xml_read.cpp \
-    xml_write.cpp
+    MainWindow.cpp
 
 HEADERS += \
+    Debug.h \
+    DialogChooseBoard.h \
+    DialogChooseMcu.h \
+    FileManage.h \
+    FormChipConfig/FormChipConfig.h \
+    FormChipConfig/GraphicsViewMcu.h \
+    FormChipConfig/Parameter/STM32/FormPinAttribute.h \
+    FormChipConfig/Parameter/STM32/FormSTM32PeripheralsModeConfig.h \
+    FormChipConfig/Parameter/STM32/STM32Model.h \
+    FormChipConfig/Parameter/STM32/STM32XmlRead.h \
+    FormChipConfig/TreeWidgetChooseFunction.h \
+    FormHome.h \
     MainWindow.h \
-    debug.h \
-    dialog_choose_board.h \
-    dialog_choose_mcu.h \
-    file_manage.h \
-    form_home_widget.h \
-    mcu_model.h \
-    tablewidegt_mcu_info.h \
-    textbrowser_mcu_board_info.h \
-    treewidget_choose_mcu_board.h \
-    xml_read.h \
-    xml_write.h
+    FormChipConfig/ChipView/LabelPin.h \
+    FormChipConfig/ChipView/WidgetLQFP48.h \
+    Model.h \
+    TableWidegtMcuInfo.h \
+    FormChipConfig/TreeWidgetChooseIp.h \
+    TreeWidgetChooseMcuBoard.h \
+    XmlRead.h \
+    XmlWrite.h \
+    demo/demo_chip.h
 
 FORMS += \
+    DialogChooseBoard.ui \
+    DialogChooseMcu.ui \
+    FormChipConfig/FormChipConfig.ui \
+    FormChipConfig/Parameter/STM32/FormPinAttribute.ui \
+    FormChipConfig/Parameter/STM32/FormSTM32PeripheralsModeConfig.ui \
+    FormHome.ui \
     MainWindow.ui \
-    dialog_choose_board.ui \
-    dialog_choose_mcu.ui \
-    form_home_widget.ui
+    FormChipConfig/ChipView/WidgetLQFP48.ui
+
+INCLUDEPATH += \
+    FormChipConfig/ChipView \
+    FormChipConfig/Parameter/STM32 \
+    FormChipConfig/
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -51,3 +79,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     qrc.qrc
+
+DISTFILES +=

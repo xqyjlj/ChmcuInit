@@ -28,30 +28,13 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-19     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#include "XmlWrite.h"
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+
+XmlWrite::XmlWrite(QObject* parent) : QObject(parent)
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
-}
 
-
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
 

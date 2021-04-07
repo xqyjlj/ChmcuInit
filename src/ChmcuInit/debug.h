@@ -1,4 +1,4 @@
-/**
+﻿/**
  ** This file is part of the ChmcuInit project.
  ** Copyright 2021 xqyjlj <xqyjlj@126.com>.
  **
@@ -15,30 +15,61 @@
  ** You should have received a copy of the GNU General Public License
  ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **
+ **
+ ** 该文件是ChmcuInit项目的一部分。
+ ** 版权所有2021 xqyjlj
+ **
+ ** 本程序是免费软件:您可以重新发布和/或修改它
+ ** 根据GNU通用公共许可证的条款，由自由软件基金会，或第三版许可证，或(随您选择)任何更新版本。
+ **
+ ** 分发此程序是希望它会有用，但没有任何保证：甚至没有默示的保证特定目的的适销性或适用性。有关更多详细信息，请参见GNU通用公共许可证。
+ **
+ ** 您应该已经与这个程序一起收到GNU通用公共许可证的副本。如果不是，请参见<http://www.gnu.org/licenses/>。
+ **
  ** Change Logs:
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#ifndef DEBUG_H
-#define DEBUG_H
+#ifndef DBUG_H
+#define DBUG_H
 
 #include <QObject>
 #include <QDebug>
+#include <QMessageBox>
 
-#define  LOG_D  qDebug()
+#define  LOG_D  qDebug()    //调试信号
 
-namespace NDbg
-{
 
-class CDebug : public QObject
+
+#ifdef QT_NO_DEBUG
+    //#define  ASSERT_X(test, where, what)                          \
+    //do{                                                             \
+    //    if(test)                                                    \
+    //        NULL;                                                   \
+    //    else                                                        \
+    //        LOG_D<<"有一个错误发生：where，what ->"<<where << what;    \
+    //        QMessageBox::critical(nullptr, tr("发生错误"), QString("位于%1,%2").arg(where).arg(what));\
+    //} while (0)
+
+    #define  ASSERT_X Q_ASSERT_X
+#else
+    #define  ASSERT_X Q_ASSERT_X
+#endif
+
+
+/**
+ * @brief The Debug class
+ *
+ * 树形功能选择界面
+ */
+class Debug : public QObject
 {
     Q_OBJECT
 public:
-    explicit CDebug(QObject *parent = nullptr);
+    explicit Debug(QObject* parent = nullptr);
 
 signals:
 
 };
-}
 
-#endif // DEBUG_H
+#endif // DBUG_H

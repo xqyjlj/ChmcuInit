@@ -30,28 +30,33 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
+#include "FileManage.h"
+#include <QCoreApplication>
 #include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#include <QDir>
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+FileManage::FileManage(QObject* parent) : QObject(parent)
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
+
+}
+
+/**
+ * @brief   获得MCU包列表
+ *
+ * @param   null
+ *
+ * @return  MCU包列表
+*/
+QStringList FileManage::getMcuPackList(void) const
+{
+    QStringList list;
+    QDir dir(QCoreApplication::applicationDirPath() + "/origin/families/chip");
+    dir.setFilter(QDir::Dirs);
+    foreach (QFileInfo fullDir, dir.entryInfoList())
     {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+        if (fullDir.fileName() == "." || fullDir.fileName() == "..")
+            continue;
+        list << fullDir.fileName();
+    }
+    return list;
 }
-
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-

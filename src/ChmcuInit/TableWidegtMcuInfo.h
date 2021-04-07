@@ -30,28 +30,41 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
+#ifndef TABLEWIDGETMCUINFO_H
+#define TABLEWIDGETMCUINFO_H
+
+#include <QObject>
+#include <QTableWidget>
 #include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+
+namespace Ui
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+class TableWidegtMcuInfo;
 }
 
-
-MainWindow::~MainWindow()
+/**
+ * @brief The TableWidegtMcuInfo class
+ *
+ * MCU信息列表
+ */
+class TableWidegtMcuInfo : public QTableWidget
 {
-    delete ui;
-}
+    Q_OBJECT
+public:
+    explicit TableWidegtMcuInfo(QWidget* parent = nullptr);
 
+    /**
+     * @brief   add mcu model to QTableWidget
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void addMcuModel(Model::XmlFamilyChipModel model);
+
+signals:
+
+};
+
+#endif // TABLEWIDGETMCUINFO_H

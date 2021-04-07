@@ -30,28 +30,17 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#include "FormPinAttribute.h"
+#include "ui_FormPinAttribute.h"
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+FormPinAttribute::FormPinAttribute(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::FormPinAttribute)
 {
     ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
 }
 
-
-MainWindow::~MainWindow()
+FormPinAttribute::~FormPinAttribute()
 {
     delete ui;
 }
-

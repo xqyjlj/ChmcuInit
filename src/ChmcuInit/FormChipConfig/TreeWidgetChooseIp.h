@@ -30,28 +30,64 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef TREEWIDGETCHOOSEIP_H
+#define TREEWIDGETCHOOSEIP_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QTreeWidget>
+#include <XmlRead.h>
+
+/**
+ * @brief The TreeWidgetChooseIp class
+ *
+ * 树形IP选择界面
+ */
+class TreeWidgetChooseIp : public QTreeWidget
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
-}
+    Q_OBJECT
+public:
+    explicit TreeWidgetChooseIp(QWidget* parent = nullptr);
 
+    /**
+     * @brief   设置ip模型
+     *
+     * @param   model: ip模型
+     *
+     * @return  null
+    */
+    void setIpModel(QList<Model::XmlIpModel> mode);
+signals:
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+    /**
+     * @brief   选中ip模型
+     *
+     * @param   model: ip模型
+     *
+     * @return  null
+    */
+    void ipChosen(QString ip, QString locate);
+private:
 
+    /**
+     * @brief   查找IP
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void findIpName(void);
+private slots:
+
+    /**
+     * @brief   treeWidgetChooseIp(自己)的Item选中状态被改变而触发的槽函数
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void treeWidgetChooseIpItemSelectionChanged(void);
+private:
+    QList<Model::XmlIpModel> ipModels;
+    QStringList ipNames;
+};
+
+#endif // TREEWIDGETCHOOSEIP_H

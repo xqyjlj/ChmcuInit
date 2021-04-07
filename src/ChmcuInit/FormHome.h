@@ -30,28 +30,60 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef FORMHOME_H
+#define FORMHOME_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QWidget>
+
+namespace Ui
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+class FormHome;
 }
 
-
-MainWindow::~MainWindow()
+/**
+ * @brief The FormHome class
+ *
+ * 主页面
+ */
+class FormHome : public QWidget
 {
-    delete ui;
-}
+    Q_OBJECT
 
+public:
+    explicit FormHome(QWidget* parent = nullptr);
+    ~FormHome();
+
+private slots:
+
+    /**
+     * @brief   创建板工程按钮按下槽函数
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+
+    void buttonCreateBoardProjectPressed();
+    /**
+     * @brief   创建芯片工程按钮按下槽函数
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void buttonCreateChipProjectPressed();
+
+signals:
+    /**
+     * @brief   创建MCU工程信号
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void createMcuProject(QString name);
+private:
+    Ui::FormHome* ui;               //ui文件
+};
+
+#endif // FORMHOME_H

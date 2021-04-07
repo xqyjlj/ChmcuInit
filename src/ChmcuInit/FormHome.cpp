@@ -30,28 +30,65 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
 #include "FormHome.h"
+#include "ui_FormHome.h"
+#include "DialogChooseMcu.h"
+#include "DialogChooseBoard.h"
+#include <QStyle>
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include "Debug.h"
+#include "FileManage.h"
+#include <QMessageBox>
+FormHome::FormHome(QWidget* parent) : QWidget(parent), ui(new Ui::FormHome)
 {
     ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+    ui->buttonCreateBoardProject->setIcon(QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon));
+    ui->buttonCreateChipProject->setIcon(QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon));
+    connect(ui->buttonCreateBoardProject, SIGNAL(pressed()), this, SLOT(buttonCreateBoardProjectPressed()), Qt::UniqueConnection);
+    connect(ui->buttonCreateChipProject, SIGNAL(pressed()), this, SLOT(buttonCreateChipProjectPressed()), Qt::UniqueConnection);
 }
 
-
-MainWindow::~MainWindow()
+FormHome::~FormHome()
 {
     delete ui;
 }
 
+/**
+ * @brief   创建板工程按钮按下槽函数
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void FormHome::buttonCreateBoardProjectPressed()
+{
+    DialogChooseBoard dialog(this);
+    dialog.setWindowTitle(tr("新建开发板项目"));
+    dialog.exec();
+
+}
+
+/**
+ * @brief   创建芯片工程按钮按下槽函数
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void FormHome::buttonCreateChipProjectPressed()
+{
+    DialogChooseMcu dialog(this);
+    dialog.setWindowTitle(tr("新建芯片项目"));
+    connect(&dialog, &DialogChooseMcu::createMcuProject, this, [ = ](QString name)
+    {
+        if (FileManage().getMcuPackList().contains(name))
+        {
+            emit createMcuProject(name);
+        }
+        else
+        {
+            QMessageBox::critical(nullptr, tr("Error"), tr("目前还未准备这个包"));
+        }
+    });
+    dialog.exec();
+}

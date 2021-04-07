@@ -28,30 +28,38 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-25     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef CDEMO_CHIP_H
+#define CDEMO_CHIP_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QObject>
+#include <QGraphicsItem>
+
+namespace NDemo
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+
+class CDemo_chip : public QGraphicsItem
+{
+public:
+    CDemo_chip(const QColor &color, int x, int y);
+
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+
+private:
+    int x;
+    int y;
+    QColor color;
+    QVector<QPointF> stuff;
+};
+
 }
 
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
+#endif // CDEMO_CHIP_H

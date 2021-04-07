@@ -28,30 +28,42 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-04     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
-
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#ifndef STM32MODEL_H
+#define STM32MODEL_H
+#include <QStringList>
+namespace STM32Model
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
+/**
+ * @brief The XmlIpF1IoModel class
+ *
+ * 参照XML文件理解
+ */
+class XmlIpF1IoModel
+{
+public:
+    class TableModel
     {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+    public:
+        QString key;
+        QString value;
+    };
+
+    class ModeModel
+    {
+    public:
+        QString name;
+        QString widgets;
+        QList<TableModel> tables;
+    };
+public:
+    QString mcuName;
+    QString subFamilyName;
+    QList<ModeModel> mode;
+};
 }
 
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 
+#endif // STM32MODEL_H

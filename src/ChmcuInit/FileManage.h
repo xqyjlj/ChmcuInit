@@ -30,28 +30,33 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef FILEMANAGE_H
+#define FILEMANAGE_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QObject>
+#include <QStringList>
+
+/**
+ * @brief The FileManage class
+ *
+ * 文件管理类
+ */
+class FileManage : public QObject
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
-}
+    Q_OBJECT
+public:
+    explicit FileManage(QObject* parent = nullptr);
 
+    /**
+     * @brief   获得MCU包列表
+     *
+     * @param   null
+     *
+     * @return  MCU包列表
+    */
+    QStringList getMcuPackList(void) const;
+signals:
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+};
 
+#endif // FILEMANAGE_H

@@ -30,28 +30,34 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include "TableWidegtMcuInfo.h"
+
+TableWidegtMcuInfo::TableWidegtMcuInfo(QWidget* parent) : QTableWidget(parent)
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+
 }
 
-
-MainWindow::~MainWindow()
+/**
+ * @brief   add mcu model to QTableWidget
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void TableWidegtMcuInfo::addMcuModel(Model::XmlFamilyChipModel model)
 {
-    delete ui;
+    int count = this->rowCount();
+    this->insertRow(count);
+    this->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    this->setItem(count, 0, new QTableWidgetItem(model.name));
+    this->setItem(count, 3, new QTableWidgetItem(model.packagename));
+    this->setItem(count, 4, new QTableWidgetItem(model.flash));
+    this->setItem(count, 5, new QTableWidgetItem(model.ram));
+    this->setItem(count, 6, new QTableWidgetItem(model.io));
+    this->setItem(count, 7, new QTableWidgetItem(model.frequency));
+    this->setItem(count, 8, new QTableWidgetItem(model.company));
+    this->setItem(count, 9, new QTableWidgetItem(model.core));
+    this->setItem(count, 10, new QTableWidgetItem(model.family));
+    this->setItem(count, 11, new QTableWidgetItem(model.subfamily));
 }
-

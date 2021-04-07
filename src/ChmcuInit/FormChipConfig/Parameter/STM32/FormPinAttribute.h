@@ -28,30 +28,32 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-04     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef FORMPINATTRIBUTE_H
+#define FORMPINATTRIBUTE_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QWidget>
+
+namespace Ui
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+class FormPinAttribute;
 }
-
-
-MainWindow::~MainWindow()
+/**
+ * @brief The FormPinAttribute class
+ *
+ * 继承自QWidget，用于配置芯片的引脚属性
+ */
+class FormPinAttribute : public QWidget
 {
-    delete ui;
-}
+    Q_OBJECT
 
+public:
+    explicit FormPinAttribute(QWidget* parent = nullptr);
+    ~FormPinAttribute();
+
+private:
+    Ui::FormPinAttribute* ui;               //ui文件
+};
+
+#endif // FORMPINATTRIBUTE_H

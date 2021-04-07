@@ -30,28 +30,29 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef TREEWIDGETCHOOSEMCUBOARD_H
+#define TREEWIDGETCHOOSEMCUBOARD_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QObject>
+#include <QTreeWidget>
+
+namespace Ui
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+class TreeWidgetChooseMcuBoard;
 }
-
-
-MainWindow::~MainWindow()
+/**
+ * @brief The TreeWidgetChooseIp class
+ *
+ * 树形选择芯片与板界面
+ */
+class TreeWidgetChooseMcuBoard : public QTreeWidget
 {
-    delete ui;
-}
+    Q_OBJECT
+public:
+    explicit TreeWidgetChooseMcuBoard(QWidget* parent = nullptr);
 
+signals:
+
+};
+
+#endif // TREEWIDGETCHOOSEMCUBOARD_H

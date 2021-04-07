@@ -28,30 +28,61 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-04     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef STM32XMLREAD_H
+#define STM32XMLREAD_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QObject>
+#include <QXmlStreamReader>
+#include "STM32Model.h"
+
+namespace STM32Xml
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+/**
+ * @brief The STM32XmlRead class
+ *
+ * 提供STM32XML文件读函数
+ */
+class STM32XmlRead : public QObject
+{
+    Q_OBJECT
+public:
+    explicit STM32XmlRead(QObject* parent = nullptr);
+
+    /**
+     * @brief   获得STM32的IP内容中F1的IO模型
+     *
+     * @param   local: 库位置
+     *          QString：亚科名
+     *          McuName：mcu名
+     *
+     * @return  STM32的IP内容中F1的IO库模型
+    */
+    STM32Model::XmlIpF1IoModel getIpF1IoModel(QString local, QString subfamily, QString mcuName) const;
+signals:
+
+private:
+
+    /**
+     * @brief   获得STM32的IP内容中F1的IO模型中的模式库
+     *
+     * @param   reader: 读XML工具
+     *
+     * @return  STM32的IP内容中F1的IO库模型中的模式库
+    */
+    QList<STM32Model::XmlIpF1IoModel::ModeModel> readIpF1IoModeModel(QXmlStreamReader* reader) const;
+
+    /**
+     * @brief   获得STM32的IP内容中F1的IO模型中的表库
+     *
+     * @param   reader: 读XML工具
+     *
+     * @return  STM32的IP内容中F1的IO库模型中的表库
+    */
+    QList<STM32Model::XmlIpF1IoModel::TableModel> readIpF1IoTableModel(QXmlStreamReader* reader) const;
+};
 }
 
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
+#endif // STM32XMLREAD_H

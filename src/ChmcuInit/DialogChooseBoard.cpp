@@ -30,28 +30,23 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#include "DialogChooseBoard.h"
+#include "ui_DialogChooseBoard.h"
+#include <QPushButton>
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+DialogChooseBoard::DialogChooseBoard(QWidget* parent) :
+    QDialog(parent),
+    ui(new Ui::DialogChooseBoard)
 {
     ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("创建"));
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("取消"));
+
+    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()), Qt::UniqueConnection);
+    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()), Qt::UniqueConnection);
 }
 
-
-MainWindow::~MainWindow()
+DialogChooseBoard::~DialogChooseBoard()
 {
     delete ui;
 }
-

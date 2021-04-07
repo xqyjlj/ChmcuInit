@@ -28,30 +28,69 @@
  **
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-03-29     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
+#ifndef WIDGETLQFP48_H
+#define WIDGETLQFP48_H
+#include "LabelPin.h"
+#include <QWidget>
 #include "XmlRead.h"
-#include "FormHome.h"
-
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+namespace Ui
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+class WidgetLQFP48;
 }
-
-
-MainWindow::~MainWindow()
+/**
+ * @brief The WidgetLQFP48 class
+ *
+ * 继承自QWidget，做LQFP48封装的引脚使用
+ */
+class WidgetLQFP48 : public QWidget
 {
-    delete ui;
-}
+    Q_OBJECT
 
+public:
+    explicit WidgetLQFP48(QWidget *parent = nullptr);
+    ~WidgetLQFP48();
+    /**
+     * @brief   设置引脚模型
+     *
+     * @param   model: 引脚模型
+     *
+     * @return  null
+    */
+    void setPinModel(QList<Model::XmlPinModel> list);
+    /**
+     * @brief   如果已安装此对象作为监视对象的事件过滤器，则过滤事件。
+     *
+     * @param   obj: QObject对象
+     *          event: 事件
+     *
+     * @return  bool: eventFilter
+    */
+    virtual bool eventFilter(QObject *obj, QEvent *event) override;
+signals:
+    /**
+     * @brief   pin点击信号
+     *
+     * @param   bools: 装有所有引脚被选中的bool状态
+     *
+     * @return  null
+    */
+    void pinClicked(QVector<bool> bools);
+public slots:
+    /**
+     * @brief   选中引脚
+     *
+     * @param   bools: 装有所有引脚被选中的bool状态
+     *
+     * @return  null
+    */
+    void selectPin(QVector<bool> bools);
+private:
+
+private:
+    Ui::WidgetLQFP48 *ui;                   //ui文件
+    QList<LabelPin *> mpins;                //引脚
+};
+
+#endif // WIDGETLQFP48_H

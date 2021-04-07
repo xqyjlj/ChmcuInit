@@ -30,28 +30,42 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef FORMSTM32PERIPHERALSMODECONFIG_H
+#define FORMSTM32PERIPHERALSMODECONFIG_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QWidget>
+
+namespace Ui
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
+class FormSTM32PeripheralsModeConfig;
 }
-
-
-MainWindow::~MainWindow()
+/**
+ * @brief The FormSTM32PeripheralsModeConfig class
+ *
+ * 继承自QWidget，做芯片的引脚外设模式配置
+ */
+class FormSTM32PeripheralsModeConfig : public QWidget
 {
-    delete ui;
-}
+    Q_OBJECT
 
+public:
+    explicit FormSTM32PeripheralsModeConfig(QWidget* parent = nullptr);
+    ~FormSTM32PeripheralsModeConfig();
+
+    /**
+     * @brief   设置IP核
+     *
+     * @param   mcu: mcu名
+     *          ipLocate: IP核的地址
+     *
+     * @return  null
+    */
+    void setIp(QString mcu, QString ipLocate);
+private:
+//    void readIp(void);
+//    void addModeWidegt(void);
+private:
+    Ui::FormSTM32PeripheralsModeConfig* ui;         //ui文件
+};
+
+#endif // FORMSTM32PERIPHERALSMODECONFIG_H

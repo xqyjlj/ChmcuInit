@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
@@ -17,13 +17,15 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QStackedWidget" name="MainWindowStackedWidget">
-      <widget class="CForm_home_widget" name="HomePage"/>
-      <widget class="QWidget" name="page_2"/>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="FormHome" name="formHome"/>
+      <widget class="FormChipConfig" name="formChipConfig"/>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -40,12 +42,19 @@
    </widget>
    <addaction name="menu"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CForm_home_widget</class>
+   <class>FormChipConfig</class>
    <extends>QWidget</extends>
-   <header>form_home_widget.h</header>
+   <header>FormChipConfig.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FormHome</class>
+   <extends>QWidget</extends>
+   <header>FormHome.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

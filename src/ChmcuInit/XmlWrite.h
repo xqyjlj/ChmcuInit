@@ -30,28 +30,19 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
+#ifndef XML_WRITE_H
+#define XML_WRITE_H
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QObject>
+
+class XmlWrite : public QObject
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
-    {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
-}
+    Q_OBJECT
+public:
+    explicit XmlWrite(QObject* parent = nullptr);
 
+signals:
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+};
 
+#endif // XML_XML_WRITE_H

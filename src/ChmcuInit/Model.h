@@ -30,28 +30,93 @@
  ** Date           Author       Notes                    Email
  ** 2021-03-20     xqyjlj       the first version        xqyjlj@126.com
  **/
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "Debug.h"
-#include "Model.h"
-#include "XmlRead.h"
-#include "FormHome.h"
 
-MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
+#ifndef MODEL_H
+#define MODEL_H
+
+#include <QStringList>
+
+namespace Model
 {
-    ui->setupUi(this);
-    connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
+
+/**
+ * @brief The XmlPinModel class
+ *
+ * 参照XML文件理解
+ */
+class XmlPinModel
+{
+public:
+    class SignalModel
     {
-        LOG_D << name;
-        this->setWindowState(Qt::WindowMaximized);
-        ui->formChipConfig->setMcu(name);
-        ui->MainWindowStackedWidget->setCurrentIndex(1);
-    });
-}
+    public:
+        QString name;
+        QString io_modes;
+    };
+public:
+    QString name;
+    QString position;
+    QString type;
+    QList<SignalModel> signal;
+};
 
-
-MainWindow::~MainWindow()
+class XmlIpModel
 {
-    delete ui;
+public:
+    QString instance_name;
+    QString name;
+    QString version;
+    QString pack_name;
+    QString pack_locate;
+};
+
+class XmlFamilyChipModel
+{
+public:
+    class XmlVoltageModel
+    {
+    public:
+        QString min;
+        QString max;
+    };
+
+    class XmlTemperatureModel
+    {
+    public:
+        QString min;
+        QString max;
+    };
+
+    class XmlCurrentModel
+    {
+    public:
+        QString lowest;
+        QString run;
+    };
+
+    class XmlPeripheralModel
+    {
+    public:
+        QString type;
+    };
+public:
+    QString company;
+    QString family;
+    QString subfamily;
+    QString name;
+    QString packagename;
+    QString core;
+    QString frequency;
+    QString ram;
+    QString io;
+    QString flash;
+    XmlVoltageModel voltage;
+    XmlTemperatureModel temperature;
+    XmlCurrentModel current;
+    QList<XmlPeripheralModel> peripheral;
+};
+
 }
 
+
+#endif // MODEL_H
