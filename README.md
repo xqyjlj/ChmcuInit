@@ -53,61 +53,27 @@ MCU图形化配置程序，基于QT，灵感来自cubeMX。
 
 ### 微信
 
-#### 少林寺驻武当山办事处王喇嘛<img src="./assets/少林寺驻武当山办事处大神父王喇嘛.png" width=25% align=right hspace="5" vspace="5"/>
+#### 少林寺驻武当山办事处大神父王喇嘛
 
 ​	这个是我自己的大号，里面主要是一些同学，好朋友，如果你想认识认识我，可以加这个号。当然，我希望加我的，是可以一起玩原神，炉石，王者的大腿.
 
+<img src="./assets/少林寺驻武当山办事处大神父王喇嘛.png" alt="少林寺驻武当山办事处大神父王喇嘛" style="zoom:50%;" />
 
-
-
-
-
-
-
-
-
-
-#### 北京大兴野兔繁殖基地<img src="./assets/北京大兴野兔繁殖基地.png" width=25% align=right hspace="5" vspace="5"/>
+#### 北京大兴野兔繁殖基地
 
 ​	这个是我自己的小号，如果联系我是纯粹为了工作，学习，项目等方面的，请加这个号。
 
+<img src="./assets/北京大兴野兔繁殖基地.png" alt="北京大兴野兔繁殖基地" style="zoom:50%;" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-### QQ <img src="./assets/QQ.jpg" width=25% align=right hspace="5" vspace="5"/>
+### QQ 
 
 ​	QQ号我本人不经常用，用QQ还不如发邮箱呢（逃）
 
-
-
-
-
-
-
-
+<img src="./assets/QQ.jpg" alt="少林寺驻武当山办事处大神父王喇嘛" style="zoom:50%;" />
 
 ### 邮箱
 
 ​	xqyjlj@126.com
-
-
-
-
-
-
-
-
 
 ### 关于打赏
 
@@ -115,8 +81,8 @@ MCU图形化配置程序，基于QT，灵感来自cubeMX。
 
 #### 微信 
 
-![微信收款码](./assets/微信收款码.png)
+<img src="./assets/微信收款码.png" alt="微信收款码" style="zoom:50%;" />
 
 #### 支付宝
 
-![支付宝收款码](./assets/支付宝收款码.png)
+<img src="./assets/支付宝收款码.png" alt="支付宝收款码" style="zoom:70%;" />
