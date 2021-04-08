@@ -109,20 +109,19 @@ void FormChipConfig::setPinModel(QString mcuPath, QString mcuName)
 */
 void FormChipConfig::setFormPinAttributeWidget(FormPinAttribute* widget)
 {
+    LOG_D << widget;
     static FormPinAttribute* last_widget = nullptr;
-    if (widget)
+    ASSERT_X(widget, "FormChipConfig", "空指针");
+    if (last_widget)
     {
-        if (last_widget)
-        {
-            widget->setParent(ui->PInAttributeWidget);
-            ui->PinAttributeLayout->replaceWidget(last_widget, widget);
-            widget->show();
-            last_widget->hide();
-        }
-        else
-        {
-            ui->PinAttributeLayout->addWidget(widget);
-        }
+        widget->setParent(ui->PInAttributeWidget);
+        ui->PinAttributeLayout->replaceWidget(last_widget, widget);
+        widget->show();
+        last_widget->hide();
+    }
+    else
+    {
+        ui->PinAttributeLayout->addWidget(widget);
     }
     last_widget = widget;
 }

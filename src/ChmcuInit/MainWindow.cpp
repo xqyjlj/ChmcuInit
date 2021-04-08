@@ -40,13 +40,21 @@
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->MainWindowStackedWidget->setCurrentIndex(0);
     connect(ui->formHome, &FormHome::createMcuProject, this, [ = ](QString name)
     {
-        LOG_D << name;
         this->setWindowState(Qt::WindowMaximized);
         ui->formChipConfig->setMcu(name);
         ui->MainWindowStackedWidget->setCurrentIndex(1);
     });
+
+#ifdef QT_NO_DEBUG
+    ui->MainWindowStackedWidget->setCurrentIndex(0);
+#else
+    this->setWindowState(Qt::WindowMaximized);
+    ui->formChipConfig->setMcu("STM32F103C8T6");
+    ui->MainWindowStackedWidget->setCurrentIndex(1);
+#endif
 }
 
 

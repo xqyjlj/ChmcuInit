@@ -92,6 +92,7 @@ void TreeWidgetChooseFunction::setPinModel(QList<Model::XmlPinModel> list)
 void TreeWidgetChooseFunction::TreeWidgetChooseFunctionItemSelectionChanged()
 {
     selectItems = selectedItems();
+    LOG_D << selectItems;
     QVector<bool> bools(mpinItems.length(), false);
     foreach (QTreeWidgetItem* item, selectItems)
     {
@@ -99,6 +100,7 @@ void TreeWidgetChooseFunction::TreeWidgetChooseFunctionItemSelectionChanged()
         if (index > mpinItems.length() - 1 || index < 0)
             return;
         bools[index] = true;
+
         if (mformPinAttributes.at(index) == nullptr)
         {
             mformPinAttributes[index] = new FormPinAttribute();
@@ -117,9 +119,15 @@ void TreeWidgetChooseFunction::TreeWidgetChooseFunctionItemSelectionChanged()
 */
 void TreeWidgetChooseFunction::selectPin(QVector<bool> bools)
 {
-    if (bools.length() == mpinItems.length())
+    int length = mpinItems.length();
+    QList<QTreeWidgetItem*> _selectItems = selectedItems();
+    foreach (QTreeWidgetItem* item, _selectItems)
     {
-        int length = mpinItems.length();
+        item->setSelected(false);
+    }
+
+    if (bools.length() == length)
+    {
         for (int i = 0; i < length; i++)
         {
             mpinItems.at(i)->setSelected(bools.at(i));
