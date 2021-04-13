@@ -36,13 +36,12 @@
 #include "Debug.h"
 #include <QFile>
 
-#include <QCoreApplication>
 #include <QWebEngineView>
 #include <QTextStream>
 #include <QWebChannel>
 #include "FileManage.h"
-
 #include <QMessageBox>
+
 DialogChooseMcu::DialogChooseMcu(QWidget* parent): QDialog(parent), ui(new Ui::DialogChooseMcu)
 {
     ui->setupUi(this);
@@ -78,6 +77,18 @@ DialogChooseMcu::DialogChooseMcu(QWidget* parent): QDialog(parent), ui(new Ui::D
 DialogChooseMcu::~DialogChooseMcu()
 {
     delete ui;
+}
+
+/**
+ * @brief   设置基础对象
+ *
+ * @param   baseObject: 基础对象
+ *
+ * @return  null
+*/
+void DialogChooseMcu::setBaseObject(BaseObject* baseObject)
+{
+    mbaseObject = baseObject;
 }
 
 /**
@@ -239,9 +250,9 @@ void DialogChooseMcu::findPackage(void)
 {
     foreach (Model::XmlFamilyChipModel model, mmcus)
     {
-        if ((!model.packagename.isEmpty()) && (!mpackages.contains(model.packagename)))
+        if ((!model.package.isEmpty()) && (!mpackages.contains(model.package)))
         {
-            mpackages << model.packagename;
+            mpackages << model.package;
         }
     }
 }
@@ -301,6 +312,13 @@ void DialogChooseMcu::buttonBoxClick(QAbstractButton* button)
         QList<QTableWidgetItem*> items =  ui->tableWidegtMcuInfo->selectedItems();
         if (!items.isEmpty())
         {
+            ASSERT_X(mbaseObject, "DialogChooseMcu", "空指针");
+            mbaseObject->setMcuName(items.at(0)->text());
+            mbaseObject->setPackageName(items.at(3)->text());
+            mbaseObject->setCompanyName(items.at(8)->text());
+            mbaseObject->setFamilyName(items.at(10)->text());
+            mbaseObject->setSubfamilyName(items.at(11)->text());
+
             emit createMcuProject(items.at(0)->text());
         }
         else
@@ -322,7 +340,8 @@ void DialogChooseMcu::tableWidgetItemSelectionChanged()
     QList<QTableWidgetItem*> items =  ui->tableWidegtMcuInfo->selectedItems();
     if (!items.isEmpty())
     {
-        QString path = QCoreApplication::applicationDirPath() + "/origin/families/chip/" + items.at(0)->text() + "/readme.html";
+        ASSERT_X(mbaseObject, "DialogChooseMcu", "空指针");
+        QString path = mbaseObject->getMcuReadMePath(items.at(0)->text());
         if (mmcuPacks.contains(items.at(0)->text()))
         {
             QFile file(path);

@@ -35,6 +35,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "BaseObject.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -58,5 +59,6 @@ public:
 
 private:
     Ui::MainWindow* ui;                 //ui文件
+    BaseObject* mbaseObject = nullptr;  //基础对象
 };
 #endif // MAINWINDOW_H

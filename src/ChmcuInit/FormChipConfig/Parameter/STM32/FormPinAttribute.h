@@ -34,6 +34,10 @@
 #define FORMPINATTRIBUTE_H
 
 #include <QWidget>
+#include "STM32Model.h"
+#include "BaseObject.h"
+#include <QComboBox>
+#include <QTreeWidgetItem>
 
 namespace Ui
 {
@@ -47,13 +51,85 @@ class FormPinAttribute;
 class FormPinAttribute : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit FormPinAttribute(QWidget* parent = nullptr);
     ~FormPinAttribute();
 
+    /**
+     * @brief   设置基础对象
+     *
+     * @param   baseObject: 基础对象
+     *
+     * @return  null
+    */
+    void setBaseObject(const BaseObject* baseObject);
+
+    /**
+     * @brief   加载本模块
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void load(void);
+
+    /**
+     * @brief   设置标题
+     *
+     * @param   title: 标题
+     *          attribute: 属性
+     *
+     * @return  null
+    */
+    void setTitle(const QString title, const QString attribute);
+
+    /**
+     * @brief   设置种类
+     *
+     * @param   type: 种类
+     *
+     * @return  null
+    */
+    void setType(const QString type);
+
+
+private slots:
+
+    /**
+     * @brief   comboBox的项被改变时触发的槽函数
+     *
+     * @param   str: 触发之后文本
+     *
+     * @return  null
+    */
+    void attributeComboBoxCurrentTextChanged(QString str);
 private:
-    Ui::FormPinAttribute* ui;               //ui文件
+
+    /**
+     * @brief   添加Item
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void addItem(void);
+private:
+    Ui::FormPinAttribute* ui;                   //ui文件
+    QString mtitle;                             //标题
+    QStringList mattributes;                    //属性
+
+    QStringList mkeys;                          //键
+    QStringList mvalues;                        //值
+
+    QString mtype;                              //类型
+
+    STM32Model::XmlIpF1IoModel mipF1IoModel;    //IO模型
+
+    QList<QTreeWidgetItem*> mtreeWidgetItems;   //属性下拉窗口
+
+    QList<QComboBox*> mattributeComboBoxs;      //属性下拉窗口
+
+    BaseObject* mbaseObject = nullptr;          //基础对象
 };
 
 #endif // FORMPINATTRIBUTE_H

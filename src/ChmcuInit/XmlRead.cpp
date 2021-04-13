@@ -307,7 +307,7 @@ Model::XmlFamilyChipModel XmlRead::readMcuInfo(QXmlStreamReader* reader) const
         if (reader->isStartElement() && reader->name() == QString("Mcu"))
         {
             model.name = reader->attributes().value("Name").toString();
-            model.packagename = reader->attributes().value("PackageName").toString();
+            model.package = reader->attributes().value("PackageName").toString();
             model.company = reader->attributes().value("CompanyName").toString();
             model.family = reader->attributes().value("FamilyName").toString();
             model.subfamily = reader->attributes().value("SubFamilyName").toString();
@@ -363,14 +363,14 @@ Model::XmlFamilyChipModel XmlRead::readMcuInfo(QXmlStreamReader* reader) const
 }
 
 /**
- * @brief   获得Pin信息
+ * @brief   获得Pin模型列表
  *
  * @param   mcuPath: MCU路径
  *          mcuName: MCU名
  *
- * @return  Pin信息
+ * @return  Pin模型列表
 */
-QList<Model::XmlPinModel> XmlRead::getPinInfo(QString mcuPath, QString mcuName) const
+QList<Model::XmlPinModel> XmlRead::getPinModels(QString mcuPath, QString mcuName) const
 {
     QList<Model::XmlPinModel> list;
     int pins = 0;
@@ -432,7 +432,7 @@ QList<Model::XmlPinModel> XmlRead::readPinInfo(QXmlStreamReader* reader) const
                 {
                     Model::XmlPinModel::SignalModel pin_signal_model;
                     pin_signal_model.name = reader->attributes().value("Name").toString();
-                    pin_signal_model.io_modes = reader->attributes().value("IOModes").toString();
+                    pin_signal_model.ioModes = reader->attributes().value("IOModes").toString();
                     pin_model.signal << pin_signal_model;
                 }
                 reader->readNext();
@@ -444,13 +444,13 @@ QList<Model::XmlPinModel> XmlRead::readPinInfo(QXmlStreamReader* reader) const
 }
 
 /**
- * @brief   获得IP信息
+ * @brief   获得IP信息列表
  *
  * @param   mcu_path: MCU路径
  *
- * @return  IP信息
+ * @return  IP信息列表
 */
-QList<Model::XmlIpModel> XmlRead::getIpInfo(QString mcuPath) const
+QList<Model::XmlIpModel> XmlRead::getIpModels(QString mcuPath) const
 {
     QList<Model::XmlIpModel> list;
     QFile file(mcuPath);
@@ -463,11 +463,11 @@ QList<Model::XmlIpModel> XmlRead::getIpInfo(QString mcuPath) const
             if (reader.isStartElement() && reader.name() == QString("IP"))
             {
                 Model::XmlIpModel ip_model;
-                ip_model.instance_name = reader.attributes().value("InstanceName").toString();
+                ip_model.instanceName = reader.attributes().value("InstanceName").toString();
                 ip_model.name = reader.attributes().value("Name").toString();
-                ip_model.pack_name = reader.attributes().value("PackName").toString();
+                ip_model.packName = reader.attributes().value("PackName").toString();
                 ip_model.version = reader.attributes().value("Version").toString();
-                ip_model.pack_locate = reader.attributes().value("PackLocate").toString();
+                ip_model.packLocate = reader.attributes().value("PackLocate").toString();
                 list << ip_model;
             }
             reader.readNext();

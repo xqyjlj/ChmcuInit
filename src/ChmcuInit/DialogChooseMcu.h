@@ -36,6 +36,8 @@
 #include <QDialog>
 #include "XmlRead.h"
 #include <QAbstractButton>
+#include "BaseObject.h"
+
 namespace Ui
 {
 class DialogChooseMcu;
@@ -53,6 +55,15 @@ class DialogChooseMcu : public QDialog
 public:
     explicit DialogChooseMcu(QWidget* parent = nullptr);
     ~DialogChooseMcu();
+
+    /**
+     * @brief   设置基础对象
+     *
+     * @param   baseObject: 基础对象
+     *
+     * @return  null
+    */
+    void setBaseObject(BaseObject* baseObject);
 
 private:
 
@@ -176,6 +187,7 @@ private:
     QStringList mcores;                                 //内核列表
     QStringList mpackages;                              //封装列表
     QStringList mmcuPacks;                              //Mcu包列表
+    BaseObject* mbaseObject = nullptr;                  //基础对象
 };
 
 #endif // DIALOGCHOOSEMCU_H

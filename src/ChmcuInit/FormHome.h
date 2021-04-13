@@ -34,6 +34,7 @@
 #define FORMHOME_H
 
 #include <QWidget>
+#include "BaseObject.h"
 
 namespace Ui
 {
@@ -53,6 +54,15 @@ public:
     explicit FormHome(QWidget* parent = nullptr);
     ~FormHome();
 
+    /**
+     * @brief   设置基础对象
+     *
+     * @param   baseObject: 基础对象
+     *
+     * @return  null
+    */
+    void setBaseObject(BaseObject* baseObject);
+
 private slots:
 
     /**
@@ -62,8 +72,8 @@ private slots:
      *
      * @return  null
     */
-
     void buttonCreateBoardProjectPressed();
+
     /**
      * @brief   创建芯片工程按钮按下槽函数
      *
@@ -74,6 +84,7 @@ private slots:
     void buttonCreateChipProjectPressed();
 
 signals:
+
     /**
      * @brief   创建MCU工程信号
      *
@@ -84,6 +95,7 @@ signals:
     void createMcuProject(QString name);
 private:
     Ui::FormHome* ui;               //ui文件
+    BaseObject* mbaseObject;        //基础对象
 };
 
 #endif // FORMHOME_H

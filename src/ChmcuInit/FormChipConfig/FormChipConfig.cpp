@@ -52,33 +52,43 @@ FormChipConfig::~FormChipConfig()
 }
 
 /**
- * @brief   设置Mcu
+ * @brief   设置基础对象
  *
- * @param   mcuName: mcu名
+ * @param   baseObject: 基础对象
  *
  * @return  null
 */
-void FormChipConfig::setMcu(QString mcuName)
+void FormChipConfig::setBaseObject(const BaseObject* baseObject)
 {
-    mcorePath = QCoreApplication::applicationDirPath();
-    mmcuPath = mcorePath + "/origin/families/chip/" + mcuName + "/" + mcuName + ".xml";
-    mmcuName = mcuName;
-    setPinModel(mmcuPath, mmcuName);
-    setIpModel(mmcuPath);
+    mbaseObject = const_cast<BaseObject*>(baseObject);
+    ASSERT_X(mbaseObject, "FormChipConfig", "空指针-> mbaseObject");
+    load();
 }
 
 /**
- * @brief   设置Mcu引脚模型
+ * @brief   加载本模块
  *
- * @param   mcuName: mcu名
+ * @param   null
  *
  * @return  null
 */
-void FormChipConfig::setPinModel(QString mcuPath, QString mcuName)
+void FormChipConfig::load(void)
 {
-    mpinModels = Xml::XmlRead().getPinInfo(mcuPath, mcuName);
-    Model::XmlFamilyChipModel family = Xml::XmlRead().getMcuInfo(mcuName);
-    if (family.packagename == "LQFP48")
+    setMcuWidegt();
+    ui->treeWidgetChooseIp->setBaseObject(mbaseObject);
+    ui->treeWidgetChooseFunction->setBaseObject(mbaseObject);
+}
+
+/**
+ * @brief   设置McuWidget
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void FormChipConfig::setMcuWidegt(void)
+{
+    if (mbaseObject->getPackageName() == "LQFP48")
     {
         if (!mpackWidget)
         {
@@ -87,7 +97,7 @@ void FormChipConfig::setPinModel(QString mcuPath, QString mcuName)
             connect(mpackWidget, SIGNAL(pinClicked(QVector<bool>)), ui->treeWidgetChooseFunction, SLOT(selectPin(QVector<bool>)), Qt::UniqueConnection);
         }
         ASSERT_X(mpackWidget, "FormChipConfig", "空指针");
-        reinterpret_cast<WidgetLQFP48*>(mpackWidget)->setPinModel(mpinModels);
+        reinterpret_cast<WidgetLQFP48*>(mpackWidget)->setBaseObject(mbaseObject);
     }
     else
     {
@@ -97,7 +107,6 @@ void FormChipConfig::setPinModel(QString mcuPath, QString mcuName)
     ASSERT_X(mgraphicsScene, "FormChipConfig", "空指针");
     mgraphicsScene->addWidget(mpackWidget);
     ui->graphicsViewMcu->setScene(mgraphicsScene);
-    ui->treeWidgetChooseFunction->setPinModel(mpinModels);
 }
 
 /**
@@ -109,7 +118,6 @@ void FormChipConfig::setPinModel(QString mcuPath, QString mcuName)
 */
 void FormChipConfig::setFormPinAttributeWidget(FormPinAttribute* widget)
 {
-    LOG_D << widget;
     static FormPinAttribute* last_widget = nullptr;
     ASSERT_X(widget, "FormChipConfig", "空指针");
     if (last_widget)
@@ -127,19 +135,6 @@ void FormChipConfig::setFormPinAttributeWidget(FormPinAttribute* widget)
 }
 
 /**
- * @brief   设置IP引脚模型
- *
- * @param   mcuName: mcu名
- *
- * @return  null
-*/
-void FormChipConfig::setIpModel(QString mcuPath)
-{
-    mipModels = Xml::XmlRead().getIpInfo(mcuPath);
-    ui->treeWidgetChooseIp->setIpModel(mipModels);
-}
-
-/**
  * @brief   设置外设属性配置界面槽函数
  *
  * @param   ip: ip名
@@ -149,10 +144,10 @@ void FormChipConfig::setIpModel(QString mcuPath)
 */
 void FormChipConfig::setFormPeripheralsModeConfigWidget(QString ip, QString locate)
 {
-    if (locate.contains("stm32"))
-    {
-        setFormSTM32PeripheralsModeConfigWidget(ip, mcorePath + locate);
-    }
+//    if (locate.contains("stm32"))
+//    {
+//        setFormSTM32PeripheralsModeConfigWidget(ip, mcorePath + locate);
+//    }
 }
 
 /**
@@ -165,37 +160,37 @@ void FormChipConfig::setFormPeripheralsModeConfigWidget(QString ip, QString loca
 */
 void FormChipConfig::setFormSTM32PeripheralsModeConfigWidget(QString ip, QString locate)
 {
-    if (!mmodeConfigNames.contains(ip))
-    {
-        mmodeConfigNames << ip;
-        FormSTM32PeripheralsModeConfig* mode_config = new FormSTM32PeripheralsModeConfig(this);
-        mode_config->setWhatsThis(ip);
-        mode_config->setIp(mmcuName, locate);
-        mformSTM32PeripheralsModeConfigs << mode_config;
-    }
+//    if (!mmodeConfigNames.contains(ip))
+//    {
+//        mmodeConfigNames << ip;
+//        FormSTM32PeripheralsModeConfig* mode_config = new FormSTM32PeripheralsModeConfig(this);
+//        mode_config->setWhatsThis(ip);
+//        mode_config->setIp(mmcuName, locate);
+//        mformSTM32PeripheralsModeConfigs << mode_config;
+//    }
 
-    static int last_node = -1;
-    int node = -1, len = mformSTM32PeripheralsModeConfigs.length();
-    for (int i = 0; i < len; i++)
-    {
-        if (mformSTM32PeripheralsModeConfigs.at(i)->whatsThis() == ip)
-        {
-            node = i;
-            break;
-        }
-    }
-    if (node > -1)
-    {
-        if (last_node > -1)
-        {
-            ui->gridLayout_3->replaceWidget(mformSTM32PeripheralsModeConfigs.at(last_node), mformSTM32PeripheralsModeConfigs.at(node));
-            mformSTM32PeripheralsModeConfigs.at(node)->show();
-            mformSTM32PeripheralsModeConfigs.at(last_node)->hide();
-        }
-        else
-        {
-            ui->gridLayout_3->addWidget(mformSTM32PeripheralsModeConfigs.at(node));
-        }
-        last_node = node;
-    }
+//    static int last_node = -1;
+//    int node = -1, len = mformSTM32PeripheralsModeConfigs.length();
+//    for (int i = 0; i < len; i++)
+//    {
+//        if (mformSTM32PeripheralsModeConfigs.at(i)->whatsThis() == ip)
+//        {
+//            node = i;
+//            break;
+//        }
+//    }
+//    if (node > -1)
+//    {
+//        if (last_node > -1)
+//        {
+//            ui->gridLayout_3->replaceWidget(mformSTM32PeripheralsModeConfigs.at(last_node), mformSTM32PeripheralsModeConfigs.at(node));
+//            mformSTM32PeripheralsModeConfigs.at(node)->show();
+//            mformSTM32PeripheralsModeConfigs.at(last_node)->hide();
+//        }
+//        else
+//        {
+//            ui->gridLayout_3->addWidget(mformSTM32PeripheralsModeConfigs.at(node));
+//        }
+//        last_node = node;
+//    }
 }

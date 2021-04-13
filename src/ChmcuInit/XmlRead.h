@@ -98,23 +98,23 @@ public:
     Model::XmlFamilyChipModel getMcuInfo(QString mcu) const;
 
     /**
-     * @brief   获得Pin信息
+     * @brief   获得Pin模型列表
      *
      * @param   mcuPath: MCU路径
      *          mcuName: MCU名
      *
-     * @return  Pin信息
+     * @return  Pin模型列表
     */
-    QList<Model::XmlPinModel> getPinInfo(QString mcuPath, QString mcuName) const;
+    QList<Model::XmlPinModel> getPinModels(QString mcuPath, QString mcuName) const;
 
     /**
-     * @brief   获得IP信息
+     * @brief   获得IP信息列表
      *
      * @param   mcu_path: MCU路径
      *
-     * @return  IP信息
+     * @return  IP信息列表
     */
-    QList<Model::XmlIpModel> getIpInfo(QString mcuPath) const;
+    QList<Model::XmlIpModel> getIpModels(QString mcuPath) const;
 signals:
 
 private:

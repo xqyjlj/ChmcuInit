@@ -38,7 +38,9 @@
 #include "FormSTM32PeripheralsModeConfig.h"
 #include "WidgetLQFP48.h"
 #include "FormPinAttribute.h"
+
 #include <QGraphicsScene>
+#include "BaseObject.h"
 
 namespace Ui
 {
@@ -58,33 +60,33 @@ public:
     ~FormChipConfig();
 
     /**
-     * @brief   设置Mcu
+     * @brief   设置基础对象
      *
-     * @param   mcuName: mcu名
+     * @param   baseObject: 基础对象
      *
      * @return  null
     */
-    void setMcu(QString mcuName);
+    void setBaseObject(const BaseObject* baseObject);
+
+    /**
+     * @brief   加载本模块
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void load(void);
 
 private:
 
     /**
-     * @brief   设置Mcu引脚模型
+     * @brief   设置McuWidget
      *
-     * @param   mcuName: mcu名
-     *
-     * @return  null
-    */
-    void setPinModel(QString mcuPath, QString mcuName);
-
-    /**
-     * @brief   设置IP引脚模型
-     *
-     * @param   mcuName: mcu名
+     * @param   null
      *
      * @return  null
     */
-    void setIpModel(QString mcuPath);
+    void setMcuWidegt(void);
 
     /**
      * @brief   设置外设属性配置界面槽函数
@@ -120,14 +122,11 @@ private:
     Ui::FormChipConfig* ui;                                                     //ui文件
     QList<FormSTM32PeripheralsModeConfig*> mformSTM32PeripheralsModeConfigs;    //外设模型控制列表
     QStringList mmodeConfigNames;                                               //IP模式名
-    QString mmcuName;                                                           //MCU名
-    QString mmcuPath;                                                           //MCU路径
-    QList<Model::XmlPinModel> mpinModels;                                       //MCU引脚信息列表
-    QString mcorePath;                                                          //程序现在目前路径
 
+    QList<Model::XmlPinModel>* mpinModels;                                      //MCU引脚信息列表
     QGraphicsScene* mgraphicsScene = nullptr;                                   //QgraphicsView管理器
     QWidget* mpackWidget = nullptr;                                             //封装
-    QList<Model::XmlIpModel> mipModels;                                         //IP模型名
+    BaseObject* mbaseObject = nullptr;                                          //基础对象
 };
 
 #endif // FORMCHIPCONFIG_H

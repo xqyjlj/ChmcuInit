@@ -60,6 +60,16 @@ public:
      * @return  STM32的IP内容中F1的IO库模型
     */
     STM32Model::XmlIpF1IoModel getIpF1IoModel(QString local, QString subfamily, QString mcuName) const;
+
+    /**
+     * @brief   获得STM32的IP包的位置
+     *
+     * @param   local: 库位置
+     *          ip: IP名
+     *
+     * @return  IP包的位置
+    */
+    QString getMcuIpPath(QString local, QString ip) const;
 signals:
 
 private:

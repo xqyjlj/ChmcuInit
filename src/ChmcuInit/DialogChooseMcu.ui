@@ -377,12 +377,12 @@
        </column>
        <column>
         <property name="text">
-         <string>系列</string>
+         <string>主科</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>产品</string>
+         <string>亚科</string>
         </property>
        </column>
       </widget>

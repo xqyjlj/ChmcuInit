@@ -66,7 +66,7 @@ void LabelPin::paintEvent(QPaintEvent* e)
     QString text = fm.elidedText(this->text(), Qt::ElideRight, 70);
     QPainter painter(this);
 
-    if (mpinModel.type == "I/O")
+    if (mpinModel.type == "IO")
     {
         if (mselected)
         {
@@ -162,9 +162,9 @@ bool LabelPin::parseSignals(QList<Model::XmlPinModel::SignalModel> signalModels)
     {
         foreach (Model::XmlPinModel::SignalModel signal, signalModels)
         {
-            if (!signal.io_modes.isEmpty())
+            if (!signal.ioModes.isEmpty())
             {
-                msignals << signal.io_modes.split(",");
+                msignals << signal.ioModes.split(",");
             }
             if (!signal.name.isEmpty())
             {

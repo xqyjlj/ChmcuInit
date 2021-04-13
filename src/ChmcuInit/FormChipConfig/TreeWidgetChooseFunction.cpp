@@ -39,45 +39,72 @@
 TreeWidgetChooseFunction::TreeWidgetChooseFunction(QWidget* parent) : QTreeWidget(parent)
 {
     connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(TreeWidgetChooseFunctionItemSelectionChanged()), Qt::UniqueConnection);
-    STM32Model::XmlIpF1IoModel model =
-        STM32Xml::STM32XmlRead().getIpF1IoModel(
-            "C:/Users/xqyjlj/Desktop/build-ChmcuInit-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/src/ChmcuInit/debug/origin/families/ip/stm32/stm32_io_F1_Cube_0_0.xml",
-            "STM32F103",
-            "STM32F103C8T6");
 }
 
 /**
- * @brief   设置引脚模型
+ * @brief   设置基础对象
  *
- * @param   model: 引脚模型
+ * @param   baseObject: 基础对象
  *
  * @return  null
 */
-void TreeWidgetChooseFunction::setPinModel(QList<Model::XmlPinModel> list)
+void TreeWidgetChooseFunction::setBaseObject(const BaseObject* baseObject)
+{
+    mbaseObject = const_cast<BaseObject*>(baseObject);
+    ASSERT_X(mbaseObject, "TreeWidgetChooseFunction", "空指针-> mbaseObject");
+    mpinModels = mbaseObject->getPinModels();
+    load();
+}
+
+/**
+ * @brief   加载
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void TreeWidgetChooseFunction::load(void)
 {
     QList<QTreeWidgetItem*> _items = this->findItems(tr("Pin"), Qt::MatchExactly);
-    if (_items.length() && !list.isEmpty())
+    if (_items.length())
     {
         QTreeWidgetItem* _parent = _items.at(0);
         _parent->setExpanded(true);
-        mformPinAttributes = QVector<FormPinAttribute*>(list.length(), nullptr);
-        foreach (Model::XmlPinModel _model, list)
-        {
-            QTreeWidgetItem* _item = new QTreeWidgetItem(_parent);
-            _item->setText(0, _model.position + ": " + _model.name);
 
-            QComboBox* _comboBox = new QComboBox(this);
-            _comboBox->addItem("无");
-            foreach (Model::XmlPinModel::SignalModel _signalModel, _model.signal)
+        int length = mpinModels->length();
+        for (int i = 0; i < length ; i++)
+        {
+            Model::XmlPinModel* _model = const_cast<Model::XmlPinModel* >(&mpinModels->at(i));
+
+            QTreeWidgetItem* _item = new QTreeWidgetItem(_parent);
+            _item->setText(0, _model->position + ": " + _model->name);
+            _item->setWhatsThis(0, _model->position);
+
+            QComboBox* _pinComboBox = new QComboBox(this);
+            _pinComboBox->addItem("无");
+
+
+            int length = _model->signal.length();
+            for (int i = 0; i < length; i++)
             {
-                _comboBox->addItem(_signalModel.name);
+                Model::XmlPinModel::SignalModel* _signalModel = const_cast<Model::XmlPinModel::SignalModel* >(&_model->signal.at(i));
+                _pinComboBox->addItem(_signalModel->name);
             }
-            this->setItemWidget(_item, 1, _comboBox);
-            mpinComboBox << _comboBox;
-            _comboBox->setWhatsThis(_model.position);
-            connect(_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(comboBoxCurrentTextChanged(QString)), Qt::UniqueConnection);
-            _item->setWhatsThis(0, _model.position);
+
+            this->setItemWidget(_item, 1, _pinComboBox);
+            mpinComboBoxs << _pinComboBox;
+            _pinComboBox->setWhatsThis(_model->position);
+
+            connect(_pinComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(pinComboBoxCurrentTextChanged(QString)), Qt::UniqueConnection);
+
             mpinItems << _item;
+
+            FormPinAttribute* _formPinAttributes = new FormPinAttribute();
+
+            _formPinAttributes->setBaseObject(mbaseObject);
+            _formPinAttributes->setTitle(_item->text(0), _model->type);
+            _formPinAttributes->setType("无");
+            mformPinAttributes << _formPinAttributes;
         }
     }
 }
@@ -92,7 +119,6 @@ void TreeWidgetChooseFunction::setPinModel(QList<Model::XmlPinModel> list)
 void TreeWidgetChooseFunction::TreeWidgetChooseFunctionItemSelectionChanged()
 {
     selectItems = selectedItems();
-    LOG_D << selectItems;
     QVector<bool> bools(mpinItems.length(), false);
     foreach (QTreeWidgetItem* item, selectItems)
     {
@@ -100,12 +126,8 @@ void TreeWidgetChooseFunction::TreeWidgetChooseFunctionItemSelectionChanged()
         if (index > mpinItems.length() - 1 || index < 0)
             return;
         bools[index] = true;
-
-        if (mformPinAttributes.at(index) == nullptr)
-        {
-            mformPinAttributes[index] = new FormPinAttribute();
-        }
-        emit pinAttributeOpened(mformPinAttributes.at(index));
+        mformPinAttribute = mformPinAttributes.at(index);
+        emit pinAttributeOpened(mformPinAttribute);
     }
     emit pinClicked(bools);
 }
@@ -142,7 +164,10 @@ void TreeWidgetChooseFunction::selectPin(QVector<bool> bools)
  *
  * @return  null
 */
-void TreeWidgetChooseFunction::comboBoxCurrentTextChanged(QString str)
+void TreeWidgetChooseFunction::pinComboBoxCurrentTextChanged(QString str)
 {
-    LOG_D << str;
+    if (selectItems.length() == 1)
+    {
+        mformPinAttribute->setType(str);
+    }
 }

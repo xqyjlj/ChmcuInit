@@ -54,6 +54,17 @@ FormHome::~FormHome()
 }
 
 /**
+ * @brief   设置基础对象
+ *
+ * @param   baseObject: 基础对象
+ *
+ * @return  null
+*/
+void FormHome::setBaseObject(BaseObject* baseObject)
+{
+    mbaseObject = baseObject;
+}
+/**
  * @brief   创建板工程按钮按下槽函数
  *
  * @param   null
@@ -62,8 +73,10 @@ FormHome::~FormHome()
 */
 void FormHome::buttonCreateBoardProjectPressed()
 {
+    ASSERT_X(mbaseObject, "FormHome", "空指针");
     DialogChooseBoard dialog(this);
     dialog.setWindowTitle(tr("新建开发板项目"));
+    dialog.setBaseObject(mbaseObject);
     dialog.exec();
 
 }
@@ -77,8 +90,10 @@ void FormHome::buttonCreateBoardProjectPressed()
 */
 void FormHome::buttonCreateChipProjectPressed()
 {
+    ASSERT_X(mbaseObject, "FormHome", "空指针");
     DialogChooseMcu dialog(this);
     dialog.setWindowTitle(tr("新建芯片项目"));
+    dialog.setBaseObject(mbaseObject);
     connect(&dialog, &DialogChooseMcu::createMcuProject, this, [ = ](QString name)
     {
         if (FileManage().getMcuPackList().contains(name))

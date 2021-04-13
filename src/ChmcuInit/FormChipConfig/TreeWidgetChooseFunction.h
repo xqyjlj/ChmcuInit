@@ -39,6 +39,7 @@
 #include <QVector>
 #include <QComboBox>
 
+#include "BaseObject.h"
 /**
  * @brief The TreeWidgetChooseFunction class
  *
@@ -51,13 +52,22 @@ public:
     explicit TreeWidgetChooseFunction(QWidget* parent = nullptr);
 
     /**
-     * @brief   设置引脚模型
+     * @brief   设置基础对象
      *
-     * @param   model: 引脚模型
+     * @param   baseObject: 基础对象
      *
      * @return  null
     */
-    void setPinModel(QList<Model::XmlPinModel> list);
+    void setBaseObject(const BaseObject* baseObject);
+
+    /**
+     * @brief   加载
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void load(void);
 signals:
 
     /**
@@ -105,12 +115,17 @@ private slots:
      *
      * @return  null
     */
-    void comboBoxCurrentTextChanged(QString str);
+    void pinComboBoxCurrentTextChanged(QString str);
 private:
     QList<QTreeWidgetItem*> selectItems;                //被选中的QTreeWidgetItem集合
     QList<QTreeWidgetItem*> mpinItems;                  //引脚列表
-    QList<QComboBox*> mpinComboBox;                     //引脚对应的复选框
-    QVector<FormPinAttribute*> mformPinAttributes;      //引脚对应的界面
+    QList<QComboBox*> mpinComboBoxs;                    //引脚对应的复选框列表
+    QList<FormPinAttribute*> mformPinAttributes;        //引脚对应的界面列表
+    FormPinAttribute* mformPinAttribute;                //引脚对应的界面
+    QList<Model::XmlPinModel>* mpinModels;              //引脚模型
+
+    BaseObject* mbaseObject = nullptr;                  //基础对象
+
 };
 
 #endif // TREEWIDGETCHOOSEFUNCTION_H

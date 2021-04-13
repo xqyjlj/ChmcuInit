@@ -42,18 +42,16 @@
 
 
 #ifdef QT_NO_DEBUG
-    //#define  ASSERT_X(test, where, what)                          \
-    //do{                                                             \
-    //    if(test)                                                    \
-    //        NULL;                                                   \
-    //    else                                                        \
-    //        LOG_D<<"有一个错误发生：where，what ->"<<where << what;    \
-    //        QMessageBox::critical(nullptr, tr("发生错误"), QString("位于%1,%2").arg(where).arg(what));\
-    //} while (0)
-
-    #define  ASSERT_X Q_ASSERT_X
+#define  ASSERT_X(test, where, what)                                                            \
+do{                                                                                             \
+    if(!test)                                                                                   \
+    {                                                                                           \
+        LOG_D<<"有一个错误发生：where，what ->"<<where << what;                                    \
+        QMessageBox::critical(nullptr, tr("发生错误"), QString("位于%1,%2").arg(where, what));    \
+    }                                                                                           \
+} while (0)
 #else
-    #define  ASSERT_X Q_ASSERT_X
+#define  ASSERT_X Q_ASSERT_X
 #endif
 
 

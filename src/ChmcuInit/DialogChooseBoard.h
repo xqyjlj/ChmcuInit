@@ -34,6 +34,7 @@
 #define DIALOGCHOOSEBOARD_H
 
 #include <QDialog>
+#include "BaseObject.h"
 
 namespace Ui
 {
@@ -53,8 +54,18 @@ public:
     explicit DialogChooseBoard(QWidget* parent = nullptr);
     ~DialogChooseBoard();
 
+    /**
+     * @brief   设置基础对象
+     *
+     * @param   baseObject: 基础对象
+     *
+     * @return  null
+    */
+    void setBaseObject(BaseObject* baseObject);
+
 private:
     Ui::DialogChooseBoard* ui;          //ui文件
+    BaseObject* mbaseObject = nullptr;  //基础对象
 };
 
 #endif // DIALOGCHOOSEBOARD_H

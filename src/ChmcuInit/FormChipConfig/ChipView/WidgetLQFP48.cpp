@@ -37,12 +37,12 @@
 #include <QMenu>
 
 
-WidgetLQFP48::WidgetLQFP48(QWidget *parent) :
+WidgetLQFP48::WidgetLQFP48(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::WidgetLQFP48)
 {
     ui->setupUi(this);
-    mpins = this->findChildren<LabelPin *>();
+    mpins = this->findChildren<LabelPin*>();
     std::sort(mpins.begin(), mpins.end(), [](const LabelPin * infoA, const LabelPin * infoB)
     {
         QString infoAstr = infoA->objectName().split("_").last();
@@ -71,16 +71,32 @@ WidgetLQFP48::~WidgetLQFP48()
 {
     delete ui;
 }
+
 /**
- * @brief   设置引脚模型
+ * @brief   设置基础对象
  *
- * @param   model: 引脚模型
+ * @param   baseObject: 基础对象
  *
  * @return  null
 */
-void WidgetLQFP48::setPinModel(QList<Model::XmlPinModel> list)
+void WidgetLQFP48::setBaseObject(BaseObject* baseObject)
 {
-    if (list.length() != 48)
+    mbaseObject = baseObject;
+    ASSERT_X(mbaseObject, "WidgetLQFP48", "空指针-> mbaseObject");
+    load();
+}
+
+/**
+ * @brief   加载
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void WidgetLQFP48::load(void)
+{
+    QList<Model::XmlPinModel>* list = mbaseObject->getPinModels();
+    if (list->length() != 48)
     {
         return;
     }
@@ -89,9 +105,9 @@ void WidgetLQFP48::setPinModel(QList<Model::XmlPinModel> list)
         for (int i = 0; i < 48; i++)
         {
             mpins.at(i)->setWhatsThis(QString::number(i + 1));
-            mpins.at(i)->setText(list.at(i).name);
-            mpins.at(i)->setToolTip("(" + list.at(i).position + ") " + list.at(i).name);
-            mpins.at(i)->setPinModel(list.at(i));
+            mpins.at(i)->setText(list->at(i).name);
+            mpins.at(i)->setToolTip("(" + list->at(i).position + ") " + list->at(i).name);
+            mpins.at(i)->setPinModel(list->at(i));
             mpins.at(i)->installEventFilter(this);
         }
     }
@@ -104,16 +120,16 @@ void WidgetLQFP48::setPinModel(QList<Model::XmlPinModel> list)
  *
  * @return  null
 */
-bool WidgetLQFP48::eventFilter(QObject *obj, QEvent *event)
+bool WidgetLQFP48::eventFilter(QObject* obj, QEvent* event)
 {
     if (event->type() == QEvent::MouseButtonPress)
     {
-        QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event); // 事件转换
+        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);  // 事件转换
         if (mouseEvent->button() == Qt::LeftButton)
         {
             if (obj->objectName().contains("label_"))
             {
-                LabelPin *pin = reinterpret_cast<LabelPin *>(obj);
+                LabelPin* pin = reinterpret_cast<LabelPin*>(obj);
 
                 QVector<bool> bools(48, false);
                 if (pin->getSelect())

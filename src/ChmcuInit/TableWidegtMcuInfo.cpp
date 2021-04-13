@@ -51,7 +51,9 @@ void TableWidegtMcuInfo::addMcuModel(Model::XmlFamilyChipModel model)
     this->insertRow(count);
     this->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->setItem(count, 0, new QTableWidgetItem(model.name));
-    this->setItem(count, 3, new QTableWidgetItem(model.packagename));
+    this->setItem(count, 1, new QTableWidgetItem());
+    this->setItem(count, 2, new QTableWidgetItem());
+    this->setItem(count, 3, new QTableWidgetItem(model.package));
     this->setItem(count, 4, new QTableWidgetItem(model.flash));
     this->setItem(count, 5, new QTableWidgetItem(model.ram));
     this->setItem(count, 6, new QTableWidgetItem(model.io));

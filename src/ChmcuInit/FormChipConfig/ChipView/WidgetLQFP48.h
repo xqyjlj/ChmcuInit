@@ -35,6 +35,7 @@
 #include "LabelPin.h"
 #include <QWidget>
 #include "XmlRead.h"
+#include "BaseObject.h"
 namespace Ui
 {
 class WidgetLQFP48;
@@ -49,16 +50,27 @@ class WidgetLQFP48 : public QWidget
     Q_OBJECT
 
 public:
-    explicit WidgetLQFP48(QWidget *parent = nullptr);
+    explicit WidgetLQFP48(QWidget* parent = nullptr);
     ~WidgetLQFP48();
+
+
     /**
-     * @brief   设置引脚模型
+     * @brief   设置基础对象
      *
-     * @param   model: 引脚模型
+     * @param   baseObject: 基础对象
      *
      * @return  null
     */
-    void setPinModel(QList<Model::XmlPinModel> list);
+    void setBaseObject(BaseObject* baseObject);
+
+    /**
+     * @brief   加载
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void load(void);
     /**
      * @brief   如果已安装此对象作为监视对象的事件过滤器，则过滤事件。
      *
@@ -67,7 +79,7 @@ public:
      *
      * @return  bool: eventFilter
     */
-    virtual bool eventFilter(QObject *obj, QEvent *event) override;
+    virtual bool eventFilter(QObject* obj, QEvent* event) override;
 signals:
     /**
      * @brief   pin点击信号
@@ -89,8 +101,9 @@ public slots:
 private:
 
 private:
-    Ui::WidgetLQFP48 *ui;                   //ui文件
-    QList<LabelPin *> mpins;                //引脚
+    Ui::WidgetLQFP48* ui;                   //ui文件
+    QList<LabelPin*> mpins;                 //引脚
+    BaseObject* mbaseObject = nullptr;      //基础对象
 };
 
 #endif // WIDGETLQFP48_H

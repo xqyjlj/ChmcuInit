@@ -36,6 +36,8 @@
 #include <QMessageBox>
 #include "Debug.h"
 
+#include <QCoreApplication>
+
 namespace STM32Xml
 {
 STM32XmlRead::STM32XmlRead(QObject* parent) : QObject(parent)
@@ -146,4 +148,41 @@ QList<STM32Model::XmlIpF1IoModel::TableModel> STM32XmlRead::readIpF1IoTableModel
     }
     return _tableModels;
 }
+
+/**
+ * @brief   获得STM32的IP包的位置
+ *
+ * @param   local: 库位置
+ *          QString：亚科名
+ *          McuName：mcu名
+ *
+ * @return  STM32的IP内容中F1的IO库模型
+*/
+QString STM32XmlRead::getMcuIpPath(QString local, QString ip) const
+{
+    QString str;
+    QFile file(local);
+    if (file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QXmlStreamReader reader;
+        reader.setDevice(&file);
+        while (!reader.atEnd())
+        {
+            if (reader.isStartElement() && reader.name() == QString("IP") && reader.attributes().value("Name").toString() == ip)
+            {
+                QString packName = reader.attributes().value("PackName").toString();
+                QString packLocate = reader.attributes().value("PackLocate").toString();
+                str = QCoreApplication::applicationDirPath() + packLocate + packName + ".xml";
+                break;
+            }
+        }
+    }
+    else
+    {
+        QMessageBox::critical(nullptr, tr("Error"), tr("Cannot read file %1").arg(local));
+    }
+    file.close();
+    return str;
+}
+
 }

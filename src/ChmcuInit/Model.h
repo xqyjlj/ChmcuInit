@@ -51,7 +51,7 @@ public:
     {
     public:
         QString name;
-        QString io_modes;
+        QString ioModes;
     };
 public:
     QString name;
@@ -63,11 +63,11 @@ public:
 class XmlIpModel
 {
 public:
-    QString instance_name;
+    QString instanceName;
     QString name;
     QString version;
-    QString pack_name;
-    QString pack_locate;
+    QString packName;
+    QString packLocate;
 };
 
 class XmlFamilyChipModel
@@ -104,7 +104,7 @@ public:
     QString family;
     QString subfamily;
     QString name;
-    QString packagename;
+    QString package;
     QString core;
     QString frequency;
     QString ram;

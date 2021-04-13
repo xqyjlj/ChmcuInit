@@ -38,47 +38,67 @@ TreeWidgetChooseIp::TreeWidgetChooseIp(QWidget* parent) : QTreeWidget(parent)
     connect(this, &QTreeWidget::itemSelectionChanged, this, &TreeWidgetChooseIp::treeWidgetChooseIpItemSelectionChanged, Qt::UniqueConnection);
 }
 
-void TreeWidgetChooseIp::setIpModel(QList<Model::XmlIpModel> mode)
+/**
+ * @brief   设置基础对象
+ *
+ * @param   baseObject: 基础对象
+ *
+ * @return  null
+*/
+void TreeWidgetChooseIp::setBaseObject(BaseObject* baseObject)
 {
-    ipModels = mode;
-    findIpName();
-    foreach (QString str, ipNames)
-    {
-        QTreeWidgetItem* item = new QTreeWidgetItem(this);
-        item->setText(0, str);
-        foreach (Model::XmlIpModel model, ipModels)
-        {
-            if (model.name == str)
-            {
-                QTreeWidgetItem* _item = new QTreeWidgetItem(item);
-                _item->setText(0, model.instance_name);
-            }
-        }
-    }
+    mbaseObject = baseObject;
+    ASSERT_X(mbaseObject, "TreeWidgetChooseIp", "空指针-> mbaseObject");
+    mipModels = mbaseObject->getIpModels();
+    mipNames = mbaseObject->getIpNames();
+    load();
 }
 
-void TreeWidgetChooseIp::findIpName(void)
+/**
+ * @brief   加载
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void TreeWidgetChooseIp::load()
 {
-    foreach (Model::XmlIpModel model, ipModels)
+    ASSERT_X(mipNames, "TreeWidgetChooseIp", "空指针-> mipNames");
+    ASSERT_X(mipModels, "TreeWidgetChooseIp", "空指针-> mipModels");
+
+    int length = mipNames->length();
+    for (int i = 0; i < length; i++)
     {
-        if ((!model.name.isEmpty()) && (!ipNames.contains(model.name)))
+        QString str = mipNames->at(i);
+
+        QTreeWidgetItem* item = new QTreeWidgetItem(this);
+        item->setText(0, str);
+
+        int length = mipModels->length();
+
+        for (int i = 0; i < length; i++)
         {
-            ipNames << model.name;
+            Model::XmlIpModel* model = const_cast<Model::XmlIpModel* >(&mipModels->at(i));
+            if (model->name == str)
+            {
+                QTreeWidgetItem* _item = new QTreeWidgetItem(item);
+                _item->setText(0, model->instanceName);
+            }
         }
     }
 }
 
 void TreeWidgetChooseIp::treeWidgetChooseIpItemSelectionChanged()
 {
-    if (selectedItems().length() > 0)
-    {
-        QString str = selectedItems().at(0)->text(0);
-        foreach (Model::XmlIpModel model, ipModels)
-        {
-            if (model.instance_name == str)
-            {
-                emit ipChosen(model.instance_name, model.pack_locate + "/" + model.pack_name + "_" + model.version + ".xml");
-            }
-        }
-    }
+//    if (selectedItems().length() > 0)
+//    {
+//        QString str = selectedItems().at(0)->text(0);
+//        foreach (Model::XmlIpModel model, ipModels)
+//        {
+//            if (model.instanceName == str)
+//            {
+//                emit ipChosen(model.instanceName, model.packLocate + "/" + model.packName + "_" + model.version + ".xml");
+//            }
+//        }
+//    }
 }

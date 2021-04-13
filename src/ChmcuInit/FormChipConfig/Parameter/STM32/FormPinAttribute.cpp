@@ -32,8 +32,11 @@
  **/
 #include "FormPinAttribute.h"
 #include "ui_FormPinAttribute.h"
+#include "Debug.h"
+#include "STM32XmlRead.h"
 
-FormPinAttribute::FormPinAttribute(QWidget *parent) :
+
+FormPinAttribute::FormPinAttribute(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::FormPinAttribute)
 {
@@ -43,4 +46,118 @@ FormPinAttribute::FormPinAttribute(QWidget *parent) :
 FormPinAttribute::~FormPinAttribute()
 {
     delete ui;
+}
+
+/**
+ * @brief   设置基础对象
+ *
+ * @param   baseObject: 基础对象
+ *
+ * @return  null
+*/
+void FormPinAttribute::setBaseObject(const BaseObject* baseObject)
+{
+    mbaseObject = const_cast<BaseObject*>(baseObject);
+    ASSERT_X(mbaseObject, "FormPinAttribute", "空指针-> mbaseObject");
+}
+
+/**
+ * @brief   加载本模块
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void FormPinAttribute::load(void)
+{
+    ASSERT_X(mbaseObject, "FormPinAttribute", "空指针-> mbaseObject");
+    mipF1IoModel = STM32Xml::STM32XmlRead().getIpF1IoModel(mbaseObject->getIpPackPath("IO"), mbaseObject->getSubfamilyName(), mbaseObject->getMcuName());
+}
+
+/**
+ * @brief   设置标题
+ *
+ * @param   title: 标题
+ *          attribute: 属性
+ *
+ * @return  null
+*/
+void FormPinAttribute::setTitle(const QString title, const QString attribute)
+{
+    mtitle = title;
+    mattributes << attribute;
+    ui->labelTitle->setText(title + "->" + attribute);
+    load();
+    addItem();
+}
+
+/**
+ * @brief   设置种类
+ *
+ * @param   type: 种类
+ *
+ * @return  null
+*/
+void FormPinAttribute::setType(const QString type)
+{
+    mtype = type;
+    foreach (QTreeWidgetItem* item, mtreeWidgetItems)
+    {
+        LOG_D << item->text(0) << reinterpret_cast<QComboBox*>(ui->treeWidget->itemWidget(item, 1))->currentText();
+    }
+}
+
+/**
+ * @brief   添加Item
+ *
+ * @param   null
+ *
+ * @return  null
+*/
+void FormPinAttribute::addItem(void)
+{
+    QTreeWidgetItem* modeItem = new QTreeWidgetItem(ui->treeWidget);
+    modeItem->setText(0, "IO");
+
+    int length = mipF1IoModel.mode.length();
+    for (int i = 0; i < length; i++)
+    {
+        STM32Model::XmlIpF1IoModel::ModeModel* modeModel = const_cast<STM32Model::XmlIpF1IoModel::ModeModel*>(&mipF1IoModel.mode.at(i));
+        if (modeModel->widgets == "QComboBox")
+        {
+            QTreeWidgetItem* item = new QTreeWidgetItem(modeItem);
+            mtreeWidgetItems << item;
+            item->setText(0, modeModel->name);
+
+            QComboBox* comboBox = new QComboBox(this);
+            mattributeComboBoxs << comboBox;
+            connect(comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(attributeComboBoxCurrentTextChanged(QString)), Qt::UniqueConnection);
+
+            int length = modeModel->tables.length();
+            for (int i = 0; i < length; i++)
+            {
+                STM32Model::XmlIpF1IoModel::TableModel* tableModel = const_cast<STM32Model::XmlIpF1IoModel::TableModel*>(&modeModel->tables.at(i));
+                mkeys << tableModel->key;
+                mvalues << tableModel->value;
+                comboBox->addItem(tableModel->key);
+            }
+
+            ui->treeWidget->setItemWidget(item, 1, comboBox);
+        }
+    }
+}
+
+/**
+ * @brief   comboBox的项被改变时触发的槽函数
+ *
+ * @param   str: 触发之后文本
+ *
+ * @return  null
+*/
+void FormPinAttribute::attributeComboBoxCurrentTextChanged(QString str)
+{
+    if (!mtype.isEmpty() && mtype != "无")
+    {
+        LOG_D << str;
+    }
 }

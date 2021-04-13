@@ -50,3 +50,15 @@ DialogChooseBoard::~DialogChooseBoard()
 {
     delete ui;
 }
+
+/**
+ * @brief   设置基础对象
+ *
+ * @param   baseObject: 基础对象
+ *
+ * @return  null
+*/
+void DialogChooseBoard::setBaseObject(BaseObject* baseObject)
+{
+    mbaseObject = baseObject;
+}

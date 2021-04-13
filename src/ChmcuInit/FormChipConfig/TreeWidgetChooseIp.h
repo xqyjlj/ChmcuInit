@@ -35,7 +35,7 @@
 
 #include <QTreeWidget>
 #include <XmlRead.h>
-
+#include "BaseObject.h"
 /**
  * @brief The TreeWidgetChooseIp class
  *
@@ -48,13 +48,22 @@ public:
     explicit TreeWidgetChooseIp(QWidget* parent = nullptr);
 
     /**
-     * @brief   设置ip模型
+     * @brief   设置基础对象
      *
-     * @param   model: ip模型
+     * @param   baseObject: 基础对象
      *
      * @return  null
     */
-    void setIpModel(QList<Model::XmlIpModel> mode);
+    void setBaseObject(BaseObject* baseObject);
+
+    /**
+     * @brief   加载
+     *
+     * @param   null
+     *
+     * @return  null
+    */
+    void load();
 signals:
 
     /**
@@ -67,14 +76,6 @@ signals:
     void ipChosen(QString ip, QString locate);
 private:
 
-    /**
-     * @brief   查找IP
-     *
-     * @param   null
-     *
-     * @return  null
-    */
-    void findIpName(void);
 private slots:
 
     /**
@@ -86,8 +87,9 @@ private slots:
     */
     void treeWidgetChooseIpItemSelectionChanged(void);
 private:
-    QList<Model::XmlIpModel> ipModels;
-    QStringList ipNames;
+    QList<Model::XmlIpModel>* mipModels = nullptr;
+    QStringList* mipNames = nullptr;
+    BaseObject* mbaseObject = nullptr;                                          //基础对象
 };
 
 #endif // TREEWIDGETCHOOSEIP_H
