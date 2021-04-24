@@ -43,6 +43,8 @@ BaseObject::BaseObject(QObject *parent) : QObject(parent)
     m_xmlIpModel = new XmlIpModel(this);
     m_xmlIoModel = new XmlIoModel(this);
 
+    m_fileProject = new FileProject(this);
+
     m_mcuModels = m_xmlFamilyModel->getMcuModels();
 }
 
@@ -168,5 +170,10 @@ void BaseObject::setIoModel(QString &path)
 {
     m_ioModel = m_xmlIoModel->getIoModel(path, m_mcuModel.subfamily, m_mcuModel.name);
     setMapIoTables();
+}
+
+FileProject *BaseObject::getFileProject() const
+{
+    return m_fileProject;
 }
 

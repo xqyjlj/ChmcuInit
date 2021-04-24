@@ -48,6 +48,10 @@ void TreeWidgetMcuChooseFunction::setBaseObject(BaseObject *baseObject)
 {
     m_baseObject = baseObject;
     ASSERT_X(m_baseObject, u8"TreeWidgetMcuChooseFunction", u8"空指针-> m_baseObject");
+
+    connect(m_baseObject, &BaseObject::signalConfigProject, this, &TreeWidgetMcuChooseFunction::slotConfigProject,
+            Qt::UniqueConnection);
+
     createPinItems();
 }
 
@@ -59,14 +63,14 @@ QTreeWidgetItem *TreeWidgetMcuChooseFunction::createMasterItem(const QString &na
     return item;
 }
 
-QTreeWidgetItem * TreeWidgetMcuChooseFunction::createPinItem(XmlPinModel::PinModel_T &pinModel)
+QTreeWidgetItem *TreeWidgetMcuChooseFunction::createPinItem(XmlPinModel::PinModel_T &pinModel)
 {
     ASSERT_X(m_itemPin, u8"TreeWidgetMcuChooseFunction", u8"空指针-> m_item_pin");
     auto *item = new QTreeWidgetItem(m_itemPin);
     item->setText(0, pinModel.name);
     item->setWhatsThis(0, pinModel.position);
     item->setToolTip(0, QString(pinModel.position) + u8": " + pinModel.name);
-    item->setStatusTip(0,QString(pinModel.position) + u8": " + pinModel.name);
+    item->setStatusTip(0, QString(pinModel.position) + u8": " + pinModel.name);
 
     m_itemPins << item;
 
@@ -81,10 +85,10 @@ QTreeWidgetItem * TreeWidgetMcuChooseFunction::createPinItem(XmlPinModel::PinMod
 void TreeWidgetMcuChooseFunction::createPinItems()
 {
     m_pinModels = m_baseObject->getPinModels();
-    foreach(XmlPinModel::PinModel_T pinModel, m_pinModels)
-    {
-        createPinItem(pinModel);
-    }
+            foreach(XmlPinModel::PinModel_T pinModel, m_pinModels)
+        {
+            createPinItem(pinModel);
+        }
 }
 
 QComboBox *TreeWidgetMcuChooseFunction::createPinComboBox(QList<XmlPinModel::SignalModel_T> &signalModels)
@@ -92,21 +96,21 @@ QComboBox *TreeWidgetMcuChooseFunction::createPinComboBox(QList<XmlPinModel::Sig
     auto *pinComboBox = new QComboBox(this);
     pinComboBox->addItem(u8"NULL");
 
-    foreach(XmlPinModel::SignalModel_T signalModel, signalModels)
-    {
-        if (signalModel.ioModes.isEmpty())
+            foreach(XmlPinModel::SignalModel_T signalModel, signalModels)
         {
-            pinComboBox->addItem(signalModel.name);
-        } else
-        {
-            QStringList list = signalModel.ioModes.split(u8",");
-            foreach(QString str, list)
+            if (signalModel.ioModes.isEmpty())
             {
-                pinComboBox->addItem(str);
-                m_mapSignals.insert(str, signalModel.name);
+                pinComboBox->addItem(signalModel.name);
+            } else
+            {
+                QStringList list = signalModel.ioModes.split(u8",");
+                        foreach(QString str, list)
+                    {
+                        pinComboBox->addItem(str);
+                        m_mapSignals.insert(str, signalModel.name);
+                    }
             }
         }
-    }
 
     connect(pinComboBox, &QComboBox::currentTextChanged, this,
             &TreeWidgetMcuChooseFunction::slotPinComboBoxCurrentTextChanged, Qt::UniqueConnection);
@@ -116,7 +120,7 @@ QComboBox *TreeWidgetMcuChooseFunction::createPinComboBox(QList<XmlPinModel::Sig
     return pinComboBox;
 }
 
-void TreeWidgetMcuChooseFunction::slotPinComboBoxCurrentTextChanged(QString text)
+void TreeWidgetMcuChooseFunction::slotPinComboBoxCurrentTextChanged(const QString &text)
 {
     m_formMcuPinAttributes.at(m_currentIndex)->setTag(text);
 }
@@ -147,4 +151,17 @@ FormMcuPinAttribute *TreeWidgetMcuChooseFunction::createFormMcuPinAttribute(XmlP
     m_formMcuPinAttributes << formMcuPinAttribute;
 
     return formMcuPinAttribute;
+}
+
+void TreeWidgetMcuChooseFunction::slotConfigProject()
+{
+    int length = static_cast<int>(m_pinComboBoxes.length());
+    for (int i = 0; i < length; i++)
+    {
+        QComboBox *comboBox = m_pinComboBoxes.at(i);
+        if (comboBox->currentIndex() != 0)
+        {
+            m_formMcuPinAttributes.at(i)->slotConfigProject();
+        }
+    }
 }

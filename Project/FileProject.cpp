@@ -26,51 +26,30 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-24     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
+#include "FileProject.h"
+#include "Debug.h"
 
-
-MainWindow::MainWindow(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::MainWindow)
+FileProject::FileProject(QObject *parent) : QObject(parent)
 {
-    ui->setupUi(this);
+    qRegisterMetaType<GpioModel_T>("GpioModel_T");
 
-    ui->ustackedWidget->setCurrentIndex(Home);
+    m_domSaveConfig.createProcessingInstruction("xml", R"(version="1.0" encoding="UTF-8")");
 
-    connect(ui->uformHome, &FormHome::signalCreateMcuProject, this, &MainWindow::slotCreateMcuProject,
-            Qt::UniqueConnection);
-
-    connect(ui->uactionSave, &QAction::triggered, this, &MainWindow::slotActionSaveTriggered, Qt::UniqueConnection);
+    creatDomConfiguration();
 }
 
-MainWindow::~MainWindow()
+void FileProject::slotAddGpioModel(const FileProject::GpioModel_T& gpioModel)
 {
-    delete ui;
+    LOG_D << gpioModel.GPIOx << gpioModel.pin << gpioModel.name << gpioModel.level << gpioModel.mode << gpioModel.speed << gpioModel.pull;
 }
 
-void MainWindow::setBaseObject(BaseObject *baseObject)
+void FileProject::creatDomConfiguration()
 {
-    m_baseObject = baseObject;
-    ASSERT_X(m_baseObject, u8"MainWindow", u8"空指针-> m_baseObject");
-    ui->uformHome->setBaseObject(m_baseObject);
+    m_domConfigurationConfig = m_domSaveConfig.createElement("configuration");
 
-    m_baseObject->setMcuModel(u8"STM32F103C8T6");
-    slotCreateMcuProject();
-}
-
-void MainWindow::slotCreateMcuProject()
-{
-    setWindowTitle(m_baseObject->getMcuModel().name + u8": ChmcuInit");
-    setWindowState(Qt::WindowMaximized);
-    ui->uformMcuConfig->setBaseObject(m_baseObject);
-    ui->ustackedWidget->setCurrentIndex(McuConfig);
-}
-
-void MainWindow::slotActionSaveTriggered(bool checked)
-{
-    m_baseObject->configProject();
+    m_domConfigurationConfig.setAttribute(u8"Name", u8"stm32f103c8t6");
 }
 

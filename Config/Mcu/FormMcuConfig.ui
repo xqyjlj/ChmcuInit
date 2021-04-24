@@ -158,7 +158,7 @@
               <number>0</number>
              </property>
              <item row="0" column="0">
-              <widget class="QGraphicsView" name="graphics_view">
+              <widget class="GraphicsView" name="ugraphicsView">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                  <horstretch>2</horstretch>
@@ -316,6 +316,11 @@
    <class>TreeWidgetMcuChooseFunction</class>
    <extends>QTreeWidget</extends>
    <header>TreeWidgetMcuChooseFunction.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>GraphicsView.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

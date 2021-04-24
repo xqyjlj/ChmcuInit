@@ -65,6 +65,16 @@ private:
 
     void setPinTreeWidgetStatus();
 
+    static void parseGpioModel(FileProject::GpioModel_T &gpioModel);
+
+public slots:
+
+    void slotConfigProject();
+
+signals:
+
+    void signalAddGpioModel(FileProject::GpioModel_T gpioModel);
+
 private:
     Ui::FormMcuPinAttribute *ui;
 
@@ -83,10 +93,10 @@ private:
     QList<QTreeWidgetItem*> m_itemPinAttributes;
 
     QMap<QString, QString> m_mapSignals;
+
 public:
     void setMapSignals(const QMap<QString, QString> &mapSignals);
 
-public:
     void setTag(const QString &tag);
 
     void setTitle(const QString &title);

@@ -55,6 +55,9 @@ void FormMcuPinAttribute::setBaseObject(BaseObject *baseObject)
     m_baseObject = baseObject;
     ASSERT_X(m_baseObject, u8"FormMcuPinAttribute", u8"空指针-> m_baseObject");
     createPinItems();
+
+    connect(this, &FormMcuPinAttribute::signalAddGpioModel, m_baseObject->getFileProject(),
+            &FileProject::slotAddGpioModel, Qt::UniqueConnection);
 }
 
 void FormMcuPinAttribute::setPinName(const QString &pinName)
@@ -160,5 +163,56 @@ void FormMcuPinAttribute::setMapSignals(const QMap<QString, QString> &mapSignals
 {
     m_mapSignals = mapSignals;
 }
+
+void FormMcuPinAttribute::slotConfigProject()
+{
+    int length = static_cast<int>(m_itemPinAttributes.length());
+    FileProject::GpioModel_T gpioModel;//GPIO模型
+    for (int i = 0; i < length; i++)
+    {
+        QTreeWidgetItem *item = m_itemPinAttributes.at(i);
+        if (!item->isDisabled())
+        {
+            gpioModel.name = m_pinName;
+            QWidget *widget = ui->utreeWidget->itemWidget(item, 1);
+            if (widget)
+            {
+                QString className = QString(widget->metaObject()->className());
+                if (className == u8"QComboBox")
+                {
+                    auto *comboBox = dynamic_cast<ComboBoxMcuPinAttribute *>(widget);
+                    if (comboBox->whatsThis() == u8"Level")
+                    {
+                        gpioModel.level = comboBox->getCurrentValue();
+                    } else if (comboBox->whatsThis() == u8"Mode")
+                    {
+                        gpioModel.mode = comboBox->getCurrentValue();
+                    } else if (comboBox->whatsThis() == u8"Speed")
+                    {
+                        gpioModel.speed = comboBox->getCurrentValue();
+                    } else if (comboBox->whatsThis() == u8"Pull")
+                    {
+                        gpioModel.pull = comboBox->getCurrentValue();
+                    }
+                }
+            }
+        }
+    }
+    if (!gpioModel.name.isEmpty())
+    {
+        parseGpioModel(gpioModel);
+        emit signalAddGpioModel(gpioModel);
+    }
+}
+
+void FormMcuPinAttribute::parseGpioModel(FileProject::GpioModel_T &gpioModel)
+{
+    if (gpioModel.name.startsWith(u8"P"))
+    {
+        gpioModel.GPIOx = u8"GPIO" + QString(gpioModel.name.at(1));
+        gpioModel.pin = u8"GPIO_PIN_" + gpioModel.name.right(gpioModel.name.length() - 2);
+    }
+}
+
 
 

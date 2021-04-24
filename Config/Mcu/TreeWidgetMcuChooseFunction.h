@@ -61,11 +61,15 @@ private:
 
     FormMcuPinAttribute *createFormMcuPinAttribute(XmlPinModel::PinModel_T &pinModel);
 
+public slots:
+
+    void slotConfigProject();
+
 private slots:
 
     void slotCurrentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
 
-    void slotPinComboBoxCurrentTextChanged(QString text);
+    void slotPinComboBoxCurrentTextChanged(const QString& text);
 
 private:
 

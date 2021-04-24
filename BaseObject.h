@@ -38,8 +38,9 @@
 #include "XmlPinModel.h"
 #include "Debug.h"
 #include "XmlIoModel.h"
+#include "FileProject.h"
 
-class BaseObject : QObject
+class BaseObject : public QObject
 {
 Q_OBJECT
 public:
@@ -54,21 +55,28 @@ private:
 
     XmlFamilyModel *m_xmlFamilyModel = nullptr;
     XmlPinModel *m_xmlPinModel = nullptr;
-    XmlIpModel *m_xmlIpModel= nullptr;
+    XmlIpModel *m_xmlIpModel = nullptr;
     XmlIoModel *m_xmlIoModel = nullptr;
+
+    FileProject* m_fileProject = nullptr;
+public:
+    FileProject *getFileProject() const;
+
+private:
 
     XmlFamilyModel::McuModel_T m_mcuModel;
     XmlIoModel::IoModel_T m_ioModel;
 
     QList<XmlPinModel::PinModel_T> m_pinModels;
     QList<XmlFamilyModel::McuModel_T> m_mcuModels;
-    QList<XmlIpModel::IpModel_T>m_ipModels;
+    QList<XmlIpModel::IpModel_T> m_ipModels;
 
     QStringList m_ipNames;
 
     QMultiMap<QString, QString> m_mapIoTables;
 public:
-    [[nodiscard]] const QMultiMap<QString, QString> & getMapIoTables() const;
+
+    [[nodiscard]] const QMultiMap<QString, QString> &getMapIoTables() const;
 
     [[nodiscard]] const XmlIoModel::IoModel_T &getIoModel() const;
 
