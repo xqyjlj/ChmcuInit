@@ -78,6 +78,7 @@ void BaseObject::setMcuModel(const XmlFamilyModel::McuModel_T &mcuModel)
     m_mcuModel = mcuModel;
     setPinModels();
     setIpModels();
+    m_fileProject->setMcuModel(m_mcuModel);
 }
 
 const QList<XmlPinModel::PinModel_T> &BaseObject::getPinModels() const
@@ -115,6 +116,7 @@ void BaseObject::setMcuModel(const QString &mcuName)
     m_mcuModel = m_xmlFamilyModel->getMcuModel(mcuName);
     setPinModels();
     setIpModels();
+    m_fileProject->setMcuModel(m_mcuModel);
 }
 
 void BaseObject::setPinModels()
@@ -175,5 +177,10 @@ void BaseObject::setIoModel(QString &path)
 FileProject *BaseObject::getFileProject() const
 {
     return m_fileProject;
+}
+
+void BaseObject::saveProject()
+{
+    m_fileProject->saveFile();
 }
 

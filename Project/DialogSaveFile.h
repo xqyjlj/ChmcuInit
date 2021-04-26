@@ -26,55 +26,43 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-20     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-24     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "DialogSaveFile.h"
+#ifndef CHMCUINIT_DIALOGSAVEFILE_H
+#define CHMCUINIT_DIALOGSAVEFILE_H
 
-MainWindow::MainWindow(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::MainWindow)
+#include <QDialog>
+#include "BaseObject.h"
+
+QT_BEGIN_NAMESPACE
+namespace Ui
 {
-    ui->setupUi(this);
-
-    ui->ustackedWidget->setCurrentIndex(Home);
-
-    connect(ui->uformHome, &FormHome::signalCreateMcuProject, this, &MainWindow::slotCreateMcuProject,
-            Qt::UniqueConnection);
-
-    connect(ui->uactionSave, &QAction::triggered, this, &MainWindow::slotActionSaveTriggered, Qt::UniqueConnection);
+    class DialogSaveFile;
 }
+QT_END_NAMESPACE
 
-MainWindow::~MainWindow()
+class DialogSaveFile : public QDialog
 {
-    delete ui;
-}
+Q_OBJECT
 
-void MainWindow::setBaseObject(BaseObject *baseObject)
-{
-    m_baseObject = baseObject;
-    ASSERT_X(m_baseObject, u8"MainWindow", u8"空指针-> m_baseObject");
-    ui->uformHome->setBaseObject(m_baseObject);
+public:
+    explicit DialogSaveFile(QWidget *parent = nullptr);
 
-    m_baseObject->setMcuModel(u8"STM32F103C8T6");
-    slotCreateMcuProject();
-}
+    ~DialogSaveFile() override;
 
-void MainWindow::slotCreateMcuProject()
-{
-    setWindowTitle(m_baseObject->getMcuModel().name + u8": ChmcuInit");
-    setWindowState(Qt::WindowMaximized);
-    ui->uformMcuConfig->setBaseObject(m_baseObject);
-    ui->ustackedWidget->setCurrentIndex(McuConfig);
-}
+private slots:
 
-void MainWindow::slotActionSaveTriggered(bool checked)
-{
-    DialogSaveFile dialog(this);
-    dialog.setWindowTitle(u8"项目内容");
-    dialog.setBaseObject(m_baseObject);
-    m_baseObject->configProject();
-    dialog.exec();
-}
+    void slotAddProjectContent(const QString& content);
 
+    void slotButtonBoxClick(QAbstractButton* button);
+private:
+    Ui::DialogSaveFile *ui;
+
+    BaseObject* m_baseObject = nullptr;
+public:
+    void setBaseObject(BaseObject *baseObject);
+};
+
+
+#endif //CHMCUINIT_DIALOGSAVEFILE_H

@@ -59,10 +59,6 @@ private:
     XmlIoModel *m_xmlIoModel = nullptr;
 
     FileProject* m_fileProject = nullptr;
-public:
-    FileProject *getFileProject() const;
-
-private:
 
     XmlFamilyModel::McuModel_T m_mcuModel;
     XmlIoModel::IoModel_T m_ioModel;
@@ -74,7 +70,10 @@ private:
     QStringList m_ipNames;
 
     QMultiMap<QString, QString> m_mapIoTables;
+
 public:
+
+    [[nodiscard]] FileProject *getFileProject() const;
 
     [[nodiscard]] const QMultiMap<QString, QString> &getMapIoTables() const;
 
@@ -107,6 +106,8 @@ public:
     void configProject();
 
     [[nodiscard]] QString getMcuPath(const QString &file) const;
+
+    void saveProject();
 
 private:
     void setPinModels();

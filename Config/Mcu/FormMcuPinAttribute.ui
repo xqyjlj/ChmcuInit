@@ -14,17 +14,7 @@
    <string>FormMcuPinAttribute</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="ulabelTitle">
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="2" column="0">
     <widget class="QTreeWidget" name="utreeWidget">
      <attribute name="headerCascadingSectionResizes">
       <bool>true</bool>
@@ -51,6 +41,13 @@
        <string>值</string>
       </property>
      </column>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="ulabelTitle">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
     </widget>
    </item>
   </layout>

@@ -33,7 +33,9 @@
 #define CHMCUINIT_FILEPROJECT_H
 
 #include <QObject>
-#include <QDomDocument>
+#include <QMap>
+#include "XmlFamilyModel.h"
+#include <QXmlStreamWriter>
 
 class FileProject : public QObject
 {
@@ -67,20 +69,34 @@ public:
 public:
     explicit FileProject(QObject *parent);
 
-    void creatDomConfiguration();
-
 signals:
+
+    void signalAddProjectContent(QString content);
 
 public slots:
 
-    void slotAddGpioModel(const FileProject::GpioModel_T& gpioModel);
+    void slotAddGpioModel(const FileProject::GpioModel_T &gpioModel);
 
 private:
-    QDomDocument m_domSaveConfig;
-    QDomElement m_domConfigurationConfig;
-    QDomElement m_domMcuConfig;
-    QDomElement m_domIpConfig;
-    QDomElement m_domPinConfig;
+
+    void CreateConfigurationNode(QXmlStreamWriter &streamWriter) const;
+
+    void CreateMcuNode(QXmlStreamWriter &streamWriter) const;
+
+    void CreateGpioNode(QXmlStreamWriter &streamWriter) const;
+
+private:
+
+    XmlFamilyModel::McuModel_T m_mcuModel;
+
+    ConfigurationModel_T m_configurationModel;
+
+    QStringList m_parameterNames;
+public:
+
+    void setMcuModel(const XmlFamilyModel::McuModel_T &mcuModel);
+
+    void saveFile();
 };
 
 
