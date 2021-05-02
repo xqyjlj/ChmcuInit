@@ -62,6 +62,9 @@ private slots:
     void slotCreateMcuProject();
 
     void slotActionSaveTriggered(bool checked);
+
+    void slotActionGenerateCodeTriggered(bool checked);
+
 private:
     Ui::MainWindow *ui;
 

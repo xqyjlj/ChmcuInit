@@ -36,12 +36,12 @@
 
 XmlIpModel::XmlIpModel(QObject *parent) : QObject(parent)
 {
-    m_corePath = QCoreApplication::applicationDirPath();
+
 }
 
 QList<XmlIpModel::IpModel_T> XmlIpModel::getIpModels(const QString &mcuPath)
 {
-    QList<XmlIpModel::IpModel_T> list;
+    QList<XmlIpModel::IpModel_T> ipModels;
     QFile file(mcuPath);
     if (file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -49,26 +49,27 @@ QList<XmlIpModel::IpModel_T> XmlIpModel::getIpModels(const QString &mcuPath)
         reader.setDevice(&file);
         while (!reader.atEnd())
         {
-            if (reader.isStartElement() && reader.name() == QString("IP"))
+            if (reader.isStartElement() && reader.name() == QString(u8"IP"))
             {
                 XmlIpModel::IpModel_T ipModel;
-                ipModel.instanceName = reader.attributes().value("InstanceName").toString();
-                ipModel.name = reader.attributes().value("Name").toString();
-                ipModel.packName = reader.attributes().value("PackName").toString();
-                ipModel.packPath = reader.attributes().value("PackPath").toString();
-                list << ipModel;
+                ipModel.instanceName = reader.attributes().value(u8"InstanceName").toString();
+                ipModel.name = reader.attributes().value(u8"Name").toString();
+                ipModel.packName = reader.attributes().value(u8"PackName").toString();
+                ipModel.packPath = reader.attributes().value(u8"PackPath").toString();
+                ipModels << ipModel;
             }
             reader.readNext();
         }
-    } else
+    }
+    else
     {
-        ASSERT_X(false, "XmlIpModel", QString("Cannot read file %1").arg(mcuPath));
+        ASSERT_X(false, u8"XmlIpModel", QString(u8"Cannot read file %1").arg(mcuPath));
     }
     file.close();
-    return list;
+    return ipModels;
 }
 
-QString XmlIpModel::getIpPath(const QString &path, const QString &ip) const
+QString XmlIpModel::getIpPath(const QString &path, const QString &ip)
 {
     QString str;
     QFile file(path);
@@ -83,14 +84,68 @@ QString XmlIpModel::getIpPath(const QString &path, const QString &ip) const
             {
                 QString pack_name = reader.attributes().value("PackName").toString();
                 QString pack_path = reader.attributes().value("PackPath").toString();
-                str = m_corePath + pack_path + pack_name + ".xml";
+                str = QCoreApplication::applicationDirPath() + pack_path + pack_name + ".xml";
                 break;
             }
         }
-    } else
+    }
+    else
     {
         ASSERT_X(false, "XmlIpModel", QString("Cannot read file %1").arg(path));
     }
     file.close();
     return str;
+}
+
+QList<XmlIpModel::IpTagModel_T> XmlIpModel::getIpTagModels(const QString &mcuPath)
+{
+    QList<XmlIpModel::IpTagModel_T> ipTagModels;
+    QFile file(mcuPath);
+    if (file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QXmlStreamReader reader;
+        reader.setDevice(&file);
+        while (!reader.atEnd())
+        {
+            if (reader.isStartElement() && reader.name() == QString(u8"IPTag"))
+            {
+                XmlIpModel::IpTagModel_T ipTagModel;
+                ipTagModel.name = reader.attributes().value(u8"Name").toString();
+                ipTagModel.chineseName = reader.attributes().value(u8"ChineseName").toString();
+                ipTagModel.ips = getIpModels(&reader);
+                ipTagModels << ipTagModel;
+            }
+            reader.readNext();
+        }
+    }
+    else
+    {
+        ASSERT_X(false, u8"XmlIpModel", QString(u8"Cannot read file %1").arg(mcuPath));
+    }
+    file.close();
+    return ipTagModels;
+}
+
+QList<XmlIpModel::IpModel_T> XmlIpModel::getIpModels(QXmlStreamReader *reader)
+{
+    QList<IpModel_T> ipModels;
+
+    while (!reader->atEnd())
+    {
+        if (reader->isStartElement() && reader->name() == QString("IP"))
+        {
+            XmlIpModel::IpModel_T ipModel;
+            ipModel.instanceName = reader->attributes().value(u8"InstanceName").toString();
+            ipModel.name = reader->attributes().value(u8"Name").toString();
+            ipModel.packName = reader->attributes().value(u8"PackName").toString();
+            ipModel.packPath = reader->attributes().value(u8"PackPath").toString();
+            ipModels << ipModel;
+        }
+        else if (reader->isEndElement() && reader->name() == QString("IPTag"))
+        {
+            break;
+        }
+        reader->readNext();
+    }
+    return ipModels;
 }

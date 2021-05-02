@@ -3,36 +3,107 @@
  <class>DialogSaveFile</class>
  <widget class="QDialog" name="DialogSaveFile">
   <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>300</height>
-   </rect>
+      <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>516</width>
+          <height>443</height>
+      </rect>
   </property>
-  <property name="windowTitle">
-   <string>DialogSaveFile</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="ulabel">
-     <property name="text">
-      <string>以下是你的项目内容</string>
+     <property name="windowTitle">
+         <string>DialogSaveFile</string>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTextBrowser" name="utextBrowser"/>
-   </item>
-   <item>
-    <widget class="QDialogButtonBox" name="ubuttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+             <widget class="QWidget" name="widget_3" native="true">
+                 <layout class="QGridLayout" name="gridLayout_2">
+                     <item row="1" column="0">
+                         <widget class="QLineEdit" name="u_lineEditProjectName"/>
+                     </item>
+                     <item row="0" column="0">
+                         <widget class="QLabel" name="label_2">
+                             <property name="text">
+                                 <string>请输入项目文件名</string>
+                             </property>
+                         </widget>
+                     </item>
+                 </layout>
+             </widget>
+         </item>
+         <item>
+             <widget class="Line" name="line_2">
+                 <property name="lineWidth">
+                     <number>1</number>
+                 </property>
+                 <property name="midLineWidth">
+                     <number>5</number>
+                 </property>
+                 <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                 </property>
+             </widget>
+         </item>
+         <item>
+             <widget class="QWidget" name="widget_2" native="true">
+                 <layout class="QGridLayout" name="gridLayout">
+                     <item row="1" column="0">
+                         <widget class="QLineEdit" name="u_lineEditProjectDir"/>
+                     </item>
+                     <item row="0" column="0">
+                         <widget class="QLabel" name="label">
+                             <property name="text">
+                                 <string>请输入项目文件路径</string>
+                             </property>
+                         </widget>
+                     </item>
+                     <item row="1" column="1">
+                         <widget class="QPushButton" name="u_pushButtonProjectDir">
+                             <property name="text">
+                                 <string>浏览</string>
+                             </property>
+                         </widget>
+                     </item>
+                 </layout>
+             </widget>
+         </item>
+         <item>
+             <widget class="Line" name="line">
+                 <property name="lineWidth">
+                     <number>1</number>
+                 </property>
+                 <property name="midLineWidth">
+                     <number>5</number>
+                 </property>
+                 <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                 </property>
+             </widget>
+         </item>
+         <item>
+             <widget class="QWidget" name="widget" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout">
+                     <item>
+                         <widget class="QLabel" name="u_label">
+                             <property name="text">
+                                 <string>以下是你的项目内容</string>
+                             </property>
+                         </widget>
+                     </item>
+                     <item>
+                         <widget class="QTextBrowser" name="u_textBrowserProjectContent"/>
+                     </item>
+                 </layout>
+             </widget>
+         </item>
+         <item>
+             <widget class="QDialogButtonBox" name="u_buttonBox">
+                 <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="standardButtons">
+                     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+                 </property>
+             </widget>
    </item>
   </layout>
  </widget>

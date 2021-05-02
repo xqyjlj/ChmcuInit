@@ -54,7 +54,7 @@ void TreeWidgetChooseMcu::setBaseObject(BaseObject *baseObject)
     addPackageItems();
 }
 
-QTreeWidgetItem *TreeWidgetChooseMcu::createMasterItem(const QString& name)
+QTreeWidgetItem *TreeWidgetChooseMcu::createMasterItem(const QString &name)
 {
     auto *item = new QTreeWidgetItem(this);
     item->setText(0, name);
@@ -66,23 +66,23 @@ QTreeWidgetItem *TreeWidgetChooseMcu::createMasterItem(const QString& name)
 void TreeWidgetChooseMcu::addCompanyItems()
 {
     findCompanyNames();
-    foreach (QString name, m_companyNames)
+    for (const QString &name: m_companyNames)
     {
         addCompanyItem(name);
     }
 }
 
-void TreeWidgetChooseMcu::addCompanyItem(const QString& company)
+void TreeWidgetChooseMcu::addCompanyItem(const QString &company)
 {
     ASSERT_X(m_itemCompany, u8"TreeWidgetChooseMcu", u8"空指针-> m_itemCompany");
-    auto* item = new QTreeWidgetItem(m_itemCompany);
+    auto *item = new QTreeWidgetItem(m_itemCompany);
     item->setText(0, company);
     item->setCheckState(0, Qt::Unchecked);
 }
 
 void TreeWidgetChooseMcu::findCompanyNames()
 {
-    foreach(XmlFamilyModel::McuModel_T model, m_mcuModels)
+    for (const XmlFamilyModel::McuModel_T &model: m_mcuModels)
     {
         if (!m_companyNames.contains(model.company))
         {
@@ -93,7 +93,7 @@ void TreeWidgetChooseMcu::findCompanyNames()
 
 void TreeWidgetChooseMcu::findCoreNames()
 {
-    foreach (XmlFamilyModel::McuModel_T model, m_mcuModels)
+    for (const XmlFamilyModel::McuModel_T &model: m_mcuModels)
     {
         if (!m_coreNames.contains(model.core))
         {
@@ -105,23 +105,23 @@ void TreeWidgetChooseMcu::findCoreNames()
 void TreeWidgetChooseMcu::addCoreItems()
 {
     findCoreNames();
-    foreach (QString name, m_coreNames)
+    for (const QString &name: m_coreNames)
     {
         addCoreItem(name);
     }
 }
 
-void TreeWidgetChooseMcu::addCoreItem(const QString& core)
+void TreeWidgetChooseMcu::addCoreItem(const QString &core)
 {
     ASSERT_X(m_itemCore, u8"TreeWidgetChooseMcu", u8"空指针-> m_itemCore");
-    auto* item = new QTreeWidgetItem(m_itemCore);
+    auto *item = new QTreeWidgetItem(m_itemCore);
     item->setText(0, core);
     item->setCheckState(0, Qt::Unchecked);
 }
 
 void TreeWidgetChooseMcu::findFamilyNames()
 {
-    foreach (XmlFamilyModel::McuModel_T model, m_mcuModels)
+    for (const XmlFamilyModel::McuModel_T &model: m_mcuModels)
     {
         if (!m_familyNames.contains(model.family))
         {
@@ -133,23 +133,23 @@ void TreeWidgetChooseMcu::findFamilyNames()
 void TreeWidgetChooseMcu::addFamilyItems()
 {
     findFamilyNames();
-    foreach (QString name, m_familyNames)
+    for (const QString &name: m_familyNames)
     {
         addFamilyItem(name);
     }
 }
 
-void TreeWidgetChooseMcu::addFamilyItem(const QString& family)
+void TreeWidgetChooseMcu::addFamilyItem(const QString &family)
 {
     ASSERT_X(m_itemFamily, u8"TreeWidgetChooseMcu", u8"空指针-> m_itemFamily");
-    auto* item = new QTreeWidgetItem(m_itemFamily);
+    auto *item = new QTreeWidgetItem(m_itemFamily);
     item->setText(0, family);
     item->setCheckState(0, Qt::Unchecked);
 }
 
 void TreeWidgetChooseMcu::findSubfamilyNames()
 {
-    foreach (XmlFamilyModel::McuModel_T model, m_mcuModels)
+    for (const XmlFamilyModel::McuModel_T &model: m_mcuModels)
     {
         if (!m_subfamilyNames.contains(model.subfamily))
         {
@@ -161,23 +161,23 @@ void TreeWidgetChooseMcu::findSubfamilyNames()
 void TreeWidgetChooseMcu::addSubfamilyItems()
 {
     findSubfamilyNames();
-    foreach (QString name, m_subfamilyNames)
+    for (const QString &name: m_subfamilyNames)
     {
         addSubfamilyItem(name);
     }
 }
 
-void TreeWidgetChooseMcu::addSubfamilyItem(const QString& subfamily)
+void TreeWidgetChooseMcu::addSubfamilyItem(const QString &subfamily)
 {
     ASSERT_X(m_itemSubfamily, u8"TreeWidgetChooseMcu", u8"空指针-> m_itemSubfamily");
-    auto* item = new QTreeWidgetItem(m_itemSubfamily);
+    auto *item = new QTreeWidgetItem(m_itemSubfamily);
     item->setText(0, subfamily);
     item->setCheckState(0, Qt::Unchecked);
 }
 
 void TreeWidgetChooseMcu::findPackageNames()
 {
-    foreach (XmlFamilyModel::McuModel_T model, m_mcuModels)
+    for (const XmlFamilyModel::McuModel_T &model: m_mcuModels)
     {
         if (!m_packageNames.contains(model.package))
         {
@@ -189,16 +189,16 @@ void TreeWidgetChooseMcu::findPackageNames()
 void TreeWidgetChooseMcu::addPackageItems()
 {
     findPackageNames();
-    foreach (QString name, m_packageNames)
+    for (const QString &name: m_packageNames)
     {
         addPackageItem(name);
     }
 }
 
-void TreeWidgetChooseMcu::addPackageItem(const QString& package)
+void TreeWidgetChooseMcu::addPackageItem(const QString &package)
 {
     ASSERT_X(m_itemPackage, u8"TreeWidgetChooseMcu", u8"空指针-> m_itemPackage");
-    auto* item = new QTreeWidgetItem(m_itemPackage);
+    auto *item = new QTreeWidgetItem(m_itemPackage);
     item->setText(0, package);
     item->setCheckState(0, Qt::Unchecked);
 }

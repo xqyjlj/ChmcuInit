@@ -31,14 +31,14 @@
 
 #include "FormMcuConfig.h"
 #include "ui_FormMcuConfig.h"
-
+#include "WidgetLQFP48.h"
 
 FormMcuConfig::FormMcuConfig(QWidget *parent) :
         QWidget(parent), ui(new Ui::FormMcuConfig)
 {
     ui->setupUi(this);
-    connect(ui->utreeWidgetMcuChooseFunction, &TreeWidgetMcuChooseFunction::signalShowFormMcuAttribute,
-            this, &FormMcuConfig::slotShowFormMcuAttribute, Qt::UniqueConnection);
+    connect(ui->u_treeWidgetChooseIp, &TreeWidgetChooseIp::signalShowWidget, this, &FormMcuConfig::slotShowIpWidget,
+            Qt::UniqueConnection);
 }
 
 FormMcuConfig::~FormMcuConfig()
@@ -50,24 +50,52 @@ void FormMcuConfig::setBaseObject(BaseObject *baseObject)
 {
     m_baseObject = baseObject;
     ASSERT_X(m_baseObject, u8"FormMcuConfig", u8"空指针-> m_baseObject");
-    ui->utreeWidgetMcuChooseFunction->setBaseObject(m_baseObject);
+    ui->u_treeWidgetChooseIp->setBaseObject(m_baseObject);
+
+    auto *graphicsScene = new QGraphicsScene(ui->u_graphicsView);
+    auto *widgetLqfp48 = new WidgetLQFP48();
+    widgetLqfp48->setBaseObject(m_baseObject);
+
+    connect(widgetLqfp48, SIGNAL(signalPinSignalClicked(QString, QString, bool)), ui->u_treeWidgetChooseIp,
+            SLOT(slotPinSignalClicked(QString, QString, bool)), Qt::UniqueConnection);
+
+    graphicsScene->addWidget(widgetLqfp48);
+    ui->u_graphicsView->setScene(graphicsScene);
 }
 
-void FormMcuConfig::slotShowFormMcuAttribute(FormMcuPinAttribute *widget)
+void FormMcuConfig::slotShowIpWidget(QWidget *widget, const QString &widgetName)
 {
-    static FormMcuPinAttribute* s_lastWidget = nullptr;
-    ASSERT_X(widget, "FormChipConfig", "空指针 ->widget");
-    if (s_lastWidget)
+    static QWidget *previousWidget = nullptr;
+    ASSERT_X(widget, "FormChipConfig", "空指针" + widgetName);
+
+    if (previousWidget && previousWidget != widget)
     {
-        widget->setParent(ui->uformMcuAttribute);
-        ui->ulayoutFormMcuAttribute->replaceWidget(s_lastWidget, widget);
+        widget->setParent(ui->u_widgetIp);
+        ui->u_gridLayoutIp->replaceWidget(previousWidget, widget);
         widget->show();
-        s_lastWidget->hide();
+        previousWidget->hide();
     }
     else
     {
-        ui->ulayoutFormMcuAttribute->addWidget(widget);
+        ui->u_gridLayoutIp->addWidget(widget);
     }
-    s_lastWidget = widget;
+    previousWidget = widget;
 }
+
+//void FormMcuConfig::slotShowFormMcuAttribute(FormMcuPinAttribute *widget)
+//{
+//    //static FormMcuPinAttribute *s_lastWidget = nullptr;
+//    //ASSERT_X(widget, "FormChipConfig", "空指针 ->widget");
+//    //if (s_lastWidget)
+//    //{
+//    //    widget->setParent(ui->uformMcuAttribute);
+//    //    ui->ulayoutFormMcuAttribute->replaceWidget(s_lastWidget, widget);
+//    //    widget->show();
+//    //    s_lastWidget->hide();
+//    //} else
+//    //{
+//    //    ui->ulayoutFormMcuAttribute->addWidget(widget);
+//    //}
+//    //s_lastWidget = widget;
+//}
 

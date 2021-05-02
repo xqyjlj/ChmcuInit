@@ -36,13 +36,13 @@
 
 XmlFamilyModel::XmlFamilyModel(QObject *parent) : QObject(parent)
 {
-    m_corePath = QCoreApplication::applicationDirPath();
+
 }
 
-QList<XmlFamilyModel::McuModel_T> XmlFamilyModel::getMcuModels() const
+QList<XmlFamilyModel::McuModel_T> XmlFamilyModel::getMcuModels()
 {
     QList<XmlFamilyModel::McuModel_T> list;
-    QString path = m_corePath + u8"/origin/families/chip/families.xml";
+    QString path = QCoreApplication::applicationDirPath() + u8"/origin/families/chip/families.xml";
     QFile file(path);
     if (file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -117,10 +117,10 @@ XmlFamilyModel::McuModel_T XmlFamilyModel::readMcuModel(QXmlStreamReader *reader
     return model;
 }
 
-XmlFamilyModel::McuModel_T XmlFamilyModel::getMcuModel(const QString &mcuName) const
+XmlFamilyModel::McuModel_T XmlFamilyModel::getMcuModel(const QString &mcuName)
 {
     XmlFamilyModel::McuModel_T model;
-    QString path = m_corePath + u8"/origin/families/chip/families.xml";
+    QString path = QCoreApplication::applicationDirPath() + u8"/origin/families/chip/families.xml";
     QFile file(path);
     if (file.open(QFile::ReadOnly | QFile::Text))
     {
@@ -136,10 +136,16 @@ XmlFamilyModel::McuModel_T XmlFamilyModel::getMcuModel(const QString &mcuName) c
             }
             reader.readNext();
         }
-    } else
+    }
+    else
     {
         ASSERT_X(false, u8"XmlFamilyModel", QString(u8"Cannot read file %1").arg(path));
     }
     file.close();
     return model;
+}
+
+QString XmlFamilyModel::getMcuPackPath(const QString &mcuName)
+{
+    return QCoreApplication::applicationDirPath() + u8"/origin/families/chip/" + mcuName;
 }

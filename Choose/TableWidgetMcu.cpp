@@ -33,7 +33,8 @@
 
 TableWidgetMcu::TableWidgetMcu(QWidget *parent) : QTableWidget(parent)
 {
-    connect(this,&QTableWidget::itemSelectionChanged,this,&TableWidgetMcu::slotItemSelectionChanged,Qt::UniqueConnection);
+    connect(this, &QTableWidget::itemSelectionChanged, this, &TableWidgetMcu::slotItemSelectionChanged,
+            Qt::UniqueConnection);
 }
 
 void TableWidgetMcu::setBaseObject(BaseObject *baseObject)
@@ -45,40 +46,35 @@ void TableWidgetMcu::setBaseObject(BaseObject *baseObject)
 
 void TableWidgetMcu::addRowItems(const XmlFamilyModel::McuModel_T &model)
 {
-    int count = this->rowCount();
-    this->insertRow(count);
-    this->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    this->setItem(count, 0, new QTableWidgetItem(model.name));
-    this->setItem(count, 1, new QTableWidgetItem());
-    this->setItem(count, 2, new QTableWidgetItem());
-    this->setItem(count, 3, new QTableWidgetItem(model.package));
-    this->setItem(count, 4, new QTableWidgetItem(model.flash));
-    this->setItem(count, 5, new QTableWidgetItem(model.ram));
-    this->setItem(count, 6, new QTableWidgetItem(model.io));
-    this->setItem(count, 7, new QTableWidgetItem(model.frequency));
-    this->setItem(count, 8, new QTableWidgetItem(model.company));
-    this->setItem(count, 9, new QTableWidgetItem(model.core));
-    this->setItem(count, 10, new QTableWidgetItem(model.family));
-    this->setItem(count, 11, new QTableWidgetItem(model.subfamily));
+    int count = rowCount();
+    insertRow(count);
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
+    setItem(count, 0, new QTableWidgetItem(model.name));
+    setItem(count, 1, new QTableWidgetItem());
+    setItem(count, 2, new QTableWidgetItem());
+    setItem(count, 3, new QTableWidgetItem(model.package));
+    setItem(count, 4, new QTableWidgetItem(model.flash));
+    setItem(count, 5, new QTableWidgetItem(model.ram));
+    setItem(count, 6, new QTableWidgetItem(model.io));
+    setItem(count, 7, new QTableWidgetItem(model.frequency));
+    setItem(count, 8, new QTableWidgetItem(model.company));
+    setItem(count, 9, new QTableWidgetItem(model.core));
+    setItem(count, 10, new QTableWidgetItem(model.family));
+    setItem(count, 11, new QTableWidgetItem(model.subfamily));
 }
 
 void TableWidgetMcu::addAllItems()
 {
     m_mcuModels = m_baseObject->getMcuModels();
-    foreach(XmlFamilyModel::McuModel_T mcuModel, m_mcuModels)
+    for (const XmlFamilyModel::McuModel_T &mcuModel: m_mcuModels)
     {
-         addRowItems(mcuModel);
+        addRowItems(mcuModel);
     }
-}
-
-void TableWidgetMcu::setMcuModels(const QList<XmlFamilyModel::McuModel_T> &mcuModels)
-{
-    m_mcuModels = mcuModels;
 }
 
 void TableWidgetMcu::slotItemSelectionChanged()
 {
-    QList<QTableWidgetItem*> items = selectedItems();
+    QList<QTableWidgetItem *> items = selectedItems();
     if (!items.isEmpty())
     {
         m_selectionMcuName = items.at(0)->text();
@@ -86,21 +82,11 @@ void TableWidgetMcu::slotItemSelectionChanged()
     }
 }
 
-const QString &TableWidgetMcu::getSelectionMcuName() const
-{
-    return m_selectionMcuName;
-}
-
-void TableWidgetMcu::setSelectionMcuName(const QString &selectionMcuName)
-{
-    m_selectionMcuName = selectionMcuName;
-}
-
 XmlFamilyModel::McuModel_T TableWidgetMcu::getSelectionMcuModel() const
 {
     XmlFamilyModel::McuModel_T model;
 
-    foreach(XmlFamilyModel::McuModel_T mcuModel, m_mcuModels)
+    for (const XmlFamilyModel::McuModel_T &mcuModel: m_mcuModels)
     {
         if (mcuModel.name == m_selectionMcuName)
         {

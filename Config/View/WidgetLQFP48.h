@@ -26,44 +26,66 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-21     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-30     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUCONFIG_H
-#define CHMCUINIT_FORMMCUCONFIG_H
+#ifndef CHMCUINIT_WIDGETLQFP48_H
+#define CHMCUINIT_WIDGETLQFP48_H
 
 #include <QWidget>
 #include "BaseObject.h"
+#include "LabelPin.h"
+#include "LabelComment.h"
 
 
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class FormMcuConfig;
+    class WidgetLQFP48;
 }
 QT_END_NAMESPACE
 
-class FormMcuConfig : public QWidget
+class WidgetLQFP48 : public QWidget
 {
 Q_OBJECT
 
 public:
-    explicit FormMcuConfig(QWidget *parent = nullptr);
+    explicit WidgetLQFP48(QWidget *info1 = nullptr);
 
-    ~FormMcuConfig() override;
-
-private slots:
-
-    void slotShowIpWidget(QWidget *widget, const QString &widgetName);
+    ~WidgetLQFP48() override;
 
 private:
-    Ui::FormMcuConfig *ui;
+
+    void findLabel();
+
+    void setLabelPin();
+
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
+    void setLabelComment();
+
+private:
+
+    Ui::WidgetLQFP48 *ui;
 
     BaseObject *m_baseObject = nullptr;
 
+    QList<LabelPin *> m_labelPins;
+    QList<LabelComment *> m_labelComment;
+
+signals:
+
+    void signalPinSignalClicked(const QString &name, const QString &tag, bool isCanceled);
+
+private slots:
+
+    void slotPinSignalClicked(int index, const QString &text);
+
 public:
+
     void setBaseObject(BaseObject *baseObject);
+
 };
 
 
-#endif //CHMCUINIT_FORMMCUCONFIG_H
+#endif //CHMCUINIT_WIDGETLQFP48_H

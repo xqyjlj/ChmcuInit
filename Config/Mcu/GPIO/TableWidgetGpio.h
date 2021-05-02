@@ -26,70 +26,61 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-22     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-05-02     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_TREEWIDGETMCUCHOOSEFUNCTION_H
-#define CHMCUINIT_TREEWIDGETMCUCHOOSEFUNCTION_H
+#ifndef CHMCUINIT_TABLEWIDGETGPIO_H
+#define CHMCUINIT_TABLEWIDGETGPIO_H
 
-#include <QTreeWidget>
-#include <QComboBox>
+#include <QTableWidget>
 #include "BaseObject.h"
-#include "FormMcuPinAttribute.h"
+#include "FormGpioAttribute.h"
 
-class TreeWidgetMcuChooseFunction : public QTreeWidget
+class TableWidgetGpio : public QTableWidget
 {
-
 Q_OBJECT
 public:
+    class GpioItem_T
+    {
+    public:
+        QTableWidgetItem *pinName;
+        QTableWidgetItem *signal;
+        QTableWidgetItem *level;
+        QTableWidgetItem *mode;
+        QTableWidgetItem *pull;
+        QTableWidgetItem *speed;
+        QTableWidgetItem *label;
+    };
 
-    explicit TreeWidgetMcuChooseFunction(QWidget *parent);
+public:
+
+    explicit TableWidgetGpio(QWidget *parent);
 
 signals:
 
-    void signalShowFormMcuAttribute(FormMcuPinAttribute* widget);
+    void signalShowGpioAttributeWidget(FormGpioAttribute *widget);
 
-private:
-
-    QTreeWidgetItem *createMasterItem(const QString &name);
-
-    QTreeWidgetItem * createPinItem(XmlPinModel::PinModel_T &pinModel);
-
-    void createPinItems();
-
-    QComboBox *createPinComboBox(QList<XmlPinModel::SignalModel_T> &signalModels);
-
-    FormMcuPinAttribute *createFormMcuPinAttribute(XmlPinModel::PinModel_T &pinModel);
-
-public slots:
-
-    void slotConfigProject();
 
 private slots:
 
-    void slotCurrentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
-
-    void slotPinComboBoxCurrentTextChanged(const QString& text);
+    void slotItemSelectionChanged();
 
 private:
 
+    QMap<QString, GpioItem_T> m_mapGpioItem;
+    QMap<QString, FormGpioAttribute *> m_mapGpioAttribute;
+
     BaseObject *m_baseObject = nullptr;
-
-    QTreeWidgetItem *m_itemPin = nullptr;
-
-    QList<XmlPinModel::PinModel_T> m_pinModels;
-    QList<QComboBox *> m_pinComboBoxes;
-    QList<QTreeWidgetItem*> m_itemPins;
-    QList<FormMcuPinAttribute*> m_formMcuPinAttributes;
-
-    QMap<QString, QString> m_mapSignals;
-
-    int m_currentIndex{};
 
 public:
 
     void setBaseObject(BaseObject *baseObject);
+
+    void addGpioModel(const QString &name, const QString &tag);
+
+    void removeGpioModel(const QString &name);
+
 };
 
 
-#endif //CHMCUINIT_TREEWIDGETMCUCHOOSEFUNCTION_H
+#endif //CHMCUINIT_TABLEWIDGETGPIO_H

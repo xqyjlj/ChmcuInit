@@ -32,6 +32,8 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "DialogSaveFile.h"
+#include <QFileInfo>
+#include "CoderHalIo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent), ui(new Ui::MainWindow)
@@ -43,7 +45,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->uformHome, &FormHome::signalCreateMcuProject, this, &MainWindow::slotCreateMcuProject,
             Qt::UniqueConnection);
 
-    connect(ui->uactionSave, &QAction::triggered, this, &MainWindow::slotActionSaveTriggered, Qt::UniqueConnection);
+    connect(ui->u_actionSave, &QAction::triggered, this, &MainWindow::slotActionSaveTriggered, Qt::UniqueConnection);
+    connect(ui->u_actionGenerateCode, &QAction::triggered, this, &MainWindow::slotActionGenerateCodeTriggered,
+            Qt::UniqueConnection);
 }
 
 MainWindow::~MainWindow()
@@ -56,9 +60,6 @@ void MainWindow::setBaseObject(BaseObject *baseObject)
     m_baseObject = baseObject;
     ASSERT_X(m_baseObject, u8"MainWindow", u8"空指针-> m_baseObject");
     ui->uformHome->setBaseObject(m_baseObject);
-
-    m_baseObject->setMcuModel(u8"STM32F103C8T6");
-    slotCreateMcuProject();
 }
 
 void MainWindow::slotCreateMcuProject()
@@ -76,5 +77,21 @@ void MainWindow::slotActionSaveTriggered(bool checked)
     dialog.setBaseObject(m_baseObject);
     m_baseObject->configProject();
     dialog.exec();
+}
+
+void MainWindow::slotActionGenerateCodeTriggered(bool checked)
+{
+    QFileInfo fileInfo;
+    fileInfo.setFile(m_baseObject->getProjectPath());
+    if (!fileInfo.isFile())
+    {
+        ASSERT_X(false, u8"MainWindow", u8"没有找到项目文件");
+    }
+    else
+    {
+        CoderHalIo coderHalIo(this);
+        coderHalIo.setGpioModels(m_baseObject->getConfigurationModel().mcu.gpios,
+                                 m_baseObject->getProjectDir() + u8"/" + m_baseObject->getProjectName());
+    }
 }
 

@@ -52,11 +52,6 @@ private:
     QList<XmlFamilyModel::McuModel_T> m_mcuModels;
     QString m_selectionMcuName;
 public:
-    const QString &getSelectionMcuName() const;
-
-    void setSelectionMcuName(const QString &selectionMcuName);
-
-    void setMcuModels(const QList<XmlFamilyModel::McuModel_T> &mcuModels);
 
     void setBaseObject(BaseObject *baseObject);
 

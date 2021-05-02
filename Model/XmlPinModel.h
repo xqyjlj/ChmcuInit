@@ -38,28 +38,30 @@
 class XmlPinModel : public QObject
 {
 public:
-    typedef struct tagSignalModel_T
+    class SignalModel_T
     {
+    public:
         QString name;
-        QString ioModes;
-    } SignalModel_T;
+        QStringList ioModes;
+    };
 
-    typedef struct tagPinModel_T
+    class PinModel_T
     {
+    public:
         QString name;
         QString position;
         QString type;
         QList<SignalModel_T> signal;
-    } PinModel_T;
+    };
 
 public:
     explicit XmlPinModel(QObject *parent);
 
 public:
-    QList<PinModel_T> getPinModels(const QString &mcuPath, const QString &mcuName);
+    [[nodiscard]] static QList<PinModel_T> getPinModels(const QString &mcuPath, const QString &mcuName);
 
 private:
-    QList<PinModel_T> readPinModels(QXmlStreamReader *reader);
+    [[nodiscard]] static QList<PinModel_T> readPinModels(QXmlStreamReader *reader);
 };
 
 

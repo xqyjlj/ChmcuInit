@@ -26,41 +26,90 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-23     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-30     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_COMBOBOXMCUPINATTRIBUTE_H
-#define CHMCUINIT_COMBOBOXMCUPINATTRIBUTE_H
+#ifndef CHMCUINIT_LABELPIN_H
+#define CHMCUINIT_LABELPIN_H
 
-#include <QComboBox>
+#include <QLabel>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QContextMenuEvent>
+#include <QMenu>
 #include "BaseObject.h"
 
-class ComboBoxMcuPinAttribute : public QComboBox
+class LabelPin : public QLabel
 {
+Q_OBJECT
 public:
-    explicit ComboBoxMcuPinAttribute(QWidget *parent);
+
+    enum Direction
+    {
+        DirectionTop = 0,
+        DirectionBottom,
+        DirectionLeft,
+        DirectionRight
+    };
 
 private:
-    void setMapIoTables();
 
-    void setItemStatus();
+    const QColor DefaultColor = QColor(185, 196, 202);
+    const QColor PowerColor = QColor(255, 246, 204);
+    const QColor OtherColor = QColor(187, 204, 0);
+    const QColor SelectedColor = QColor(0, 204, 68);
+
+public:
+
+    explicit LabelPin(QWidget *parent = nullptr);
+
+protected:
+
+    void paintEvent(QPaintEvent *e) override;
+
+    void contextMenuEvent(QContextMenuEvent *ev) override;
+
+signals:
+
+    void signalPinSignalClicked(int index, const QString &text);
+
+private slots:
+
+    void slotMenuTriggered(QAction *action);
+
 private:
+
+    void createActions();
+
+    void createAction(const QString &text);
+
+private:
+
+    enum Direction m_direction = DirectionLeft;
+
+    QMenu *m_menu = new QMenu(this);
+
     BaseObject *m_baseObject = nullptr;
 
-    QMultiMap<QString, QString> m_mapIoTables;
+    QAction *m_currentAction = nullptr;
 
-    QString m_tag;
+    XmlPinModel::PinModel_T m_pinModel;
 
-    QStringList m_keys;
+    bool m_selected = false;
+
 public:
-    void setTag(const QString &tag);
 
     void setBaseObject(BaseObject *baseObject);
 
-    void addKey(const QString &key);
+    [[maybe_unused]] [[nodiscard]] bool isSelected() const;
 
-    QString getCurrentValue();
+    void setDirection(enum Direction direction);
+
+    void setPinModel(XmlPinModel::PinModel_T pinModel);
+
+    void setSelected(bool isSelected);
+
 };
 
 
-#endif //CHMCUINIT_COMBOBOXMCUPINATTRIBUTE_H
+#endif //CHMCUINIT_LABELPIN_H

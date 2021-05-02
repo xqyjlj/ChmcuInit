@@ -90,7 +90,11 @@ QList<XmlPinModel::PinModel_T> XmlPinModel::readPinModels(QXmlStreamReader *read
                 {
                     SignalModel_T pinSignalModel;
                     pinSignalModel.name = reader->attributes().value("Name").toString();
-                    pinSignalModel.ioModes = reader->attributes().value("IOModes").toString();
+                    QString ioModes = reader->attributes().value("IOModes").toString();
+                    if (!ioModes.isEmpty())
+                    {
+                        pinSignalModel.ioModes = ioModes.split(u8",");
+                    }
                     pinModel.signal << pinSignalModel;
                 }
                 reader->readNext();

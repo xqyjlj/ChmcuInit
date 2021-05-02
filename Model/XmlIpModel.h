@@ -38,24 +38,38 @@
 class XmlIpModel : public QObject
 {
 public:
-    typedef struct tagIpModel_T
+    class IpModel_T
     {
+    public:
         QString instanceName;
         QString name;
         QString packName;
         QString packPath;
-    } IpModel_T;
+    };
+
+    class IpTagModel_T
+    {
+    public:
+        QString name;
+        QString chineseName;
+        QList<IpModel_T> ips;
+    };
 
 public:
     explicit XmlIpModel(QObject *parent);
 
-private:
-    QString m_corePath;
 public:
 
-    QList<IpModel_T> getIpModels(const QString &mcuPath);
+    [[nodiscard]] static QList<IpTagModel_T> getIpTagModels(const QString &mcuPath);
 
-    [[nodiscard]] QString getIpPath(const QString &path, const QString &ip) const;
+    [[nodiscard]] static QList<IpModel_T> getIpModels(const QString &mcuPath);
+
+    [[nodiscard]] static QString getIpPath(const QString &path, const QString &ip);
+
+private:
+
+    [[nodiscard]] static QList<IpModel_T> getIpModels(QXmlStreamReader *reader);
+
 };
 
 

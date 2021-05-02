@@ -8,8 +8,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QFont font;
-    font.setFamily(u8"YaHei Consolas Hybrid");
-    font.setPointSize(12);
+    font.setFamily(u8"JetBrains Mono");
+    font.setPointSize(11);
     QApplication::setFont(font);
 
     auto *baseObject = new BaseObject(&a);

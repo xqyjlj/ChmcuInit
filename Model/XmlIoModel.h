@@ -38,38 +38,47 @@
 class XmlIoModel : public QObject
 {
 public:
-    typedef struct tagTableModel_T
+    class TableModel_T
     {
+    public:
         QString key;
         QString value;
         QString tag;
-    } TableModel_T;
+    };
 
-    typedef struct tagParameterModel_T
+    class ParameterModel_T
     {
+    public:
         QString name;
         QString chineseName;
         QString widget;
         QList<TableModel_T> tables;
-    } ParameterModel_T;
+    };
 
-    typedef struct tagIoModel_T
+    class IoModel_T
     {
+    public:
         QString mcuName;
         QString subfamilyName;
         QList<ParameterModel_T> parameters;
-    } IoModel_T;
+    };
 
 public:
+
     explicit XmlIoModel(QObject *parent);
 
 public:
-    IoModel_T getIoModel(const QString& path, const QString& subfamily, const QString& mcuName) const;
+
+    [[nodiscard]] static IoModel_T getIoModel(const QString &path, const QString &subfamily, const QString &mcuName);
+
+    [[nodiscard]] static QMap<QString, TableModel_T> getTableModelMap(const QList<ParameterModel_T> &parameterModels);
+
 private:
 
-    QList<ParameterModel_T> readModeModels(QXmlStreamReader* reader) const;
+    [[nodiscard]] static QList<ParameterModel_T> readModeModels(QXmlStreamReader *reader);
 
-    QList<TableModel_T> readTableModels(QXmlStreamReader* reader) const;
+    [[nodiscard]] static QList<TableModel_T> readTableModels(QXmlStreamReader *reader);
+
 
 };
 

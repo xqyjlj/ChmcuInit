@@ -26,44 +26,58 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-21     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-05-01     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUCONFIG_H
-#define CHMCUINIT_FORMMCUCONFIG_H
+#include "LabelComment.h"
+#include <QFontMetrics>
+#include "Debug.h"
 
-#include <QWidget>
-#include "BaseObject.h"
-
-
-QT_BEGIN_NAMESPACE
-namespace Ui
+LabelComment::LabelComment(QWidget *parent)
 {
-    class FormMcuConfig;
+
 }
-QT_END_NAMESPACE
 
-class FormMcuConfig : public QWidget
+void LabelComment::paintEvent(QPaintEvent *e)
 {
-Q_OBJECT
+    Q_UNUSED(e);
 
-public:
-    explicit FormMcuConfig(QWidget *parent = nullptr);
+    QFont font;
+    QFontMetrics fm(font);
+    QRect rec = fm.boundingRect(text());
 
-    ~FormMcuConfig() override;
+    int width = rec.width() + 30;
+    QPainter painter(this);
 
-private slots:
+    switch (m_direction)
+    {
+        case DirectionLeft:
+            painter.translate(290 - width, 30);
+            painter.drawText(0, 0, text());
+            break;
+        case DirectionBottom:
+            painter.translate(30, width);
+            painter.rotate(-90);
+            painter.drawText(0, 0, text());
+            break;
+        case DirectionRight:
+            painter.translate(10, 30);
+            painter.drawText(0, 0, text());
+            break;
+        case DirectionTop:
+            painter.translate(30, 290);
+            painter.rotate(-90);
+            painter.drawText(0, 0, text());
+            break;
+        default:
+            break;
+    }
+    painter.resetTransform();
+}
 
-    void slotShowIpWidget(QWidget *widget, const QString &widgetName);
+void LabelComment::setDirection(enum Direction direction)
+{
+    m_direction = direction;
+    update();
+}
 
-private:
-    Ui::FormMcuConfig *ui;
-
-    BaseObject *m_baseObject = nullptr;
-
-public:
-    void setBaseObject(BaseObject *baseObject);
-};
-
-
-#endif //CHMCUINIT_FORMMCUCONFIG_H

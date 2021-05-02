@@ -26,35 +26,37 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-23     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-05-02     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#include "ComboBoxMcuPinAttribute.h"
+#include "ComboBoxGpioAttribute.h"
 
-ComboBoxMcuPinAttribute::ComboBoxMcuPinAttribute(QWidget *parent) : QComboBox(parent)
+ComboBoxGpioAttribute::ComboBoxGpioAttribute(QWidget *parent) : QComboBox(parent)
 {
 
 }
 
-void ComboBoxMcuPinAttribute::setBaseObject(BaseObject *baseObject)
+void ComboBoxGpioAttribute::setBaseObject(BaseObject *baseObject)
 {
     m_baseObject = baseObject;
-    ASSERT_X(m_baseObject, u8"ComboBoxMcuPinAttribute", u8"空指针-> m_baseObject");
-    setMapIoTables();
+    ASSERT_X(m_baseObject, u8"ComboBoxGpioAttribute", u8"空指针-> m_baseObject");
+    m_mapTableModel = m_baseObject->getTableModelMap();
 }
 
-void ComboBoxMcuPinAttribute::setMapIoTables()
+void ComboBoxGpioAttribute::addKey(const QString &key)
 {
-    m_mapIoTables = m_baseObject->getMapIoTables();
+    m_keys << key;
+    addItem(key);
+    setItemData(count() - 1, QVariant(0), Qt::UserRole - 1);
 }
 
-void ComboBoxMcuPinAttribute::setTag(const QString &tag)
+void ComboBoxGpioAttribute::setTag(const QString &tag)
 {
     m_tag = tag;
     setItemStatus();
 }
 
-void ComboBoxMcuPinAttribute::setItemStatus()
+void ComboBoxGpioAttribute::setItemStatus()
 {
     int length = static_cast<int>(m_keys.length());
 
@@ -65,10 +67,12 @@ void ComboBoxMcuPinAttribute::setItemStatus()
     for (int i = length - 1; i >= 0; i--)
     {
         setItemData(i, QVariant(1 | 32), Qt::UserRole - 1);
-        if (!m_mapIoTables.values(m_keys.at(i)).at(0).contains(m_tag))
+
+        if (!m_mapTableModel.value(m_keys.at(i)).tag.contains(m_tag))
         {
             setItemData(i, QVariant(0), Qt::UserRole - 1);
-        } else
+        }
+        else
         {
             disabled = false;
             setCurrentIndex(i);
@@ -77,18 +81,11 @@ void ComboBoxMcuPinAttribute::setItemStatus()
     setDisabled(disabled);
 }
 
-void ComboBoxMcuPinAttribute::addKey(const QString &key)
+QString ComboBoxGpioAttribute::getCurrentValue()
 {
-    m_keys << key;
-    addItem(key);
-    setItemData(count() - 1, QVariant(0), Qt::UserRole - 1);
-}
-
-QString ComboBoxMcuPinAttribute::getCurrentValue()
-{
-    if(isEnabled())
+    if (isEnabled())
     {
-        return m_mapIoTables.values(currentText()).at(1);
+        return m_mapTableModel.value(currentText()).value;
     }
     else
     {

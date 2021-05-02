@@ -52,30 +52,46 @@ signals:
 
 private:
     QString m_corePath;
+    QString m_ProjectDir;
+    QString m_ProjectName;
 
-    XmlFamilyModel *m_xmlFamilyModel = nullptr;
-    XmlPinModel *m_xmlPinModel = nullptr;
-    XmlIpModel *m_xmlIpModel = nullptr;
-    XmlIoModel *m_xmlIoModel = nullptr;
-
-    FileProject* m_fileProject = nullptr;
+    FileProject *m_fileProject = nullptr;
 
     XmlFamilyModel::McuModel_T m_mcuModel;
     XmlIoModel::IoModel_T m_ioModel;
 
     QList<XmlPinModel::PinModel_T> m_pinModels;
     QList<XmlFamilyModel::McuModel_T> m_mcuModels;
+    QList<XmlIpModel::IpTagModel_T> m_ipTagModels;
     QList<XmlIpModel::IpModel_T> m_ipModels;
 
     QStringList m_ipNames;
 
-    QMultiMap<QString, QString> m_mapIoTables;
+    QMap<QString, XmlIoModel::TableModel_T> m_mapIoTableModel;
+
+    XmlFileProjectModel::ConfigurationModel_T m_configurationModel;
 
 public:
 
+    [[nodiscard]] const XmlFileProjectModel::ConfigurationModel_T &getConfigurationModel();
+
+    [[nodiscard]] QString getProjectPath() const;
+
+    [[nodiscard]] const QString &getProjectName() const;
+
+    void setProjectName(const QString &projectName);
+
+    [[nodiscard]] QString getProjectDir() const;
+
+    void setProjectDir(const QString &projectDir);
+
+    [[nodiscard]] const QList<XmlIpModel::IpModel_T> &getIpModels() const;
+
+    [[nodiscard]] const QList<XmlIpModel::IpTagModel_T> &getIpTagModels() const;
+
     [[nodiscard]] FileProject *getFileProject() const;
 
-    [[nodiscard]] const QMultiMap<QString, QString> &getMapIoTables() const;
+    [[nodiscard]] const QMap<QString, XmlIoModel::TableModel_T> &getTableModelMap() const;
 
     [[nodiscard]] const XmlIoModel::IoModel_T &getIoModel() const;
 
@@ -109,6 +125,8 @@ public:
 
     void saveProject();
 
+    [[nodiscard]] QString getMcuName() const;
+
 private:
     void setPinModels();
 
@@ -116,7 +134,7 @@ private:
 
     void setIoModel(QString &path);
 
-    void setMapIoTables();
+    void setTableModelMap();
 };
 
 

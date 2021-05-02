@@ -26,44 +26,59 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-21     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-05-02     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUCONFIG_H
-#define CHMCUINIT_FORMMCUCONFIG_H
+#ifndef CHMCUINIT_TREEWIDGETCHOOSEIP_H
+#define CHMCUINIT_TREEWIDGETCHOOSEIP_H
 
-#include <QWidget>
+#include <QTreeWidget>
+#include "FormGpio.h"
 #include "BaseObject.h"
 
-
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-    class FormMcuConfig;
-}
-QT_END_NAMESPACE
-
-class FormMcuConfig : public QWidget
+class TreeWidgetChooseIp : public QTreeWidget
 {
 Q_OBJECT
-
 public:
-    explicit FormMcuConfig(QWidget *parent = nullptr);
 
-    ~FormMcuConfig() override;
+    explicit TreeWidgetChooseIp(QWidget *parent);
+
+private:
+
+    void createMasterItems();
+
+    void createMasterItem(const XmlIpModel::IpTagModel_T &ipTagModel);
+
+    void createIpItem(QTreeWidgetItem *master, const QString &name);
+
+    void createIpItems(QTreeWidgetItem *master, const QList<XmlIpModel::IpModel_T> &ipModels);
+
+signals:
+
+    void signalShowWidget(QWidget *widget, const QString &widgetName);
+
+public slots:
+
+    [[maybe_unused]] void slotPinSignalClicked(const QString &name, const QString &tag, bool isCanceled);
 
 private slots:
 
-    void slotShowIpWidget(QWidget *widget, const QString &widgetName);
+    void slotCurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 private:
-    Ui::FormMcuConfig *ui;
 
     BaseObject *m_baseObject = nullptr;
 
+    QList<XmlIpModel::IpTagModel_T> m_ipTagModels;
+    QList<XmlIpModel::IpModel_T> m_ipModels;
+
+    QMap<QString, QWidget *> m_mapItemWidget;
+
 public:
+
     void setBaseObject(BaseObject *baseObject);
+
 };
 
 
-#endif //CHMCUINIT_FORMMCUCONFIG_H
+#endif //CHMCUINIT_TREEWIDGETCHOOSEIP_H

@@ -23,9 +23,15 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}
         Choose
         Config
         Config/Mcu
-        Project)
+        Config/View
+        Project
+        Coder
+        Coder/Hal
+        Config/Mcu/GPIO)
 
-add_executable(${PROJECT_NAME} main.cpp
+add_executable(${PROJECT_NAME}
+        WIN32
+        main.cpp
         MainWindow.cpp MainWindow.h MainWindow.ui
         Model/XmlFamilyModel.cpp Model/XmlFamilyModel.h
         Debug.cpp Debug.h
@@ -39,13 +45,21 @@ add_executable(${PROJECT_NAME} main.cpp
         ${QRC}
         Choose/TreeWidgetChooseMcu.cpp Choose/TreeWidgetChooseMcu.h
         Config/Mcu/FormMcuConfig.cpp Config/Mcu/FormMcuConfig.h Config/Mcu/FormMcuConfig.ui
-        Config/Mcu/TreeWidgetMcuChooseFunction.cpp Config/Mcu/TreeWidgetMcuChooseFunction.h
-        Config/Mcu/FormMcuPinAttribute.cpp Config/Mcu/FormMcuPinAttribute.h Config/Mcu/FormMcuPinAttribute.ui
         Model/XmlIoModel.cpp Model/XmlIoModel.h
-        Config/Mcu/ComboBoxMcuPinAttribute.cpp Config/Mcu/ComboBoxMcuPinAttribute.h
         Config/GraphicsView.cpp Config/GraphicsView.h
         Project/FileProject.cpp Project/FileProject.h
-        Project/DialogSaveFile.cpp Project/DialogSaveFile.h Project/DialogSaveFile.ui)
+        Project/DialogSaveFile.cpp Project/DialogSaveFile.h Project/DialogSaveFile.ui
+        Coder/CoderStreamWriter.cpp Coder/CoderStreamWriter.h
+        Coder/Hal/CoderHalIo.cpp Coder/Hal/CoderHalIo.h
+        Model/XmlFileProjectModel.cpp Model/XmlFileProjectModel.h
+        Config/View/LabelPin.cpp Config/View/LabelPin.h
+        Config/View/WidgetLQFP48.cpp Config/View/WidgetLQFP48.h Config/View/WidgetLQFP48.ui
+        Config/View/LabelComment.cpp Config/View/LabelComment.h
+        Config/Mcu/TreeWidgetChooseIp.cpp Config/Mcu/TreeWidgetChooseIp.h
+        Config/Mcu/GPIO/FormGpio.cpp Config/Mcu/GPIO/FormGpio.h Config/Mcu/GPIO/FormGpio.ui
+        Config/Mcu/GPIO/TableWidgetGpio.cpp Config/Mcu/GPIO/TableWidgetGpio.h
+        Config/Mcu/GPIO/FormGpioAttribute.cpp Config/Mcu/GPIO/FormGpioAttribute.h Config/Mcu/GPIO/FormGpioAttribute.ui
+        Config/Mcu/GPIO/ComboBoxGpioAttribute.cpp Config/Mcu/GPIO/ComboBoxGpioAttribute.h)
 
 target_link_libraries(ChmcuInit PRIVATE Qt${QT_VERSION_MAJOR}::Widgets )
 

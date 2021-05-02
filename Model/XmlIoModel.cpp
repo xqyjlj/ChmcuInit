@@ -38,7 +38,7 @@ XmlIoModel::XmlIoModel(QObject *parent) : QObject(parent)
 
 }
 
-XmlIoModel::IoModel_T XmlIoModel::getIoModel(const QString& path, const QString& subfamily, const QString& mcuName) const
+XmlIoModel::IoModel_T XmlIoModel::getIoModel(const QString &path, const QString &subfamily, const QString &mcuName)
 {
     XmlIoModel::IoModel_T model;
     model.mcuName = mcuName;
@@ -75,7 +75,7 @@ XmlIoModel::IoModel_T XmlIoModel::getIoModel(const QString& path, const QString&
     return model;
 }
 
-QList<XmlIoModel::ParameterModel_T> XmlIoModel::readModeModels(QXmlStreamReader* reader) const
+QList<XmlIoModel::ParameterModel_T> XmlIoModel::readModeModels(QXmlStreamReader *reader)
 {
     QList<XmlIoModel::ParameterModel_T> modeModels;
     while (!reader->atEnd())
@@ -86,7 +86,7 @@ QList<XmlIoModel::ParameterModel_T> XmlIoModel::readModeModels(QXmlStreamReader*
             mode_model.name = reader->attributes().value("Name").toString();
             mode_model.chineseName = reader->attributes().value("ChineseName").toString();
             mode_model.widget = reader->attributes().value("Widget").toString();
-            mode_model.tables  = readTableModels(reader);
+            mode_model.tables = readTableModels(reader);
             modeModels << mode_model;
         }
         else if (reader->isEndElement() && reader->name() == QString("Configuration"))
@@ -98,7 +98,7 @@ QList<XmlIoModel::ParameterModel_T> XmlIoModel::readModeModels(QXmlStreamReader*
     return modeModels;
 }
 
-QList<XmlIoModel::TableModel_T> XmlIoModel::readTableModels(QXmlStreamReader* reader) const
+QList<XmlIoModel::TableModel_T> XmlIoModel::readTableModels(QXmlStreamReader *reader)
 {
     QList<XmlIoModel::TableModel_T> tableModels;
 
@@ -119,4 +119,17 @@ QList<XmlIoModel::TableModel_T> XmlIoModel::readTableModels(QXmlStreamReader* re
         reader->readNext();
     }
     return tableModels;
+}
+
+QMap<QString, XmlIoModel::TableModel_T> XmlIoModel::getTableModelMap(const QList<ParameterModel_T> &parameterModels)
+{
+    QMap<QString, TableModel_T> tableModelMap;
+    for (const XmlIoModel::ParameterModel_T &parameterModel: parameterModels)
+    {
+        for (const XmlIoModel::TableModel_T &tableModel: parameterModel.tables)
+        {
+            tableModelMap.insert(tableModel.key, tableModel);
+        }
+    }
+    return tableModelMap;
 }

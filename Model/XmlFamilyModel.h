@@ -39,31 +39,36 @@ class XmlFamilyModel : public QObject
 {
 Q_OBJECT
 public:
-    typedef struct tag_VoltageModel_T
+    class VoltageModel_T
     {
+    public:
         QString min;
         QString max;
-    } VoltageModel_T;
+    };
 
-    typedef struct tagTemperatureModel_T
+    class TemperatureModel_T
     {
+    public:
         QString min;
         QString max;
-    } TemperatureModel_T;
+    };
 
-    typedef struct tagCurrentModel_T
+    class CurrentModel_T
     {
+    public:
         QString lowest;
         QString run;
-    } CurrentModel_T;
+    };
 
-    typedef struct tagPeripheralModel_T
+    class PeripheralModel_T
     {
+    public:
         QString type;
-    } PeripheralModel_T;
+    };
 
-    typedef struct tagMcuModel_T
+    class McuModel_T
     {
+    public:
         QString company;
         QString family;
         QString subfamily;
@@ -78,22 +83,23 @@ public:
         TemperatureModel_T temperature;
         CurrentModel_T current;
         QList<PeripheralModel_T> peripheral;
-    } McuModel_T;
+    };
+
 signals:
 
 public:
     explicit XmlFamilyModel(QObject *parent = nullptr);
 
 private:
-    static McuModel_T readMcuModel(QXmlStreamReader *reader) ;
+    static McuModel_T readMcuModel(QXmlStreamReader *reader);
 
-private:
-    QString m_corePath;
 public:
 
-    QList<McuModel_T> getMcuModels() const;
+    [[nodiscard]] static QList<McuModel_T> getMcuModels();
 
-    McuModel_T getMcuModel(const QString &mcuName) const;
+    [[nodiscard]] static McuModel_T getMcuModel(const QString &mcuName);
+
+    [[nodiscard]] static QString getMcuPackPath(const QString &mcuName);
 };
 
 

@@ -1,5 +1,7 @@
 <RCC>
-    <qresource prefix="/image"/>
+    <qresource prefix="/image">
+
+    </qresource>
     <qresource prefix="/markdown">
         <file>no_mcu.html</file>
         <file>readme.html</file>

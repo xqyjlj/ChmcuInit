@@ -26,87 +26,74 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-22     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-05-02     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUPINATTRIBUTE_H
-#define CHMCUINIT_FORMMCUPINATTRIBUTE_H
+#ifndef CHMCUINIT_FORMGPIOATTRIBUTE_H
+#define CHMCUINIT_FORMGPIOATTRIBUTE_H
 
 #include <QWidget>
 #include "BaseObject.h"
 #include <QTreeWidget>
-#include "ComboBoxMcuPinAttribute.h"
+#include "ComboBoxGpioAttribute.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class FormMcuPinAttribute;
+    class FormGpioAttribute;
 }
 QT_END_NAMESPACE
 
-class FormMcuPinAttribute : public QWidget
+class FormGpioAttribute : public QWidget
 {
 Q_OBJECT
 
 public:
-    explicit FormMcuPinAttribute(QWidget *parent = nullptr);
+    explicit FormGpioAttribute(QWidget *parent = nullptr);
 
-    ~FormMcuPinAttribute() override;
+    ~FormGpioAttribute() override;
 
 private:
 
-    QTreeWidgetItem *createMasterItem(const QString &name);
-
     void createPinItems();
 
-    QTreeWidgetItem *createPinItem(XmlIoModel::ParameterModel_T &parameterModel);
+    QTreeWidgetItem *createPinItemWithComboBox(const XmlIoModel::ParameterModel_T &parameterModel);
 
-    ComboBoxMcuPinAttribute * createMcuPinAttributeComboBox(QList<XmlIoModel::TableModel_T> &tableModels, const QString& whatsThis);
+    ComboBoxGpioAttribute *
+    createGpioAttributeComboBox(const QList<XmlIoModel::TableModel_T> &tableModels, const QString &whatsThis);
 
-    void setPinTreeWidgetStatus();
+    void setComboBoxGpioAttributeStatus();
 
-    static void parseGpioModel(FileProject::GpioModel_T &gpioModel);
+    static void parseGpioModel(XmlFileProjectModel::GpioModel_T &gpioModel);
 
-public slots:
+private slots:
 
     void slotConfigProject();
 
 signals:
 
-    void signalAddGpioModel(FileProject::GpioModel_T gpioModel);
+    void signalAddGpioModel(XmlFileProjectModel::GpioModel_T gpioModel);
 
 private:
-    Ui::FormMcuPinAttribute *ui;
+    Ui::FormGpioAttribute *ui;
 
     BaseObject *m_baseObject = nullptr;
 
-    QTreeWidgetItem *m_itemPin = nullptr;
-
     QString m_pinName;
-    QString m_type;
-    QString m_title;
     QString m_tag;
 
     XmlIoModel::IoModel_T m_ioModel;
 
-    QList<ComboBoxMcuPinAttribute*> m_mcuPinComboBoxAttributes;
-    QList<QTreeWidgetItem*> m_itemPinAttributes;
-
-    QMap<QString, QString> m_mapSignals;
-
+    QList<QTreeWidgetItem *> m_itemGpioAttributes;
+    QList<ComboBoxGpioAttribute *> m_mcuComboBoxGpioAttribute;
 public:
-    void setMapSignals(const QMap<QString, QString> &mapSignals);
-
-    void setTag(const QString &tag);
-
-    void setTitle(const QString &title);
-
-    void setType(const QString &type);
 
     void setPinName(const QString &pinName);
+
+    void setTag(const QString &tag);
 
     void setBaseObject(BaseObject *baseObject);
 };
 
 
-#endif //CHMCUINIT_FORMMCUPINATTRIBUTE_H
+#endif //CHMCUINIT_FORMGPIOATTRIBUTE_H

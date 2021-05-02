@@ -36,35 +36,11 @@
 #include <QMap>
 #include "XmlFamilyModel.h"
 #include <QXmlStreamWriter>
+#include "XmlFileProjectModel.h"
 
 class FileProject : public QObject
 {
 Q_OBJECT
-public:
-    typedef struct tagGpioModel_T
-    {
-        QString name;
-        QString GPIOx;
-        QString pin;
-        QString mode;
-        QString pull;
-        QString speed;
-        QString label;
-        QString level;
-    } GpioModel_T;
-
-    typedef struct tagMcuModel_T
-    {
-        QString name;
-        QString family;
-        QList<GpioModel_T> gpios;
-    } McuModel_T;
-
-    typedef struct tagConfigurationModel_T
-    {
-        QString name;
-        McuModel_T mcu;
-    } ConfigurationModel_T;
 
 public:
     explicit FileProject(QObject *parent);
@@ -75,28 +51,20 @@ signals:
 
 public slots:
 
-    void slotAddGpioModel(const FileProject::GpioModel_T &gpioModel);
-
-private:
-
-    void CreateConfigurationNode(QXmlStreamWriter &streamWriter) const;
-
-    void CreateMcuNode(QXmlStreamWriter &streamWriter) const;
-
-    void CreateGpioNode(QXmlStreamWriter &streamWriter) const;
+    void slotAddGpioModel(const XmlFileProjectModel::GpioModel_T &gpioModel);
 
 private:
 
     XmlFamilyModel::McuModel_T m_mcuModel;
 
-    ConfigurationModel_T m_configurationModel;
+    XmlFileProjectModel::ConfigurationModel_T m_configurationModel;
 
     QStringList m_parameterNames;
 public:
 
     void setMcuModel(const XmlFamilyModel::McuModel_T &mcuModel);
 
-    void saveFile();
+    void saveProject(const QString &projectName, const QString &projectPath);
 };
 
 

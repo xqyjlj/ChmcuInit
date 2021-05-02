@@ -38,14 +38,9 @@ BaseObject::BaseObject(QObject *parent) : QObject(parent)
 
     m_corePath = QCoreApplication::applicationDirPath();
 
-    m_xmlFamilyModel = new XmlFamilyModel(this);
-    m_xmlPinModel = new XmlPinModel(this);
-    m_xmlIpModel = new XmlIpModel(this);
-    m_xmlIoModel = new XmlIoModel(this);
-
     m_fileProject = new FileProject(this);
 
-    m_mcuModels = m_xmlFamilyModel->getMcuModels();
+    m_mcuModels = XmlFamilyModel::getMcuModels();
 }
 
 QString BaseObject::getMcuReadMePath(const QString &fileName) const
@@ -98,7 +93,7 @@ void BaseObject::configProject()
 
 QString BaseObject::getMcuPackPath() const
 {
-    return m_corePath + u8"/origin/families/chip/" + m_mcuModel.name;
+    return XmlFamilyModel::getMcuPackPath(m_mcuModel.name);
 }
 
 void BaseObject::setMcuModels(const QList<XmlFamilyModel::McuModel_T> &mcuModels)
@@ -113,7 +108,7 @@ const QList<XmlFamilyModel::McuModel_T> &BaseObject::getMcuModels() const
 
 void BaseObject::setMcuModel(const QString &mcuName)
 {
-    m_mcuModel = m_xmlFamilyModel->getMcuModel(mcuName);
+    m_mcuModel = XmlFamilyModel::getMcuModel(mcuName);
     setPinModels();
     setIpModels();
     m_fileProject->setMcuModel(m_mcuModel);
@@ -121,7 +116,7 @@ void BaseObject::setMcuModel(const QString &mcuName)
 
 void BaseObject::setPinModels()
 {
-    m_pinModels = m_xmlPinModel->getPinModels(getMcuPath(m_mcuModel.name), m_mcuModel.name);
+    m_pinModels = XmlPinModel::getPinModels(getMcuPath(m_mcuModel.name), m_mcuModel.name);
 }
 
 QString BaseObject::getMcuPath(const QString &file) const
@@ -131,16 +126,20 @@ QString BaseObject::getMcuPath(const QString &file) const
 
 void BaseObject::setIpModels()
 {
-    m_ipModels =m_xmlIpModel->getIpModels(getMcuPath(m_mcuModel.name));
-    foreach (XmlIpModel::IpModel_T ipModel, m_ipModels)
+    m_ipTagModels = XmlIpModel::getIpTagModels(getMcuPath(m_mcuModel.name));
+
+    for (const XmlIpModel::IpTagModel_T &ipTagModel: m_ipTagModels)
     {
-        if (!m_ipNames.contains(ipModel.name))
+        for (const XmlIpModel::IpModel_T &ipModel: ipTagModel.ips)
         {
-            m_ipNames << ipModel.name;
-            QString path = m_corePath + ipModel.packPath + ipModel.packName + ".xml";
-            if (ipModel.name == "IO")
+            if (!m_ipNames.contains(ipModel.name))
             {
-                setIoModel(path);
+                m_ipNames << ipModel.name;
+                QString path = m_corePath + ipModel.packPath + ipModel.packName + ".xml";
+                if (ipModel.name == "GPIO")
+                {
+                    setIoModel(path);
+                }
             }
         }
     }
@@ -151,27 +150,20 @@ const XmlIoModel::IoModel_T &BaseObject::getIoModel() const
     return m_ioModel;
 }
 
-const QMultiMap<QString, QString> & BaseObject::getMapIoTables() const
+const QMap<QString, XmlIoModel::TableModel_T> &BaseObject::getTableModelMap() const
 {
-    return m_mapIoTables;
+    return m_mapIoTableModel;
 }
 
-void BaseObject::setMapIoTables()
+void BaseObject::setTableModelMap()
 {
-    foreach(XmlIoModel::ParameterModel_T parameterModel, m_ioModel.parameters)
-    {
-        foreach (XmlIoModel::TableModel_T tableModel, parameterModel.tables)
-        {
-            m_mapIoTables.insert(tableModel.key, tableModel.value);
-            m_mapIoTables.insert(tableModel.key, tableModel.tag);
-        }
-    }
+    m_mapIoTableModel = XmlIoModel::getTableModelMap(m_ioModel.parameters);
 }
 
 void BaseObject::setIoModel(QString &path)
 {
-    m_ioModel = m_xmlIoModel->getIoModel(path, m_mcuModel.subfamily, m_mcuModel.name);
-    setMapIoTables();
+    m_ioModel = XmlIoModel::getIoModel(path, m_mcuModel.subfamily, m_mcuModel.name);
+    setTableModelMap();
 }
 
 FileProject *BaseObject::getFileProject() const
@@ -181,6 +173,52 @@ FileProject *BaseObject::getFileProject() const
 
 void BaseObject::saveProject()
 {
-    m_fileProject->saveFile();
+    m_fileProject->saveProject(m_ProjectName, getProjectPath());
+}
+
+QString BaseObject::getMcuName() const
+{
+    return m_mcuModel.name;
+}
+
+const QList<XmlIpModel::IpTagModel_T> &BaseObject::getIpTagModels() const
+{
+    return m_ipTagModels;
+}
+
+const QList<XmlIpModel::IpModel_T> &BaseObject::getIpModels() const
+{
+    return m_ipModels;
+}
+
+QString BaseObject::getProjectDir() const
+{
+    return m_ProjectDir;
+}
+
+void BaseObject::setProjectDir(const QString &projectDir)
+{
+    m_ProjectDir = projectDir;
+}
+
+const QString &BaseObject::getProjectName() const
+{
+    return m_ProjectName;
+}
+
+void BaseObject::setProjectName(const QString &projectName)
+{
+    m_ProjectName = projectName;
+}
+
+QString BaseObject::getProjectPath() const
+{
+    return m_ProjectDir + u8"/" + m_ProjectName + u8"/" + m_ProjectName + u8".cmiprj";
+}
+
+const XmlFileProjectModel::ConfigurationModel_T &BaseObject::getConfigurationModel()
+{
+    m_configurationModel = XmlFileProjectModel::getConfigurationModel(getProjectPath());
+    return m_configurationModel;
 }
 

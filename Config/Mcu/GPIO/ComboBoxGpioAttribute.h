@@ -26,44 +26,44 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-21     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-05-02     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUCONFIG_H
-#define CHMCUINIT_FORMMCUCONFIG_H
+#ifndef CHMCUINIT_COMBOBOXGPIOATTRIBUTE_H
+#define CHMCUINIT_COMBOBOXGPIOATTRIBUTE_H
 
-#include <QWidget>
+#include <QComboBox>
 #include "BaseObject.h"
 
-
-QT_BEGIN_NAMESPACE
-namespace Ui
+class ComboBoxGpioAttribute : public QComboBox
 {
-    class FormMcuConfig;
-}
-QT_END_NAMESPACE
-
-class FormMcuConfig : public QWidget
-{
-Q_OBJECT
-
 public:
-    explicit FormMcuConfig(QWidget *parent = nullptr);
 
-    ~FormMcuConfig() override;
-
-private slots:
-
-    void slotShowIpWidget(QWidget *widget, const QString &widgetName);
+    explicit ComboBoxGpioAttribute(QWidget *parent);
 
 private:
-    Ui::FormMcuConfig *ui;
 
+    void setItemStatus();
+
+private:
     BaseObject *m_baseObject = nullptr;
 
+    QStringList m_keys;
+
+    QString m_tag;
+
+    QMap<QString, XmlIoModel::TableModel_T> m_mapTableModel;
+
 public:
+
+    void setTag(const QString &tag);
+
+    void addKey(const QString &key);
+
     void setBaseObject(BaseObject *baseObject);
+
+    QString getCurrentValue();
 };
 
 
-#endif //CHMCUINIT_FORMMCUCONFIG_H
+#endif //CHMCUINIT_COMBOBOXGPIOATTRIBUTE_H

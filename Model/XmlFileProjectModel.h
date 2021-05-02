@@ -26,44 +26,67 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-21     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-29     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUCONFIG_H
-#define CHMCUINIT_FORMMCUCONFIG_H
+#ifndef CHMCUINIT_XMLFILEPROJECTMODEL_H
+#define CHMCUINIT_XMLFILEPROJECTMODEL_H
 
-#include <QWidget>
-#include "BaseObject.h"
+#include <QObject>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
-
-QT_BEGIN_NAMESPACE
-namespace Ui
+class XmlFileProjectModel : public QObject
 {
-    class FormMcuConfig;
-}
-QT_END_NAMESPACE
-
-class FormMcuConfig : public QWidget
-{
-Q_OBJECT
 
 public:
-    explicit FormMcuConfig(QWidget *parent = nullptr);
+    class GpioModel_T
+    {
+    public:
+        QString name;
+        QString port;
+        QString pin;
+        QString mode;
+        QString pull;
+        QString speed;
+        QString label;
+        QString level;
+    };
 
-    ~FormMcuConfig() override;
+    class McuModel_T
+    {
+    public:
+        QString name;
+        QString family;
+        QList<GpioModel_T> gpios;
+    };
 
-private slots:
+    class ConfigurationModel_T
+    {
+    public:
+        QString name;
+        McuModel_T mcu;
+    };
 
-    void slotShowIpWidget(QWidget *widget, const QString &widgetName);
+public:
+
+    explicit XmlFileProjectModel(QObject *parent);
 
 private:
-    Ui::FormMcuConfig *ui;
+    static void setMcuModel(QXmlStreamWriter *writer, const McuModel_T &mcuModel);
 
-    BaseObject *m_baseObject = nullptr;
+    static void setGpioModel(QXmlStreamWriter *writer, const QList<GpioModel_T> &gpioModels);
+
+    static McuModel_T getMcuModel(QXmlStreamReader *reader);
+
+    static QList<GpioModel_T> getGpioModels(QXmlStreamReader *reader);
 
 public:
-    void setBaseObject(BaseObject *baseObject);
+
+    static void setConfigurationModel(const ConfigurationModel_T &configurationModel, const QString &path);
+
+    static ConfigurationModel_T getConfigurationModel(const QString &path);
 };
 
 
-#endif //CHMCUINIT_FORMMCUCONFIG_H
+#endif //CHMCUINIT_XMLFILEPROJECTMODEL_H

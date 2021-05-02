@@ -26,44 +26,29 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-21     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-04-29     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUCONFIG_H
-#define CHMCUINIT_FORMMCUCONFIG_H
+#ifndef CHMCUINIT_CODERHALIO_H
+#define CHMCUINIT_CODERHALIO_H
 
-#include <QWidget>
-#include "BaseObject.h"
+#include "CoderStreamWriter.h"
+#include "XmlFileProjectModel.h"
 
-
-QT_BEGIN_NAMESPACE
-namespace Ui
+class CoderHalIo : public QObject
 {
-    class FormMcuConfig;
-}
-QT_END_NAMESPACE
-
-class FormMcuConfig : public QWidget
-{
-Q_OBJECT
-
 public:
-    explicit FormMcuConfig(QWidget *parent = nullptr);
+    explicit CoderHalIo(QObject *parent);
 
-    ~FormMcuConfig() override;
-
-private slots:
-
-    void slotShowIpWidget(QWidget *widget, const QString &widgetName);
+    void setGpioModels(const QList<XmlFileProjectModel::GpioModel_T> &gpioModels, const QString &path);
 
 private:
-    Ui::FormMcuConfig *ui;
+    static void createHeader(CoderStreamWriter *writer);
 
-    BaseObject *m_baseObject = nullptr;
+    static void createFunction(const QList<XmlFileProjectModel::GpioModel_T> &gpioModels, CoderStreamWriter *writer);
 
-public:
-    void setBaseObject(BaseObject *baseObject);
+    static void createPin(const XmlFileProjectModel::GpioModel_T &gpioModel, CoderStreamWriter *writer);
 };
 
 
-#endif //CHMCUINIT_FORMMCUCONFIG_H
+#endif //CHMCUINIT_CODERHALIO_H

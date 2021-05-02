@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>FormGpioAttribute</class>
+    <widget class="QWidget" name="FormGpioAttribute">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>400</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>FormGpioAttribute</string>
+  </property>
+        <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+                <widget class="QLabel" name="u_labelTitle">
+                    <property name="text">
+                        <string>TextLabel</string>
+                    </property>
+                </widget>
+            </item>
+            <item row="1" column="0">
+                <widget class="QTreeWidget" name="u_treeWidget">
+                    <attribute name="headerCascadingSectionResizes">
+                        <bool>true</bool>
+                    </attribute>
+                    <attribute name="headerMinimumSectionSize">
+                        <number>50</number>
+                    </attribute>
+                    <attribute name="headerDefaultSectionSize">
+                        <number>200</number>
+                    </attribute>
+                    <attribute name="headerStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>属性</string>
+      </property>
+      <property name="statusTip">
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>值</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

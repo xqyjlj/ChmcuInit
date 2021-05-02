@@ -26,44 +26,50 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-21     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-05-02     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUCONFIG_H
-#define CHMCUINIT_FORMMCUCONFIG_H
+#ifndef CHMCUINIT_FORMGPIO_H
+#define CHMCUINIT_FORMGPIO_H
 
 #include <QWidget>
 #include "BaseObject.h"
-
+#include "FormGpioAttribute.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class FormMcuConfig;
+    class FormGpio;
 }
 QT_END_NAMESPACE
 
-class FormMcuConfig : public QWidget
+class FormGpio : public QWidget
 {
 Q_OBJECT
 
 public:
-    explicit FormMcuConfig(QWidget *parent = nullptr);
+    explicit FormGpio(QWidget *parent = nullptr);
 
-    ~FormMcuConfig() override;
+    ~FormGpio() override;
+
+public slots:
+
+    void slotPinSignalClicked(const QString &name, const QString &tag, bool isCanceled);
 
 private slots:
 
-    void slotShowIpWidget(QWidget *widget, const QString &widgetName);
+    void slotShowGpioAttributeWidget(FormGpioAttribute *widget);
 
 private:
-    Ui::FormMcuConfig *ui;
+
+    Ui::FormGpio *ui;
 
     BaseObject *m_baseObject = nullptr;
 
 public:
+
     void setBaseObject(BaseObject *baseObject);
 };
 
 
-#endif //CHMCUINIT_FORMMCUCONFIG_H
+#endif //CHMCUINIT_FORMGPIO_H

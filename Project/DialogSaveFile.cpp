@@ -29,27 +29,29 @@
  ** 2021-04-24     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-// You may need to build the project (run Qt uic code generator) to get "ui_DialogSaveFile.h" resolved
 
 #include "DialogSaveFile.h"
 #include "ui_DialogSaveFile.h"
 #include <QPushButton>
-
+#include <QFileDialog>
 
 DialogSaveFile::DialogSaveFile(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogSaveFile)
 {
     ui->setupUi(this);
 
-    ui->ubuttonBox->button(QDialogButtonBox::Ok)->setText(u8"保存");
-    ui->ubuttonBox->button(QDialogButtonBox::Ok)->setObjectName(u8"buttonBoxSave");
-    ui->ubuttonBox->button(QDialogButtonBox::Cancel)->setText(u8"取消");
-    ui->ubuttonBox->button(QDialogButtonBox::Cancel)->setObjectName(u8"buttonBoxCancel");
+    ui->u_buttonBox->button(QDialogButtonBox::Ok)->setText(u8"保存");
+    ui->u_buttonBox->button(QDialogButtonBox::Ok)->setObjectName(u8"buttonBoxSave");
+    ui->u_buttonBox->button(QDialogButtonBox::Cancel)->setText(u8"取消");
+    ui->u_buttonBox->button(QDialogButtonBox::Cancel)->setObjectName(u8"buttonBoxCancel");
 
-    connect(ui->ubuttonBox, &QDialogButtonBox::clicked, this, &DialogSaveFile::slotButtonBoxClick,
+    connect(ui->u_buttonBox, &QDialogButtonBox::clicked, this, &DialogSaveFile::slotButtonBoxClick,
             Qt::UniqueConnection);
-    connect(ui->ubuttonBox, &QDialogButtonBox::accepted, this, &DialogSaveFile::accept, Qt::UniqueConnection);
-    connect(ui->ubuttonBox, &QDialogButtonBox::rejected, this, &DialogSaveFile::reject, Qt::UniqueConnection);
+    connect(ui->u_buttonBox, &QDialogButtonBox::accepted, this, &DialogSaveFile::accept, Qt::UniqueConnection);
+    connect(ui->u_buttonBox, &QDialogButtonBox::rejected, this, &DialogSaveFile::reject, Qt::UniqueConnection);
+
+    connect(ui->u_pushButtonProjectDir, &QPushButton::pressed, this, &DialogSaveFile::slotButtonProjectDirPressed,
+            Qt::UniqueConnection);
 }
 
 DialogSaveFile::~DialogSaveFile()
@@ -59,7 +61,7 @@ DialogSaveFile::~DialogSaveFile()
 
 void DialogSaveFile::slotAddProjectContent(const QString &content)
 {
-    ui->utextBrowser->append(content);
+    ui->u_textBrowserProjectContent->append(content);
 }
 
 void DialogSaveFile::setBaseObject(BaseObject *baseObject)
@@ -68,14 +70,41 @@ void DialogSaveFile::setBaseObject(BaseObject *baseObject)
     ASSERT_X(m_baseObject, u8"DialogSaveFile", u8"空指针-> m_baseObject");
     connect(m_baseObject->getFileProject(), &FileProject::signalAddProjectContent, this,
             &DialogSaveFile::slotAddProjectContent, Qt::UniqueConnection);
+
+    ui->u_lineEditProjectDir->setText(m_baseObject->getProjectDir());
+    ui->u_lineEditProjectName->setText(m_baseObject->getProjectName());
 }
 
 void DialogSaveFile::slotButtonBoxClick(QAbstractButton *button)
 {
     ASSERT_X(button, u8"DialogSaveFile", u8"空指针-> button");
+
+    m_baseObject->setProjectDir(ui->u_lineEditProjectDir->text());
+    m_baseObject->setProjectName(ui->u_lineEditProjectName->text());
+
+    QString projectDir = m_baseObject->getProjectDir() + u8"/" + m_baseObject->getProjectName();
+    QDir dir(projectDir);
+    if (!dir.exists(projectDir))
+    {
+        dir.mkdir(projectDir);
+    }
+
     if (button->objectName() == u8"buttonBoxSave")
     {
-        m_baseObject->saveProject();
+        if (ui->u_lineEditProjectDir->text().isEmpty() || ui->u_lineEditProjectName->text().isEmpty())
+        {
+            ASSERT_X(false, u8"DialogSaveFile", "请输入文件信息");
+        }
+        else
+        {
+            m_baseObject->saveProject();
+        }
     }
+}
+
+void DialogSaveFile::slotButtonProjectDirPressed()
+{
+    QString projectDir = QFileDialog::getExistingDirectory(this, "选择目录", "./", QFileDialog::ShowDirsOnly);
+    ui->u_lineEditProjectDir->setText(projectDir);
 }
 

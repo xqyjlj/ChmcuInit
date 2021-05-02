@@ -53,13 +53,16 @@ public:
 
 private slots:
 
-    void slotAddProjectContent(const QString& content);
+    void slotAddProjectContent(const QString &content);
 
-    void slotButtonBoxClick(QAbstractButton* button);
+    void slotButtonBoxClick(QAbstractButton *button);
+
+    void slotButtonProjectDirPressed();
+
 private:
     Ui::DialogSaveFile *ui;
 
-    BaseObject* m_baseObject = nullptr;
+    BaseObject *m_baseObject = nullptr;
 public:
     void setBaseObject(BaseObject *baseObject);
 };

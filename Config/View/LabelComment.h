@@ -26,44 +26,44 @@
  ** 
  ** Change Logs:
  ** Date           Author       Notes                    Email
- ** 2021-04-21     xqyjlj       the first version        xqyjlj@126.com
+ ** 2021-05-01     xqyjlj       the first version        xqyjlj@126.com
  **/
 
-#ifndef CHMCUINIT_FORMMCUCONFIG_H
-#define CHMCUINIT_FORMMCUCONFIG_H
+#ifndef CHMCUINIT_LABELCOMMENT_H
+#define CHMCUINIT_LABELCOMMENT_H
 
-#include <QWidget>
-#include "BaseObject.h"
+#include <QLabel>
+#include <QPainter>
+#include <QPaintEvent>
 
-
-QT_BEGIN_NAMESPACE
-namespace Ui
+class LabelComment : public QLabel
 {
-    class FormMcuConfig;
-}
-QT_END_NAMESPACE
-
-class FormMcuConfig : public QWidget
-{
-Q_OBJECT
+public:
+    enum Direction
+    {
+        DirectionTop = 0,
+        DirectionBottom,
+        DirectionLeft,
+        DirectionRight
+    };
 
 public:
-    explicit FormMcuConfig(QWidget *parent = nullptr);
 
-    ~FormMcuConfig() override;
+    explicit LabelComment(QWidget *parent = nullptr);
 
-private slots:
-
-    void slotShowIpWidget(QWidget *widget, const QString &widgetName);
 
 private:
-    Ui::FormMcuConfig *ui;
 
-    BaseObject *m_baseObject = nullptr;
+    enum Direction m_direction = DirectionLeft;
 
 public:
-    void setBaseObject(BaseObject *baseObject);
+
+    void setDirection(enum Direction direction);
+
+protected:
+
+    void paintEvent(QPaintEvent *e) override;
 };
 
 
-#endif //CHMCUINIT_FORMMCUCONFIG_H
+#endif //CHMCUINIT_LABELCOMMENT_H

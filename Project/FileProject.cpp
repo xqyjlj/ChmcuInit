@@ -31,14 +31,14 @@
 
 #include "FileProject.h"
 #include "Debug.h"
-#include <QFile>
+#include "CoderHalIo.h"
 
 FileProject::FileProject(QObject *parent) : QObject(parent)
 {
-    qRegisterMetaType<GpioModel_T>("GpioModel_T");
+    qRegisterMetaType<XmlFileProjectModel::GpioModel_T>("XmlFileProjectModel::GpioModel_T");
 }
 
-void FileProject::slotAddGpioModel(const FileProject::GpioModel_T &gpioModel)
+void FileProject::slotAddGpioModel(const XmlFileProjectModel::GpioModel_T &gpioModel)
 {
 
     if (!m_parameterNames.contains(gpioModel.name))
@@ -54,79 +54,12 @@ void FileProject::setMcuModel(const XmlFamilyModel::McuModel_T &mcuModel)
 {
     m_mcuModel = mcuModel;
 
-    m_configurationModel.name = u8"stm32f103c8t6";
     m_configurationModel.mcu.name = m_mcuModel.name;
     m_configurationModel.mcu.family = m_mcuModel.family;
-
 }
 
-void FileProject::saveFile()
+void FileProject::saveProject(const QString &projectName, const QString &projectPath)
 {
-    QString path("C:/Users/xqyjlj/Desktop/stm32f103c8t6_chmcuinit/stm32f103c8t6.cmiprj");
-    QFile file(path);
-    if (!file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate))
-    {
-        ASSERT_X(false, u8"FileProject", QString(u8"Cannot write file %1").arg(path));
-        return;
-    }
-    QXmlStreamWriter streamWriter(&file);
-    streamWriter.setAutoFormatting(true);
-    streamWriter.writeStartDocument("1.0", true);
-    streamWriter.writeComment(u8"此文件为ChmcuInit软件配置文件，软件地址：https://github.com/xqyjlj/ChmcuInit");
-
-    CreateConfigurationNode(streamWriter);
-
-    streamWriter.writeEndDocument();
-
-    file.close();
+    m_configurationModel.name = projectName;
+    XmlFileProjectModel::setConfigurationModel(m_configurationModel, projectPath);
 }
-
-void FileProject::CreateConfigurationNode(QXmlStreamWriter &streamWriter) const
-{
-    streamWriter.writeStartElement(u8"Configuration");
-    streamWriter.writeAttribute(u8"Name", m_configurationModel.name);
-    CreateMcuNode(streamWriter);
-    streamWriter.writeEndElement();
-}
-
-void FileProject::CreateMcuNode(QXmlStreamWriter &streamWriter) const
-{
-    streamWriter.writeStartElement(u8"Mcu");
-    streamWriter.writeAttribute(u8"Name", m_configurationModel.mcu.name);
-    streamWriter.writeAttribute(u8"Family", m_configurationModel.mcu.family);
-
-    CreateGpioNode(streamWriter);
-
-    streamWriter.writeEndElement();
-}
-
-void FileProject::CreateGpioNode(QXmlStreamWriter &streamWriter) const
-{
-    QList<GpioModel_T> gpios = m_configurationModel.mcu.gpios;
-    if (!gpios.isEmpty())
-    {
-        streamWriter.writeStartElement(u8"IP");
-
-        streamWriter.writeAttribute(u8"Name", u8"GPIO");
-
-        auto length = gpios.length();
-        for (int i = 0; i < length; i++)
-        {
-            streamWriter.writeStartElement(u8"GPIO");
-
-            streamWriter.writeAttribute(u8"Name", gpios.at(i).name);
-            streamWriter.writeAttribute(u8"Level", gpios.at(i).level);
-            streamWriter.writeAttribute(u8"Speed", gpios.at(i).speed);
-            streamWriter.writeAttribute(u8"Pull", gpios.at(i).pull);
-            streamWriter.writeAttribute(u8"Pin", gpios.at(i).pin);
-            streamWriter.writeAttribute(u8"Mode", gpios.at(i).mode);
-            streamWriter.writeAttribute(u8"Label", gpios.at(i).label);
-            streamWriter.writeAttribute(u8"GPIOx", gpios.at(i).GPIOx);
-
-            streamWriter.writeEndElement();
-        }
-
-        streamWriter.writeEndElement();
-    }
-}
-
