@@ -2,6 +2,8 @@
 
 MCU图形化配置程序，基于QT，灵感来自cubeMX。
 
+此项目已不再维护，新项目参见[xqyjlj/misaka_mcu: 御坂MCU (github.com)](https://github.com/xqyjlj/misaka_mcu)
+
 ## 前排提示
 
 ​	因为本人目前还是一名在读学生，时间并不充裕，本身专业其实也与此软件没什么关系，维护更新可能不会很频繁，代码可能也入不了大佬们的眼。UI也是出奇的简陋，如有意见，还请主动联系我，联系方式放下面了。或者直接提交**issues**或者**requests**。谢谢大家了。
